@@ -1,0 +1,60 @@
+{
+  "email": "Adresse e-mail",
+  "password": "Mot de passe",
+  "password-confirm": "Confirmation mot de passe",
+  "register": {
+    "TOAST_SUCCESS": "Votre inscription s'est déroulée sans accroc. Veuillez consulter vos mails et cliquer sur le lien d'activation reçu",
+    "TOAST_ERROR": "Une erreur est survenue lors de l'inscription"
+  },
+  "login": {
+    "TOAST_ERROR": "Une erreur est survenue lors de l'authentification"
+  },
+  "user": {
+    "lastname": "Nom",
+    "firstname": "Prénom",
+    "phone": "Numéro de téléphone",
+    "siret": "N° SIRET",
+    "company-name": "Dénomination de votre société",
+    "position-label": "Votre poste",
+    "position": {
+      "SALESMAN": "Commercial",
+      "SALES_MANAGER": "Chefs des ventes",
+      "PURCHASING_MANAGER": "Responsable achats",
+      "GENERAL_MANAGER": "Directeur Général",
+      "BRANCH_MANAGER": "Directeur d'agence",
+      "OPERATIONAL_MANAGER": "Directeur opérationnel",
+      "OTHER": "Autre"
+    },
+    "kyc": {
+      "kbis": "KBIS de moins de 3 mois",
+      "identity": "Pièce d'identité",
+      "bank": "RIB ou IBAN"
+    }
+  },
+  "update-user": {
+    "SUCCESS": "Votre utilisateur a été mis à jour avec succès",
+    "ERROR": "Une erreur s'est produite lors de l'enregistrement des mises à jour."
+  },
+  "update-user-password": {
+    "ERROR_INVALID_OLD_PASSWORD": "Ancien mot de passe invalide",
+    "SUCCESS": "Mot de passe mise à jour avec succès",
+    "ERROR": "Une erreur s'est produite lors de la mise à jour du mot de passe"
+  },
+  "validate-user-registration": {
+    "ERROR": "Une erreur est survenue lors de l'activation de votre compte"
+  },
+  "lost-password": {
+    "SUCCESS": "La demande de réinitialisation a bien été envoyée. Si un compte existe avec cette adresse, un mail vous a été envoyé. Veuillez suivre les instructions y figurant pour définir un nouveau mot de passe.",
+    "ERROR": "Une erreur est survenue lors de la réinitialisation de votre mot de passe."
+  },
+  "reset-password": {
+    "SUCCESS": "Votre mot de passe a été réinitialisé avec succès, vous pouvez désormais essayer de vous connecter.",
+    "ERROR_LINK_ALREADY_USE": "Ce lien de réinitialisation a déjà été utilisé. Si vous souhaitez de nouveau changer votre mot de passe, veuillez refaire une demande de réinitialisation.",
+    "ERROR": "Une erreur inconnue est survenue. Veuillez réessayer ou contacter un administrateur si le problème persiste."
+  },
+  "update-kyc": {
+    "SUCCESS": "La pièce jointe a bien été modifiée.",
+    "ERROR": "Une erreur s'est produite lors de la modification de la pièce jointe.",
+    "TOO_LARGE": "Le fichier est trop volumineux, il ne doit pas dépasser 5mo"
+  }
+}

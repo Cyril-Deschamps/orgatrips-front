@@ -1,9 +1,13 @@
 import { AppProps } from "next/app";
+import React from "react";
+import { appWithTranslation } from "next-i18next";
 
-import "../styles/global.css";
+import "../assets/styles/global.css";
 
-const MyApp = ({ Component, pageProps }: AppProps) => (
-  <Component {...pageProps} />
+const App = ({ Component, router }: AppProps) => (
+  <React.StrictMode>
+    <Component {...router} />
+  </React.StrictMode>
 );
 
-export default MyApp;
+export default appWithTranslation(App);
