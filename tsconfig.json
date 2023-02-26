@@ -28,7 +28,9 @@
     "next-env.d.ts",
     "postcss.config.js",
     "tailwind.config.js",
-    "next.config.js"
+    "next.config.js",
+    "next-i18next.config",
+    "commitlint.config.cjs"
   ],
   "exclude": ["node_modules"]
 }

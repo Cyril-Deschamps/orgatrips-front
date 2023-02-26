@@ -1,13 +1,42 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
-import { AppConfig } from "../utils/AppConfig";
+import { AppConfig } from "../services/utils/AppConfig";
 
-// Need to create a custom _document because i18n support is not compatible with `next export`.
 class MyDocument extends Document {
   render() {
     return (
       <Html lang={AppConfig.locale}>
-        <Head />
+        <Head>
+          <link
+            href={"/static/favicon/apple-touch-icon.png"}
+            rel={"apple-touch-icon"}
+            sizes={"180x180"}
+          />
+          <link
+            href={"/static/favicon/favicon-32x32.png"}
+            rel={"icon"}
+            sizes={"32x32"}
+            type={"image/png"}
+          />
+          <link
+            href={"/static/favicon/favicon-16x16.png"}
+            rel={"icon"}
+            sizes={"16x16"}
+            type={"image/png"}
+          />
+          <link href={"/static/favicon/site.webmanifest"} rel={"manifest"} />
+          <link
+            color={"#000000"}
+            href={"/static/favicon/safari-pinned-tab.svg"}
+            rel={"mask-icon"}
+          />
+          <link href={"/static/favicon/favicon.png"} rel={"shortcut icon"} />
+          <meta
+            content={"/static/favicon/browserconfig.xml"}
+            name={"msapplication-config"}
+          />
+          <meta content={"#000"} name={"theme-color"} />
+        </Head>
         <body>
           <Main />
           <NextScript />

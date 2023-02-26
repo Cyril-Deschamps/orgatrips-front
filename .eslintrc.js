@@ -43,6 +43,7 @@ module.exports = {
     ],
 
     // JSX
+    "react/no-unescaped-entities": 0,
     "react/jsx-curly-brace-presence": ["warn", { props: "always" }],
     "react/jsx-key": [
       process.env.NODE_ENV === "production" ? "error" : "warn",
