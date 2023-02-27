@@ -13,13 +13,10 @@ module.exports = {
     switch (namespace) {
       case "auth":
         return `./src/services/auth/i18n/${locale}.json`
-        break;
       case "validations":
         return `./src/services/validations/i18n/${locale}.json`
-        break;
       default:
         return `./src/services/auth/i18n/${locale}.json`
-        break;
     }
   }
 }

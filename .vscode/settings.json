@@ -7,5 +7,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "eslint.lintTask.options": "yarn run lint-fix:react"
+  "eslint.lintTask.options": "yarn run lint-fix:react",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "css.validate": false,
+  "editor.inlineSuggest.enabled": true
 }
