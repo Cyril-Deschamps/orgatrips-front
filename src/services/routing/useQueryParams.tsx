@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next-translate-routes/router";
 
 export interface QueryParams<T = string | number | boolean | undefined> {
   [key: string]: T | null | Array<T | null>;

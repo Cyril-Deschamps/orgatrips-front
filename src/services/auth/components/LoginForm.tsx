@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useMemo } from "react";
-import { LOST_PASSWORD_LINK, REGISTER_LINK } from "../../../routes/public";
+import { LOST_PASSWORD_LINK, REGISTER_LINK } from "../../../routes";
 import { object, string } from "yup";
 import { UserToLogin } from "../user";
 import ValidationsErrors from "../../forms/ValidationsErrors";

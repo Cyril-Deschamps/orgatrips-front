@@ -1,0 +1,13 @@
+{
+  "description": "Trouver la destination qui vous correspond",
+  "pages": {
+    "home": "Trouvez une destination",
+    "blog": "Blog",
+    "contact": "Nous contacter",
+    "legal_notice": "Mentions légales",
+    "privacy_policy": "Politique de confidentialité"
+  },
+  "footer": {
+    "all_rights_reserved": "Tous droits réservés"
+  }
+}

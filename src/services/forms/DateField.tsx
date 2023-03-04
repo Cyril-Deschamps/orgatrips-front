@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { useField } from "formik";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.min.css";
 import { useDate } from "../date/DateContext";
 
 interface Props<

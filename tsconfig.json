@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -25,11 +25,10 @@
   "include": [
     "src",
     ".eslintrc.js",
-    "next-env.d.ts",
     "postcss.config.js",
     "tailwind.config.js",
     "next.config.js",
-    "next-i18next.config",
+    "next-i18next.config.js",
     "commitlint.config.cjs"
   ],
   "exclude": ["node_modules"]

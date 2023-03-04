@@ -1,7 +1,9 @@
 import React, { ReactElement } from "react";
-import { PRIVATE } from "../../../routes/private";
+
+const PRIVATE = ""; //REPLACE
+
 import { useAuth } from "../apiProvider";
-import { useRouter } from "next/router";
+import { useRouter } from "next-translate-routes/router";
 import generatePath from "../../routing/generatePath";
 import useQueryParams from "../../routing/useQueryParams";
 import Navigate from "../../routing/components/Navigate";
