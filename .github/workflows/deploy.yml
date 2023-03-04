@@ -41,7 +41,8 @@ jobs:
           KEY: ${{ secrets.DEVELOPMENT_SSHKEY }}
         with:
           source: "."
-          target: "/home/cyril/dev-orgatrips"
+          target: "/home/cyril/dev-orgatrips-front"
+          rm: true
 
       - name: Executing remote command DEVELOPMENT
         if: ${{ steps.extract_branch.outputs.branch == 'DEVELOPMENT' }}
@@ -53,7 +54,7 @@ jobs:
           KEY: ${{ secrets.DEVELOPMENT_SSHKEY }}
           script: |
             docker ps -q --filter "name=dev-orgatrips-front" | grep -q . && docker stop dev-orgatrips-front && docker container rm dev-orgatrips-front
-            docker build -t dev-orgatrips-front /home/cyril/cyrildeschamps/
+            docker build -t dev-orgatrips-front /home/cyril/dev-orgatrips-front/
             docker run -d --network reverse-proxy --ip 172.18.0.5 --name dev-orgatrips-front -t dev-orgatrips-front
 
       # PRODUCTION
@@ -68,6 +69,7 @@ jobs:
         with:
           source: "."
           target: "/home/cyril/orgatrips-front"
+          rm: true
 
       - name: Executing remote command PRODUCTION
         if: ${{ steps.extract_branch.outputs.branch == 'PRODUCTION' }}

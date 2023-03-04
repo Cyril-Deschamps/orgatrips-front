@@ -41,10 +41,10 @@ export function useSearch<E>(
 ): [E[], (search: string) => void] {
   const [search, setSearch] = useState<string>("");
 
-  const filter = useMemo(() => searchGenerator(search, mapper), [
-    search,
-    mapper,
-  ]);
+  const filter = useMemo(
+    () => searchGenerator(search, mapper),
+    [search, mapper],
+  );
 
   const newList = useMemo(() => baseList.filter(filter), [baseList, filter]);
 
@@ -103,7 +103,7 @@ export function groupByField<
   Arr extends Array<any>,
   T extends Arr extends Array<infer T> ? T : never,
   Key extends keyof T & (string | number | symbol),
-  TKey extends T[Key] & (string | number | symbol)
+  TKey extends T[Key] & (string | number | symbol),
 >(array: Arr, key: Key | ((el: T) => TKey)): Record<TKey, Arr> {
   return array.reduce((result, item) => {
     const k = typeof key === "function" ? key(item) : item[key];
@@ -134,7 +134,7 @@ export function orderByField<
       : P[K] extends Date
       ? number
       : never
-    : never
+    : never,
 >(_field: K, desc?: boolean): (a: P, b: P) => X {
   const genericCompare = (_a: P, _b: P) => {
     // XXX: This is a hack to get around typescript not being able to infer the type of the field
@@ -160,7 +160,7 @@ export function orderByField<
   };
 
   return (a: P, b: P) =>
-    ((desc ? genericCompare(a, b) : genericCompare(b, a)) as unknown) as X;
+    (desc ? genericCompare(a, b) : genericCompare(b, a)) as unknown as X;
 }
 
 export function filterOnPrecondition<A, C extends (e: A) => boolean>(
