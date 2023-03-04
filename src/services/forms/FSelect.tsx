@@ -1,7 +1,8 @@
 import FSelectParse from "./FSelectParse";
 import { useYupField } from "./Form";
 import { AnySchema, BaseSchema } from "yup";
-import { Namespace, TFuncKey, useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
+import { Namespace, TFuncKey } from "react-i18next";
 import { getNumericEnumEntries } from "../data-structures/enum";
 import RadioSelect from "./RadioSelect";
 import FSelectString from "./FSelectString";

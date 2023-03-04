@@ -1,22 +1,26 @@
 module.exports = {
   i18n: {
-    defaultLocale: 'fr',
-    locales: ['fr'],
+    defaultLocale: "en",
+    locales: ["fr", "en"],
   },
   fallbackLng: {
-    default: "fr",
+    default: ["en"],
   },
   interpolation: {
     escapeValue: false,
   },
+  serializeConfig: false,
   localePath: (locale, namespace) => {
     switch (namespace) {
-      case "auth":
-        return `./src/services/auth/i18n/${locale}.json`
       case "validations":
-        return `./src/services/validations/i18n/${locale}.json`
+        return `./src/services/validations/i18n/${locale}.json`;
+      case "destination":
+        return `./src/services/destination/i18n/${locale}.json`;
       default:
-        return `./src/services/auth/i18n/${locale}.json`
+        return namespace !== "common" ?
+          `./src/services/i18n/pages/${namespace}/${locale}.json` : `./src/services/i18n/pages/website/${locale}.json`;
     }
-  }
-}
+  },
+  reloadOnPrerender: process.env.NODE_ENV === "development",
+  ns: ["validations", "destination", "home", "website"],
+};

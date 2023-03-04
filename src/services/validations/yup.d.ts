@@ -1,7 +1,7 @@
 import "yup";
 import { AnyObject, Maybe } from "yup/lib/types";
 import Reference from "yup/lib/Reference";
-import { Namespace, TFuncKey } from "next-i18next";
+import { Namespace, TFuncKey } from "react-i18next";
 
 declare module "yup" {
   interface StringSchema<
@@ -35,6 +35,8 @@ declare module "yup" {
       select?: boolean;
       notVisible?: boolean;
       radio?: boolean;
+      dateRange?: { min: Date; max: Date };
+      numberRange?: { min: number; max: number };
       autocomplete?: boolean;
       multiselect?: boolean;
       stringEnum?: boolean;
@@ -45,6 +47,9 @@ declare module "yup" {
     radio(): this;
     meta(): this["metaInterface"];
     meta(obj: Partial<this["metaInterface"]>): this;
+
+    dateRange({ min, max }: { min: Date; max: Date }): this;
+    numberRange({ min, max }: { min: number; max: number }): this;
 
     autocomplete<N extends Namespace>(
       values: Record<string | number | symbol, unknown>,

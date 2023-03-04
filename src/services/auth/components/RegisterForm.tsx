@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useMemo } from "react";
 import { useTranslation } from "next-i18next";
 import { object, ref, SchemaOf, string, number } from "yup";
-import { LOGIN_LINK } from "../../../routes/public";
+import { LOGIN_LINK } from "../../../routes";
 import Form from "../../forms/Form";
 import { Position, UserToRegisterForm } from "../user";
 import ValidationsErrors from "../../forms/ValidationsErrors";

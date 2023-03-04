@@ -9,7 +9,8 @@ import {
   ToastConsumerContext,
   ToastProvider,
 } from "react-toast-notifications";
-import { Namespace, TFuncKey, useTranslation } from "next-i18next";
+import { Namespace, TFuncKey } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { StringMap, TOptions } from "i18next";
 
 interface ToastAPI {
@@ -95,7 +96,9 @@ const ToastGenerator = ({
   );
 };
 
-export const ProvideToast: React.FC = ({ children }) => {
+export const ProvideToast: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   return (
     <ToastProvider placement={"top-right"} autoDismiss>
       <ToastConsumer>

@@ -1,6 +1,5 @@
 import { FunctionComponent } from "react";
 import { FieldAttributes, useField } from "formik";
-import Input from "../ui/reactive/Input";
 
 // Formik has wrong typing
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +7,7 @@ const NumberField: FunctionComponent<FieldAttributes<any>> = (props) => {
   const [field, , helper] = useField(props);
 
   return (
-    <Input
+    <input
       {...props}
       {...field}
       onChange={(event) =>

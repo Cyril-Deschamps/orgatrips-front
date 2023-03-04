@@ -1,4 +1,4 @@
-import { fr } from "date-fns/locale";
+import { fr, enUS } from "date-fns/locale";
 import { useTranslation } from "next-i18next";
 import { format, Locale } from "date-fns";
 
@@ -21,6 +21,7 @@ type DateFNSFormatOptions = {
 
 const LOCALES: Record<string, Locale> = {
   fr: fr,
+  en: enUS,
 };
 
 export function useDate(): DateAPI {

@@ -1,6 +1,7 @@
 import { useYupField } from "./Form";
 import { AnySchema, BaseSchema } from "yup";
-import { Namespace, TFuncKey, useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
+import { Namespace, TFuncKey } from "react-i18next";
 import { getStringEnumEntries } from "../data-structures/enum";
 import { MultiSelect, Option } from "react-multi-select-component";
 import { useField } from "formik";

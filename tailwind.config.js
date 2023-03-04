@@ -6,7 +6,7 @@ module.exports = {
   darkMode: 'media',
   theme: {
     fontSize: {
-      xs: '0.75rem',
+      xs: '0.8rem',
       sm: '0.875rem',
       base: '1rem',
       lg: '1.125rem',
@@ -18,6 +18,9 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
+      backgroundImage: {
+        'section-cut-background': "url('/assets/img/section-cut-background.svg')",
+      },
       objectPosition: {
         'center-top': 'center top',
       },
@@ -27,7 +30,9 @@ module.exports = {
       },
       colors: {
         appBgColor: "#FCF0E2",
-        'green': "#3F802B"
+        'green': "#3F802B",
+        'blue': "#385e80",
+        'light-blue': "#11a1e2"
       },
       lineHeight: {
         hero: '4.5rem',

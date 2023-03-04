@@ -9,6 +9,9 @@ import DateField from "./DateField";
 import TextareaField from "./TextareaField";
 import FSelect from "./FSelect";
 import FAutoComplete from "./FAutoComplete";
+import classNames from "classnames";
+import DateRangeField from "./DateRangeField";
+import NumberRangeField from "./NumberRangeField";
 
 interface Props {
   name: string;
@@ -32,11 +35,19 @@ enum FieldType {
   Date,
   DateTime,
   AutoComplete,
+  DateRange,
+  NumberRange,
 }
 
 function getFieldType(fieldSchema: AnySchema): FieldType {
   if (fieldSchema.tests.find((t) => t.OPTIONS.name === "email")) {
     return FieldType.Email;
+  }
+  if (fieldSchema.meta()?.dateRange) {
+    return FieldType.DateRange;
+  }
+  if (fieldSchema.meta()?.numberRange) {
+    return FieldType.NumberRange;
   }
   if (fieldSchema.meta()?.password) {
     return FieldType.Password;
@@ -56,6 +67,7 @@ function getFieldType(fieldSchema: AnySchema): FieldType {
   if (fieldSchema.meta()?.autocomplete) {
     return FieldType.AutoComplete;
   }
+
   return FieldType.String;
 }
 
@@ -83,15 +95,21 @@ const AutoField = ({
 
   if (fieldSchema.meta()?.notVisible) return null;
 
+  const customStyle =
+    "bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-3 mt-[-0.75rem]";
+
   return (
-    <div className={"form-block"}>
-      <label className={"input-label"} htmlFor={id || name}>
+    <div className={"my-xxs"}>
+      <label
+        className={"bg-white z-10 relative px-xxs ml-xs text-xs"}
+        htmlFor={id || name}
+      >
         {fieldSchema.spec.label} {unit && ` (${unit})`}
         {isRequired && "*"}
       </label>
       {fieldType === FieldType.Email && (
         <EmailField
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -101,7 +119,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Password && (
         <PasswordField
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -111,7 +129,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.String && (
         <TextField
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -121,7 +139,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Textarea && (
         <TextareaField
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -131,7 +149,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Number && (
         <NumberField
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -141,11 +159,9 @@ const AutoField = ({
       )}
       {(fieldType === FieldType.Date || fieldType === FieldType.DateTime) && (
         <DateField
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
-          maxDate={new Date()}
-          minDate={new Date(1900, 1, 1)}
           name={name}
           placeholderText={placeholder}
           showTimeSelect={fieldType === FieldType.DateTime}
@@ -154,7 +170,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Select && (
         <FSelect
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -166,9 +182,27 @@ const AutoField = ({
       {fieldType === FieldType.AutoComplete && (
         <FAutoComplete
           afterValueChanged={afterValueChanged}
-          className={className}
+          className={classNames(className, customStyle)}
           disabled={isDisabled || disabled}
           multiselect={fieldSchema.meta()?.multiselect}
+          name={name}
+          {...otherProps}
+        />
+      )}
+      {fieldType === FieldType.DateRange && (
+        <DateRangeField
+          className={classNames(className, customStyle)}
+          disabled={isDisabled}
+          id={id || name}
+          name={name}
+          {...otherProps}
+        />
+      )}
+      {fieldType === FieldType.NumberRange && (
+        <NumberRangeField
+          className={classNames(className, customStyle)}
+          disabled={isDisabled}
+          id={id || name}
           name={name}
           {...otherProps}
         />

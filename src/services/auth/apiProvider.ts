@@ -33,8 +33,9 @@ import baseAPI, {
   updateKyc as apiUpdateKyc,
 } from "./api";
 import { AxiosPromise } from "axios";
-import { useRouter } from "next/router";
-import { LOGIN_LINK } from "../../routes/public";
+import { useRouter } from "next-translate-routes/router";
+
+const LOGIN_LINK = ""; //REPLACE
 
 const defaultUser = isSetLocalUser() ? getLocalUser() : null;
 
