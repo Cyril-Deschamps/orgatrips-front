@@ -1,10 +1,9 @@
 import { FunctionComponent } from "react";
-import { flexCenter, flexColumn, flexCrossCenter } from "../../ui/layouts/flex";
 import { PreviewProps } from "../FileEdit";
 
 const GenericFilePreview: FunctionComponent<PreviewProps> = () => {
   return (
-    <div className={`${flexCenter}, ${flexColumn}, ${flexCrossCenter}`}>
+    <div className={`flex flex-col justify-center items-center`}>
       <span>
         <svg
           id={"Capa_1"}

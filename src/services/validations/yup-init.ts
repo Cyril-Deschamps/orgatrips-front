@@ -1,4 +1,4 @@
-import { addMethod, date, mixed, string, array, object, number } from "yup";
+import { addMethod, date, mixed, string, array, object } from "yup";
 import { getNumericEnumEntries } from "../data-structures/enum";
 import { Namespace, TFuncKey } from "react-i18next";
 

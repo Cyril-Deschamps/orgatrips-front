@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
 import FileEdit from "./FileEdit";
 import FileInput from "./FileInput";
-import { flexRow } from "../ui/layouts/flex";
 import { Props as FileInputProps } from "./FileInput";
 
 interface Props extends Omit<FileInputProps, "onChange"> {
@@ -15,7 +14,7 @@ const FileZone: FunctionComponent<Props> = (props) => {
 
   return (
     <div>
-      <div className={flexRow}>
+      <div className={"flex flex-row"}>
         {(files || []).map((file, index) => (
           <FileEdit
             key={index}
