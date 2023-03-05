@@ -14,6 +14,7 @@ import { BASE_LINK } from "../../../routes";
 import logoIco from "../../../assets/img/logo-ico.png";
 import facebookIcon from "../../../assets/img/icons/icon-facebook.svg";
 import instagramIcon from "../../../assets/img/icons/icon-instagram.svg";
+import { FACEBOOK_LINK, INSTAGRAM_LINK } from "../../../routes/external";
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation(["website"]);
@@ -34,16 +35,16 @@ const Footer = (): JSX.Element => {
           <div
             className={"flex flex-row gap-x-2xl gap-y-l justify-end flex-wrap"}
           >
-            <NextLink href={"https://facebook.com"}>
+            <NextLink href={FACEBOOK_LINK}>
               <Image
-                alt={"icon-instagram"}
+                alt={"icon-facebook"}
                 className={"w-2xl"}
                 src={facebookIcon}
               />
             </NextLink>
-            <NextLink href={"https://instagram.com"}>
+            <NextLink href={INSTAGRAM_LINK}>
               <Image
-                alt={"icon-facebook"}
+                alt={"icon-instagram"}
                 className={"w-2xl"}
                 src={instagramIcon}
               />
