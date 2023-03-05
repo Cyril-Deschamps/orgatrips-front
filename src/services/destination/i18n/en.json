@@ -1,0 +1,10 @@
+{
+  "start_date_range": "Travel dates",
+  "number_of_adults": "Number of adults",
+  "number_of_children": "Number of children",
+  "budget": "Budget",
+  "find_destinations": "Find destinations",
+  "search_destination": {
+    "ERROR": "An error occurred while searching for destinations. Please try again later."
+  }
+}
