@@ -30,7 +30,8 @@
     "tailwind.config.js",
     "next.config.js",
     "next-i18next.config.js",
-    "commitlint.config.cjs"
+    "commitlint.config.cjs",
+    "next-sitemap.config.js"
   ],
   "exclude": ["node_modules"]
 }

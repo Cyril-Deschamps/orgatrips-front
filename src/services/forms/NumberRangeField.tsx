@@ -112,9 +112,11 @@ const NumberRangeField = ({
 
       <div className={"grid grid-cols-2 pt-2xl gap-s md:gap-3xl"}>
         <div>
-          <label>Minimum</label>
+          <label htmlFor={"minimum"}>Minimum</label>
           <input
             className={className}
+            id={"minimum"}
+            name={"minimum"}
             onChange={(event) =>
               setValues((values) =>
                 event.target.value === ""
@@ -130,9 +132,11 @@ const NumberRangeField = ({
           />
         </div>
         <div>
-          <label>Maximum</label>
+          <label htmlFor={"maximum"}>Maximum</label>
           <input
             className={className}
+            id={"maximum"}
+            name={"maximum"}
             onChange={(event) =>
               setValues((values) =>
                 event.target.value === ""

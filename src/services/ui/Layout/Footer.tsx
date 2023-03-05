@@ -65,7 +65,9 @@ const Footer = (): JSX.Element => {
             {AppConfig.author}. {t("website:footer.all_rights_reserved")}.
           </p>
           <div className={"md:basis-full justify-center flex  w-full"}>
-            <Image alt={"logo"} className={"w-4xl"} src={logoIco} />
+            <Link href={BASE_LINK}>
+              <Image alt={"logo"} className={"w-4xl"} src={logoIco} />
+            </Link>
           </div>
 
           <nav

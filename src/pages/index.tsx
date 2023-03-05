@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import SizedSection from "../services/ui/SizedSection";
-import Head from "next/head";
 import TitleLegend from "../services/ui/TitleLegend";
 import Title2 from "../services/ui/Title2";
 import Divider from "../services/ui/Divider";
@@ -9,9 +8,9 @@ import DestinationSearchForm from "../services/destination/components/Destinatio
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import type { GetStaticProps } from "next";
 import nextI18NextConfig from "../../next-i18next.config";
-import { AppConfig } from "../services/utils/AppConfig";
 import { Trans, useTranslation } from "next-i18next";
 import AppLayout from "../services/ui/Layout/AppLayout";
+import { default as NextLink } from "next/link";
 
 import dashboardIllustration from "../assets/img/dashboard-illustration.svg";
 import logoBookingClassic from "../assets/img/logo-booking-classic.svg";
@@ -23,15 +22,29 @@ import hotelIcon from "../assets/img/icons/icon-hotel.svg";
 import planeIcon from "../assets/img/icons/icon-plane.svg";
 import trainIcon from "../assets/img/icons/icon-train.svg";
 import tripImage from "../assets/img/trip-image.jpeg";
+import BaseSeo from "../services/seo/BaseSeo";
+import { jsonLdScriptProps } from "react-schemaorg";
+import { Organization } from "schema-dts";
+import { hostBaseURL } from "../services/auth/config";
+import { BOOKING_LINK, KIWI_LINK } from "../routes/external";
 
 const Home = (): JSX.Element => {
   const { t } = useTranslation(["destination", "home", "website"]);
 
   return (
     <AppLayout>
-      <Head>
-        <title>{`${AppConfig.siteName} - ${t("website:description")}`}</title>
-      </Head>
+      <BaseSeo description={t("home:page_title")} title={t("home:page_title")}>
+        <script
+          {...jsonLdScriptProps<Organization>({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "@id": `${hostBaseURL}/#organization`,
+            url: hostBaseURL,
+            name: "OrgaTrips",
+            logo: `${hostBaseURL}/assets/logo.png`,
+          })}
+        />
+      </BaseSeo>
       <main className={"flex flex-col items-center"}>
         <SizedSection
           className={
@@ -44,6 +57,13 @@ const Home = (): JSX.Element => {
                 "md:w-[31rem] font-VarsityTeam text-xl sm:text-2xl md:text-4xl leading-8 md:leading-10 tracking-wide md:text-center lg:text-start"
               }
             >
+              <span
+                className={
+                  "absolute right-[-3rem] top-[-2rem] md:top-[-3rem] px-xs md:px-xs bg-light-blue text-white rounded-md rotate-6 text-xl sm:text-2xl"
+                }
+              >
+                {t("home:coming_soon")}
+              </span>
               <Trans
                 components={{
                   green: <span className={"text-green"} />,
@@ -63,7 +83,7 @@ const Home = (): JSX.Element => {
             <Image
               alt={"drawn-arrow"}
               className={
-                "absolute right-[-3rem] top-8 w-28 md:right-[-8rem] md:w-auto"
+                "absolute right-[-5rem] top-6 w-24 md:right-[-8rem] sm:w-32 md:w-36"
               }
               src={drawnArrow}
             />
@@ -73,6 +93,7 @@ const Home = (): JSX.Element => {
             className={
               "w-2/6 pl-14 pt-10 xl:pt-0 xl:pl-0 xl:w-[32rem] hidden lg:block"
             }
+            loading={"eager"}
             src={dashboardIllustration}
           />
         </SizedSection>
@@ -106,18 +127,23 @@ const Home = (): JSX.Element => {
                   "flex flex-row gap-x-3xl gap-y-s pt-xl flex-wrap w-[40%] items-center"
                 }
               >
-                <Image
-                  alt={"Logo Booking"}
-                  className={
-                    "max-h-l lg:max-h-2xl object-contain object-left grayscale"
-                  }
-                  src={logoBookingClassic}
-                />
-                <Image
-                  alt={"Logo kiwi"}
-                  className={"max-h-3xl object-contain object-left grayscale"}
-                  src={logoKiwiClassic}
-                />
+                <NextLink href={BOOKING_LINK}>
+                  <Image
+                    alt={"Logo Booking"}
+                    className={
+                      "max-h-l lg:max-h-2xl object-contain object-left grayscale"
+                    }
+                    src={logoBookingClassic}
+                  />
+                </NextLink>
+
+                <NextLink href={KIWI_LINK}>
+                  <Image
+                    alt={"Logo kiwi"}
+                    className={"max-h-3xl object-contain object-left grayscale"}
+                    src={logoKiwiClassic}
+                  />
+                </NextLink>
               </div>
             </div>
             <div className={"mt-[-7rem] lg:mt-[-6rem]"}>

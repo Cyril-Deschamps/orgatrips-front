@@ -23,12 +23,14 @@ jobs:
         if: ${{ steps.extract_branch.outputs.branch == 'DEVELOPMENT' }}
         run: |
           echo "REACT_APP_API_HOST=${{ secrets.DEVELOPMENT_REACT_APP_API_HOST }}" >> .env
+          echo "REACT_APP_HOST=${{ secrets.DEVELOPMENT_REACT_APP_HOST }}" >> .env
 
       # PRODUCTION
       - name: Add .env variable based on branch production
         if: ${{ steps.extract_branch.outputs.branch == 'PRODUCTION' }}
         run: |
           echo "REACT_APP_API_HOST=${{ secrets.PRODUCTION_REACT_APP_API_HOST }}" >> .env
+          echo "REACT_APP_HOST=${{ secrets.PRODUCTION_REACT_APP_HOST }}" >> .env
 
       # DEVELOPMENT
       - name: Copy repository contents via scp DEVELOPMENT
