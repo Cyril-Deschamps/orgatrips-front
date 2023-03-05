@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'media',
   theme: {
     fontSize: {
-      xs: '0.75rem',
+      xs: '0.8rem',
       sm: '0.875rem',
       base: '1rem',
       lg: '1.125rem',
@@ -15,33 +18,36 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
+      backgroundImage: {
+        'section-cut-background': "url('/assets/img/section-cut-background.svg')",
+      },
+      objectPosition: {
+        'center-top': 'center top',
+      },
+      fontFamily: {
+        VarsityTeam: ['var(--font-varsity-team)', ...fontFamily.sans],
+        Roboto: ['var(--font-roboto)', ...fontFamily.sans],
+      },
       colors: {
-        primary: {
-          100: '#E6F6FE',
-          200: '#C0EAFC',
-          300: '#9ADDFB',
-          400: '#4FC3F7',
-          500: '#03A9F4',
-          600: '#0398DC',
-          700: '#026592',
-          800: '#014C6E',
-          900: '#013349',
-        },
-        gray: {
-          100: '#f7fafc',
-          200: '#edf2f7',
-          300: '#e2e8f0',
-          400: '#cbd5e0',
-          500: '#a0aec0',
-          600: '#718096',
-          700: '#4a5568',
-          800: '#2d3748',
-          900: '#1a202c',
-        },
+        appBgColor: "#FCF0E2",
+        'green': "#3F802B",
+        'blue': "#385e80",
+        'light-blue': "#11a1e2"
       },
       lineHeight: {
         hero: '4.5rem',
       },
+      spacing: {
+        'xxs': '0.3125rem',
+        'xs': '0.625rem',
+        's': '0.9375rem',
+        'm': '1.25rem',
+        'l': '1.5625rem',
+        'xl': '1.875rem',
+        '2xl': '2.5rem',
+        '3xl': '3.75rem',
+        '4xl': '5rem',
+      }
     },
   },
   plugins: [],

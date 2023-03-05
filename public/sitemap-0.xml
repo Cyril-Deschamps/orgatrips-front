@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.s.org/schemas//0.9" xmlns:news="http://www.google.com/schemas/-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/-mobile/1.0" xmlns:image="http://www.google.com/schemas/-image/1.1" xmlns:video="http://www.google.com/schemas/-video/1.1">
+<url><loc>http://localhost:3000</loc><lastmod>2023-03-05T17:26:42.086Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/help/legal-notice</loc><lastmod>2023-03-05T17:26:42.086Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/help/privacy-policy</loc><lastmod>2023-03-05T17:26:42.087Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/fr/aide/politique-de-confidentialite</loc><lastmod>2023-03-05T17:26:42.087Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/fr/aide/mentions-legales</loc><lastmod>2023-03-05T17:26:42.087Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000</loc><lastmod>2023-03-05T17:26:42.087Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+</urlset>
