@@ -8,7 +8,6 @@ import "../assets/styles/global.css";
 import { Roboto } from "next/font/google";
 import nextI18NextConfig from "../../next-i18next.config";
 import { withTranslateRoutes } from "next-translate-routes";
-
 import "../services/validations/yup-init";
 import "../services/i18n";
 import { ProvideToast } from "../services/toast-notifications";
@@ -22,23 +21,28 @@ const robotoFont = Roboto({
   weight: ["300", "400", "500", "700"],
 });
 
-const App = ({ Component, router }: AppProps) => (
-  <React.StrictMode>
-    <Head>
-      <meta content={"width=device-width, initial-scale=1"} name={"viewport"} />
-    </Head>
-    <div
-      className={classNames(
-        varsityTeamFont.variable,
-        robotoFont.className,
-        "flex flex-col w-full min-h-screen p-0 m-0 bg-appBgColor font-Roboto",
-      )}
-    >
-      <ProvideToast>
-        <Component {...router} />
-      </ProvideToast>
-    </div>
-  </React.StrictMode>
-);
+const App = ({ Component, router }: AppProps) => {
+  return (
+    <React.StrictMode>
+      <Head>
+        <meta
+          content={"width=device-width, initial-scale=1"}
+          name={"viewport"}
+        />
+      </Head>
+      <div
+        className={classNames(
+          varsityTeamFont.variable,
+          robotoFont.className,
+          "flex flex-col w-full min-h-screen p-0 m-0 bg-appBgColor font-Roboto",
+        )}
+      >
+        <ProvideToast>
+          <Component {...router} />
+        </ProvideToast>
+      </div>
+    </React.StrictMode>
+  );
+};
 
 export default appWithTranslation(withTranslateRoutes(App), nextI18NextConfig);

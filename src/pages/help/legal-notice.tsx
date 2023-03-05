@@ -1,22 +1,38 @@
 import React from "react";
-import Head from "next/head";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import type { GetStaticProps } from "next";
 import nextI18NextConfig from "../../../next-i18next.config";
-import { AppConfig } from "../../services/utils/AppConfig";
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import AppLayout from "../../services/ui/Layout/AppLayout";
+import SizedSection from "../../services/ui/SizedSection";
+import Title2 from "../../services/ui/Title2";
+import Title1 from "../../services/ui/Title1";
+import BaseSeo from "../../services/seo/BaseSeo";
 
 const LegalNotice = (): JSX.Element => {
-  const { t } = useTranslation(["destination", "home", "website"]);
+  const { t } = useTranslation(["legal_notice", "website"]);
 
   return (
     <AppLayout>
-      <Head>
-        <title>{`${AppConfig.siteName} - ${t("website:description")}`}</title>
-      </Head>
+      <BaseSeo
+        description={t("legal_notice:page_title")}
+        title={t("legal_notice:page_title")}
+      />
       <main className={"flex flex-col items-center"}>
-        <h1>{t("website:pages.legal_notice")}</h1>
+        <SizedSection className={"mb-xl"} little>
+          <div className={"bg-white rounded-3xl p-xl"}>
+            <Trans
+              components={{
+                Title1: <Title1 className={"text-center"} />,
+                Title2: <Title2 />,
+                ul: <ul className={"list-disc p-l"} />,
+                li: <li />,
+              }}
+            >
+              {t("legal_notice:description")}
+            </Trans>
+          </div>
+        </SizedSection>
       </main>
     </AppLayout>
   );
@@ -26,7 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(
       locale ?? "en",
-      ["website"],
+      ["website", "legal_notice"],
       nextI18NextConfig,
     )),
   },
