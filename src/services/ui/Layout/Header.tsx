@@ -20,7 +20,7 @@ const Header = (): JSX.Element => {
       </Link>
       <nav
         className={
-          "flex flex-row items-center gap-xs sm:gap-s ml-auto shrink flex-wrap justify-end"
+          "flex sm:flex-row items-center gap-xs sm:gap-s ml-auto shrink flex-col justify-end"
         }
       >
         <div className={"w-14 sm:w-24"}>
