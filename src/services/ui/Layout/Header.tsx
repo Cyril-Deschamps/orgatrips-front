@@ -3,7 +3,6 @@ import Link from "next-translate-routes/link";
 import { BASE_LINK } from "src/routes";
 
 import logo from "../../../assets/img/logo.png";
-import logoBookingAffiliate from "../../../assets/img/logo-booking-affiliate.svg";
 import logoKiwiAffiliate from "../../../assets/img/logo-kiwi-affiliate.png";
 
 const Header = (): JSX.Element => {
@@ -20,12 +19,9 @@ const Header = (): JSX.Element => {
       </Link>
       <nav
         className={
-          "flex flex-row items-center gap-xs sm:gap-s ml-auto shrink flex-wrap justify-end"
+          "flex sm:flex-row items-center gap-xs sm:gap-s ml-auto shrink flex-col justify-end"
         }
       >
-        <div className={"w-14 sm:w-24"}>
-          <Image alt={"logo-booking-affiliate"} src={logoBookingAffiliate} />
-        </div>
         <div className={"w-14 sm:w-24"}>
           <Image alt={"logo-kiwi-affiliate"} src={logoKiwiAffiliate} />
         </div>
