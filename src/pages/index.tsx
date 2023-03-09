@@ -13,7 +13,6 @@ import AppLayout from "../services/ui/Layout/AppLayout";
 import { default as NextLink } from "next/link";
 
 import dashboardIllustration from "../assets/img/dashboard-illustration.svg";
-import logoBookingClassic from "../assets/img/logo-booking-classic.svg";
 import logoKiwiClassic from "../assets/img/logo-kiwi-classic.svg";
 import sectionCutBackground from "../assets/img/section-cut-background.svg";
 import drawnArrow from "../assets/img/drawn-arrow.svg";
@@ -26,7 +25,7 @@ import BaseSeo from "../services/seo/BaseSeo";
 import { jsonLdScriptProps } from "react-schemaorg";
 import { Organization } from "schema-dts";
 import { hostBaseURL } from "../services/auth/config";
-import { BOOKING_LINK, KIWI_LINK } from "../routes/external";
+import { KIWI_LINK } from "../routes/external";
 
 const Home = (): JSX.Element => {
   const { t } = useTranslation(["destination", "home", "website"]);
@@ -130,16 +129,6 @@ const Home = (): JSX.Element => {
                   "flex flex-row gap-x-3xl gap-y-s pt-xl flex-wrap w-[40%] items-center"
                 }
               >
-                <NextLink href={BOOKING_LINK}>
-                  <Image
-                    alt={"Logo Booking"}
-                    className={
-                      "max-h-l lg:max-h-2xl object-contain object-left grayscale"
-                    }
-                    src={logoBookingClassic}
-                  />
-                </NextLink>
-
                 <NextLink href={KIWI_LINK}>
                   <Image
                     alt={"Logo kiwi"}
@@ -149,7 +138,7 @@ const Home = (): JSX.Element => {
                 </NextLink>
               </div>
             </div>
-            <div className={"mt-[-7rem] lg:mt-[-6rem]"}>
+            <div className={"mt-[-5rem] lg:mt-[-6rem]"}>
               <Image
                 alt={"section-background relative"}
                 className={"w-full h-[26rem]"}
