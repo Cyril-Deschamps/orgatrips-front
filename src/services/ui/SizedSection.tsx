@@ -13,7 +13,7 @@ const SizedSection = ({ className, little, ...props }: Props): JSX.Element => {
       className={classNames(
         className,
         little ? "max-w-screen-lg" : "max-w-screen-2xl",
-        "w-full px-m",
+        "w-full px-l",
       )}
     />
   );
