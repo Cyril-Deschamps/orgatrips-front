@@ -19,6 +19,7 @@ const varsityTeamFont = localFont({
 const robotoFont = Roboto({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
 });
 
 const App = ({ Component, router }: AppProps) => {
