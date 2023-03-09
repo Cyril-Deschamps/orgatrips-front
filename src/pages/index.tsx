@@ -65,7 +65,7 @@ const Home = (): JSX.Element => {
             </span>
             <h1
               className={
-                "font-VarsityTeam md:w-[35rem] text-4xl md:text-5xl leading-8 md:leading-10 sm:tracking-wide text-center lg:text-start"
+                "font-VarsityTeam md:w-full text-4xl md:text-5xl leading-8 md:leading-10 sm:tracking-wide text-center lg:text-start"
               }
             >
               <Trans
@@ -83,11 +83,10 @@ const Home = (): JSX.Element => {
                 {t("home:main_title")}
               </Trans>
             </h1>
-
             <Image
               alt={"drawn-arrow"}
               className={
-                "hidden md:block absolute bottom-[-3rem] right-[-5rem] w-28 md:w-36"
+                "hidden md:block absolute bottom-[-3rem] left-[33rem] w-28 md:w-36"
               }
               src={drawnArrow}
             />
