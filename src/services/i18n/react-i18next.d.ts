@@ -1,7 +1,7 @@
 import "react-i18next";
 
 import validations from "../validations/i18n/en.json";
-import destination from "../destination/i18n/en.json";
+import trip from "../trip/i18n/en.json";
 
 // PAGES
 import website from "./pages/website/en.json";
@@ -11,10 +11,10 @@ import privacy_policy from "./pages/privacy_policy/en.json";
 
 declare module "react-i18next" {
   interface CustomTypeOptions {
-    defaultNS: "destination";
+    defaultNS: "trip";
     resources: {
       validations: typeof validations;
-      destination: typeof destination;
+      trip: typeof trip;
       home: typeof home;
       website: typeof website;
       legal_notice: typeof legal_notice;

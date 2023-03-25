@@ -1,4 +1,4 @@
-import { addMethod, date, mixed, string, array, object } from "yup";
+import { addMethod, date, mixed, string, array, object, number } from "yup";
 import { getNumericEnumEntries } from "../data-structures/enum";
 import { Namespace, TFuncKey } from "react-i18next";
 
@@ -44,8 +44,8 @@ addMethod(mixed, "dateRange", function (range: { min: number; max: number }) {
   return this.meta({ dateRange: range });
 });
 
-addMethod(mixed, "numberRange", function (range: { min: number; max: number }) {
-  return this.meta({ numberRange: range });
+addMethod(number, "slider", function (range: { min: number; max: number }) {
+  return this.meta({ slider: range });
 });
 
 addMethod(
