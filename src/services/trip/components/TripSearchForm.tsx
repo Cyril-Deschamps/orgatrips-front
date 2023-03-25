@@ -2,42 +2,48 @@ import classNames from "classnames";
 import { addYears } from "date-fns";
 import { useTranslation } from "next-i18next";
 import React, { useMemo } from "react";
-import { object, number, mixed } from "yup";
+import { object, number, mixed, string } from "yup";
 import AutoField from "../../forms/AutoField";
 import Form from "../../forms/Form";
 import SubmitButton from "../../forms/SubmitButton";
 import ValidationsErrors from "../../forms/ValidationsErrors";
 import { useToastsWithIntl } from "../../toast-notifications";
-import { budgetMinMax, SearchDestinationForm } from "../destination";
+import { budgetMax, SearchTripForm } from "../trip";
 
 const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
-  const { t } = useTranslation("destination");
-  const { toastError } = useToastsWithIntl("destination");
+  const { t } = useTranslation("trip");
+  const { toastError } = useToastsWithIntl("trip");
+  const { i18n } = useTranslation();
 
-  const DestinationSchema = useMemo(
+  const TripSchema = useMemo(
     () =>
       object()
         .shape({
-          rangeDateOfDeparture: mixed()
-            .label(t("start_date_range"))
+          departureCity: string()
+            .label(t("departure_city"))
+            .nullable()
+            .required(),
+          dateRange: mixed()
+            .label(t("date_range"))
             .nullable()
             .required()
             .dateRange({ min: new Date(), max: addYears(new Date(), 1) }),
-          budget: mixed()
-            .label(t("budget"))
-            .nullable()
-            .required()
-            .numberRange(budgetMinMax),
-          numberOfAdults: number()
+          adultsNumber: number()
             .label(t("number_of_adults"))
             .nullable()
             .oneOfEnum([...Array(30).keys()])
             .required(),
-          numberOfChildren: number()
+          childrenNumber: number()
             .label(t("number_of_children"))
             .nullable()
             .oneOfEnum([...Array(30).keys()])
             .required(),
+          budgetMax: number()
+            .label(t("budget_max"))
+            .nullable()
+            .required()
+            .slider({ min: 0, max: budgetMax }),
+          locale: string().nullable().required().notVisible(),
         })
         .defined(),
     [t],
@@ -52,44 +58,47 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
     >
       <Form
         initialValues={{
-          numberOfAdults: 1,
-          numberOfChildren: 0,
-          budget: budgetMinMax,
+          adultsNumber: 1,
+          childrenNumber: 0,
+          budgetMax: 3000,
+          locale: i18n.language,
         }}
-        onSubmit={(values: SearchDestinationForm, { setSubmitting }) =>
+        onSubmit={(values: SearchTripForm, { setSubmitting }) =>
           new Promise(() => {
             setSubmitting(false);
-            toastError("search_destination.ERROR");
+            toastError("search_trips.ERROR");
             return Promise.resolve();
           })
         }
-        schema={DestinationSchema}
+        schema={TripSchema}
       >
-        <AutoField name={"rangeDateOfDeparture"} />
+        <div className={"w-full"}>
+          <AutoField
+            className={"mt-[-0.7rem] p-[0.85rem]"}
+            name={"departureCity"}
+          />
+        </div>
         <div className={"flex gap-x-s flex-wrap sm:flex-nowrap"}>
           <div className={"w-full sm:basis-3/5"}>
             <AutoField
               className={"mt-[-0.7rem] p-[0.85rem]"}
-              name={"numberOfAdults"}
+              name={"adultsNumber"}
             />
           </div>
           <div className={"w-full sm:basis-2/5"}>
             <AutoField
               className={"mt-[-0.7rem] p-[0.85rem]"}
-              name={"numberOfChildren"}
+              name={"childrenNumber"}
             />
           </div>
         </div>
-        <AutoField
-          name={"budget"}
-          otherProps={{ formatLabel: (value: number) => `${value} $` }}
-        />
+        <AutoField name={"budgetMax"} />
+
+        <AutoField name={"locale"} />
 
         <div className={"pt-l flex items-center flex-col"}>
           <ValidationsErrors />
-          <SubmitButton className={"uppercase"}>
-            {t("find_destinations")}
-          </SubmitButton>
+          <SubmitButton className={"uppercase"}>{t("find_trips")}</SubmitButton>
         </div>
       </Form>
     </div>

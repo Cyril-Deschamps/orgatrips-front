@@ -4,7 +4,7 @@ import SizedSection from "../services/ui/SizedSection";
 import TitleLegend from "../services/ui/TitleLegend";
 import Title2 from "../services/ui/Title2";
 import Divider from "../services/ui/Divider";
-import DestinationSearchForm from "../services/destination/components/DestinationSearchForm";
+import TripSearchForm from "../services/trip/components/TripSearchForm";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import type { GetStaticProps } from "next";
 import nextI18NextConfig from "../../next-i18next.config";
@@ -28,7 +28,7 @@ import { hostBaseURL } from "../services/auth/config";
 import { KIWI_LINK } from "../routes/external";
 
 const Home = (): JSX.Element => {
-  const { t } = useTranslation(["destination", "home", "website"]);
+  const { t } = useTranslation(["trip", "home", "website"]);
 
   return (
     <AppLayout>
@@ -107,7 +107,7 @@ const Home = (): JSX.Element => {
           <SizedSection
             className={"flex flex-col justify-between lg:flex-row items-center"}
           >
-            <DestinationSearchForm
+            <TripSearchForm
               className={"mt-[-10em] z-20 shrink-0 lg:mr-10 mb-16"}
             />
             <p
@@ -225,7 +225,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(
       locale ?? "en",
-      ["destination", "validations", "home", "website"],
+      ["trip", "validations", "home", "website"],
       nextI18NextConfig,
     )),
   },
