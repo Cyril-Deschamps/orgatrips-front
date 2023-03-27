@@ -1,6 +1,7 @@
 import { addMethod, date, mixed, string, array, object, number } from "yup";
 import { getNumericEnumEntries } from "../data-structures/enum";
 import { Namespace, TFuncKey } from "react-i18next";
+import { AutocompleteItem } from "../forms/SuggestionField";
 
 addMethod(string, "password", function () {
   return this.required().meta({ password: true });
@@ -24,12 +25,7 @@ addMethod(mixed, "notEditable", function (isNotEditable: boolean = true) {
 });
 
 addMethod(mixed, "notVisible", function (isNotVisible: boolean = true) {
-  return isNotVisible
-    ? this.nullable()
-        .optional()
-        .meta({ notVisible: true })
-        .transform(() => null)
-    : this;
+  return isNotVisible ? this.meta({ notVisible: true }) : this;
 });
 
 addMethod(string, "multiline", function () {
@@ -39,6 +35,16 @@ addMethod(string, "multiline", function () {
 addMethod(mixed, "radio", function () {
   return this.meta({ radio: true });
 });
+
+addMethod(
+  string,
+  "suggestion",
+  function (options: {
+    autocompleteRequest: (searchText: string) => Promise<AutocompleteItem[]>;
+  }) {
+    return this.meta({ suggestion: options });
+  },
+);
 
 addMethod(mixed, "dateRange", function (range: { min: number; max: number }) {
   return this.meta({ dateRange: range });

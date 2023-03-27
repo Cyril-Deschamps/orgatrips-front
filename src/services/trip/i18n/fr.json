@@ -1,11 +1,18 @@
 {
-  "departure_city": "Ville de départ",
+  "departure_city": "Aéroport de départ",
+  "departure_city_placeholder": "Où allez vous ?",
   "date_range": "Dates de voyage",
+  "date_range_placeholder": "Date de départ — Date de retour",
   "number_of_adults": "Nombre d'adultes",
   "number_of_children": "Nombre d'enfants",
   "budget_maw": "Budget maximum",
   "find_trips": "Trouver les destinations",
   "search_trips": {
     "ERROR": "Une erreur s'est produite lors de la recherche de destinations. Veuillez réessayer plus tard."
+  },
+  "AIRPORT_TYPES": {
+    "SMALL_AIRPORT": "Petit aéroport",
+    "MEDIUM_AIRPORT": "Aéroport secondaire",
+    "LARGE_AIRPORT": "Aéroport principal"
   }
 }

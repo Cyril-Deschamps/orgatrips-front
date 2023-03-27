@@ -35,6 +35,11 @@ declare module "yup" {
       select?: boolean;
       notVisible?: boolean;
       radio?: boolean;
+      suggestion?: {
+        autocompleteRequest: (
+          searchText: string,
+        ) => Promise<AutocompleteItem[]>;
+      };
       dateRange?: { min: Date; max: Date };
       slider?: { min: number; max: number };
       autocomplete?: boolean;
@@ -45,6 +50,11 @@ declare module "yup" {
     notEditable(isNotEditable?: boolean): this;
     notVisible(isNotVisible?: boolean): this;
     radio(): this;
+    suggestion({
+      autocompleteRequest,
+    }: {
+      autocompleteRequest: (searchText: string) => Promise<AutocompleteItem[]>;
+    }): this;
     meta(): this["metaInterface"];
     meta(obj: Partial<this["metaInterface"]>): this;
 

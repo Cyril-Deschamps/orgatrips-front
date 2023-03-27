@@ -12,6 +12,7 @@ import FAutoComplete from "./FAutoComplete";
 import classNames from "classnames";
 import DateRangeField from "./DateRangeField";
 import NumberSliderField from "./NumberSliderField";
+import SuggestionField from "./SuggestionField";
 
 interface Props {
   name: string;
@@ -37,6 +38,7 @@ enum FieldType {
   AutoComplete,
   DateRange,
   Slider,
+  Suggestion,
 }
 
 function getFieldType(fieldSchema: AnySchema): FieldType {
@@ -45,6 +47,9 @@ function getFieldType(fieldSchema: AnySchema): FieldType {
   }
   if (fieldSchema.meta()?.dateRange) {
     return FieldType.DateRange;
+  }
+  if (fieldSchema.meta()?.suggestion) {
+    return FieldType.Suggestion;
   }
   if (fieldSchema.meta()?.slider) {
     return FieldType.Slider;
@@ -195,6 +200,7 @@ const AutoField = ({
           disabled={isDisabled}
           id={id || name}
           name={name}
+          placeholderText={placeholder}
           {...otherProps}
         />
       )}
@@ -204,6 +210,16 @@ const AutoField = ({
           disabled={isDisabled}
           id={id || name}
           name={name}
+          {...otherProps}
+        />
+      )}
+      {fieldType === FieldType.Suggestion && (
+        <SuggestionField
+          className={classNames(className, customStyle)}
+          disabled={isDisabled}
+          id={id || name}
+          name={name}
+          placeholder={placeholder}
           {...otherProps}
         />
       )}
