@@ -20,24 +20,20 @@
   }
 }
 
+input::placeholder {
+  @apply font-light;
+}
+
 .react-datepicker__aria-live {
   @apply hidden;
 }
 
 .react-datepicker-popper {
-  @apply z-40 w-72 text-sm bg-white shadow px-3 py-2 border-2 border-gray-200 rounded !important;
+  @apply mt-3 z-40 w-72 text-sm bg-white shadow-xl px-3 py-2 border rounded-lg !important;
 }
 
 .react-datepicker-left {
-  @apply absolute left-0 right-auto top-11 transform-none !important;
-}
-
-.react-datepicker-right {
-  @apply absolute right-0 left-auto top-11 transform-none !important;
-}
-
-.react-datepicker__portal {
-  @apply absolute z-10 w-72 text-sm transform-none bg-white shadow px-3 py-2 top-12 right-0 border-2 border-gray-200 rounded !important;
+  @apply absolute left-0 w-full max-w-sm top-11 transform-none !important;
 }
 
 .react-datepicker__month-container {

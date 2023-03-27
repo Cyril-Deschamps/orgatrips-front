@@ -7,8 +7,9 @@ import { useDate } from "../date/DateContext";
 import { PartialNullable } from "../types/utility";
 import { useYupField } from "./Form";
 
-import ChevronLeft from "../../assets/img/icons/chevron-left.svg";
-import ChevronRight from "../../assets/img/icons/chevron-right.svg";
+import ChevronLeft from "../../assets/img/icons/icon-chevron-left.svg";
+import ChevronRight from "../../assets/img/icons/icon-chevron-right.svg";
+import ChevronDown from "../../assets/img/icons/icon-chevron-down.svg";
 import Image from "next/image";
 
 interface Props<CustomModifierNames extends string = never>
@@ -37,7 +38,7 @@ const DateRangeField = ({
   return (
     <div className={"relative"}>
       <DatePicker
-        className={classNames("input", className)}
+        className={classNames("pr-7 text-ellipsis", className)}
         endDate={field.value?.endDate}
         locale={locale}
         maxDate={fieldSchema.meta()!.dateRange!.max}
@@ -103,6 +104,13 @@ const DateRangeField = ({
           </div>
         )}
       />
+      <div
+        className={
+          "absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
+        }
+      >
+        <Image alt={"chevron-down"} className={"w-3"} src={ChevronDown} />
+      </div>
     </div>
   );
 };

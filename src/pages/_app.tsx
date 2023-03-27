@@ -11,6 +11,7 @@ import { withTranslateRoutes } from "next-translate-routes";
 import "../services/validations/yup-init";
 import "../services/i18n";
 import { ProvideToast } from "../services/toast-notifications";
+import { ProvideTrip } from "../services/trip/tripProvider";
 
 const varsityTeamFont = localFont({
   src: "../assets/fonts/VarsityTeam.otf",
@@ -39,7 +40,9 @@ const App = ({ Component, router }: AppProps) => {
         )}
       >
         <ProvideToast>
-          <Component {...router} />
+          <ProvideTrip>
+            <Component {...router} />
+          </ProvideTrip>
         </ProvideToast>
       </div>
     </React.StrictMode>

@@ -1,9 +1,15 @@
 import { AxiosPromise } from "axios";
 import baseAPI from "../auth/api";
-import { SearchTripForm, Trip } from "./trip";
+import { Airport, SearchTripsForm, Trip } from "./trip";
 
-export function getFormOptionsBrand(
-  searchTripForm: SearchTripForm,
+export function searchTrips(
+  searchTripsForm: SearchTripsForm,
 ): AxiosPromise<Trip[]> {
-  return baseAPI.post(`/searchTrip`, { searchTripForm });
+  return baseAPI.post(`/cities/searchTrips`, searchTripsForm);
+}
+
+export function findAirports(searchTerms: string): AxiosPromise<Airport[]> {
+  return baseAPI.get(`/airports`, {
+    params: { query: searchTerms },
+  });
 }

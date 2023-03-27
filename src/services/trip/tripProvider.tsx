@@ -1,6 +1,17 @@
-import { ComponentType, createContext, useContext } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
+import { Airport, SearchTripsForm, Trip } from "./trip";
+import {
+  searchTrips as apiSearchTrips,
+  findAirports as apiFindAirports,
+} from "./api";
 
-export interface TripAPI {}
+export interface TripAPI {
+  trips: Trip[];
+
+  searchTrips: (searchTripsForm: SearchTripsForm) => Promise<void>;
+
+  findAirports: (searchTerms: string) => Promise<Airport[]>;
+}
 
 export const TripContext = createContext<TripAPI | null>(null);
 
@@ -9,26 +20,24 @@ export function ProvideTrip({
 }: {
   children: JSX.Element;
 }): JSX.Element {
-  return <TripContext.Provider value={{}}>{children}</TripContext.Provider>;
-}
+  const [trips, setTrips] = useState<Trip[]>([]);
 
-export function withProvideTrip<P extends Record<string, unknown>>(
-  WrappedComponent: ComponentType<P>,
-): ComponentType<P> {
-  const displayName =
-    WrappedComponent.displayName || WrappedComponent.name || "Component";
+  const searchTrips: TripAPI["searchTrips"] = useCallback(
+    (searchTripsForm) =>
+      apiSearchTrips(searchTripsForm).then(({ data }) => setTrips(data)),
+    [],
+  );
 
-  function WithProvideTrip(props: P) {
-    return (
-      <ProvideTrip>
-        <WrappedComponent {...props} />
-      </ProvideTrip>
-    );
-  }
+  const findAirports: TripAPI["findAirports"] = useCallback(
+    (searchTerms) => apiFindAirports(searchTerms).then(({ data }) => data),
+    [],
+  );
 
-  WithProvideTrip.displayName = `withProvideTrip(${displayName})`;
-
-  return WithProvideTrip;
+  return (
+    <TripContext.Provider value={{ trips, searchTrips, findAirports }}>
+      {children}
+    </TripContext.Provider>
+  );
 }
 
 export function useTrip(): TripAPI {

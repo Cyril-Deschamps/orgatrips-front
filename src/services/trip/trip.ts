@@ -2,13 +2,13 @@ import { DateRange } from "../forms/DateRangeField";
 
 export const budgetMax = 25000 as const;
 
-export interface SearchTripForm {
+export interface SearchTripsForm {
   departureCity: string;
   dateRange: DateRange;
   budgetMax: number;
   adultsNumber: number;
   childrenNumber: number;
-  locale: Locale["code"];
+  locale: string;
 }
 
 export interface Trip {
@@ -35,4 +35,28 @@ export interface Transportation {
 
 export interface Accommodation {
   averagePricePerNight: number;
+}
+
+export interface Airport {
+  iataCode: string;
+  name: string;
+  city: string;
+  countryCode: string;
+  lat: number;
+  lon: number;
+  type: AirportType;
+}
+
+export enum AirportType {
+  SMALL_AIRPORT,
+  MEDIUM_AIRPORT,
+  LARGE_AIRPORT,
+}
+
+export function getAirportTypeKey(airportTypeValue: AirportType): string {
+  const keys = Object.keys(AirportType).filter(
+    (key) => AirportType[key as keyof typeof AirportType] === airportTypeValue,
+  );
+
+  return keys[0] || "";
 }
