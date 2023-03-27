@@ -13,7 +13,7 @@ interface Props
   > {
   name: string;
   className: string;
-  icon: string;
+  icon?: string;
 }
 
 export type AutocompleteItem = {
