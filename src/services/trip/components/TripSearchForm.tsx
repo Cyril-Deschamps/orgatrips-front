@@ -17,6 +17,7 @@ import { useTransition } from "../../transition/TransitionContext";
 import { TRIP_LINK } from "../../../routes";
 import { useRouter } from "next-translate-routes";
 import { AxiosError } from "axios";
+import ReactGA from "react-ga4";
 
 const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
   const { t, i18n } = useTranslation("trip");
@@ -88,6 +89,11 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           locale: i18n.language,
         }}
         onSubmit={(values: SearchTripsForm, { setSubmitting }) => {
+          ReactGA.event({
+            category: "Trip Search",
+            action: "Trip Search Submit",
+            label: "Button",
+          });
           triggerTransition(t("search_trips_loading"));
           return searchTrips(values).then(
             () => {
