@@ -18,6 +18,7 @@ const BaseSeo = ({
   children,
 }: BaseSeoProps): JSX.Element => {
   const { pathname, query, locales, locale, defaultLocale } = useRouter();
+
   return (
     <>
       <Head>

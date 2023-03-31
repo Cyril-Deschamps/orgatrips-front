@@ -1,0 +1,16 @@
+{
+  "page_title": "Trips results",
+  "page_description": "Our solution powered by artificial intelligence suggests destinations according to your desires and your budget. It will suggest you transportation and accommodation reservations, through Booking and Kiwi, that match your budget.",
+  "main_title": "Results of the research",
+  "accomodation_budget": "Accommodation budget",
+  "transportation_budget": "Transportation budget",
+  "other_budget": "Others budgets",
+  "total_budget": "Trip cost",
+  "night": "night",
+  "transport_details": "Transport details",
+  "search_accomodation": "Find a hotel in this budget",
+  "tripInfo_one": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} person</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "tripInfo_other": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} people</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "sortedByRating_one": "Ordered by rating - {{count}} result",
+  "sortedByRating_other": "Ordered by rating - {{count}} results"
+}

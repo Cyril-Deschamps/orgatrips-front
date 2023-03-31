@@ -1,3 +1,4 @@
+import { formatISO, parseISO } from "date-fns";
 import { DateRange } from "../forms/DateRangeField";
 
 export const budgetMax = 25000 as const;
@@ -20,8 +21,14 @@ export interface Trip {
   popularity: number;
   otherSpentPrice: number;
   totalPrice: number;
+  destinationPicture: string;
   Accomodation: Accommodation;
   Transportation: Transportation;
+  budgetMax: number;
+}
+
+export interface TripRaw extends Omit<Trip, "Transportation"> {
+  Transportation: TransportationRaw;
 }
 
 export interface Transportation {
@@ -31,6 +38,14 @@ export interface Transportation {
   outboundDuration: number;
   stopOverInbound: number;
   stopOverOutbound: number;
+  departureDate: Date;
+  returnDate: Date;
+}
+
+export interface TransportationRaw
+  extends Omit<Transportation, "departureDate" | "returnDate"> {
+  departureDate: string;
+  returnDate: string;
 }
 
 export interface Accommodation {
@@ -59,4 +74,26 @@ export function getAirportTypeKey(airportTypeValue: AirportType): string {
   );
 
   return keys[0] || "";
+}
+
+export function mapTripRawToTrip(tripRaw: TripRaw): Trip {
+  return {
+    ...tripRaw,
+    Transportation: {
+      ...tripRaw.Transportation,
+      departureDate: parseISO(tripRaw.Transportation.departureDate),
+      returnDate: parseISO(tripRaw.Transportation.returnDate),
+    },
+  };
+}
+
+export function mapTripToTripRaw(tripRaw: Trip): TripRaw {
+  return {
+    ...tripRaw,
+    Transportation: {
+      ...tripRaw.Transportation,
+      departureDate: formatISO(tripRaw.Transportation.departureDate),
+      returnDate: formatISO(tripRaw.Transportation.returnDate),
+    },
+  };
 }
