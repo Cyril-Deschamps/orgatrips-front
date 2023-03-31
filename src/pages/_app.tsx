@@ -12,7 +12,6 @@ import "../services/validations/yup-init";
 import "../services/i18n";
 import { ProvideToast } from "../services/toast-notifications";
 import { ProvideTrip } from "../services/trip/tripProvider";
-import { AnimatePresence } from "framer-motion";
 import { ProvideTransition } from "../services/transition/TransitionContext";
 
 const varsityTeamFont = localFont({

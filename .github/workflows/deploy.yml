@@ -44,7 +44,6 @@ jobs:
         with:
           source: "."
           target: "/home/cyril/dev-orgatrips-front"
-          rm: true
 
       - name: Executing remote command DEVELOPMENT
         if: ${{ steps.extract_branch.outputs.branch == 'DEVELOPMENT' }}
@@ -71,7 +70,6 @@ jobs:
         with:
           source: "."
           target: "/home/cyril/orgatrips-front"
-          rm: true
 
       - name: Executing remote command PRODUCTION
         if: ${{ steps.extract_branch.outputs.branch == 'PRODUCTION' }}
