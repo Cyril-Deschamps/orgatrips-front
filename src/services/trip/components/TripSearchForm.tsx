@@ -13,12 +13,18 @@ import { AirportType, budgetMax, SearchTripsForm } from "../trip";
 import { useTrip } from "../tripProvider";
 import iconPlane from "../../../assets/img/icons/icon-plane.svg";
 import { TFuncKey } from "react-i18next";
+import { useTransition } from "../../transition/TransitionContext";
+import { TRIP_LINK } from "../../../routes";
+import { useRouter } from "next-translate-routes";
+import { AxiosError } from "axios";
 
 const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
   const { t, i18n } = useTranslation("trip");
-  const { toastError, toastSuccess } = useToastsWithIntl("trip");
+  const { toastError } = useToastsWithIntl("trip");
   const { searchTrips, findAirports } = useTrip();
   const { countriesList } = useCountry();
+  const { triggerTransition, stopTransition } = useTransition();
+  const router = useRouter();
 
   const findAirportsAutoComplete = useCallback(
     (currentText: string) =>
@@ -81,18 +87,25 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           budgetMax: 3000,
           locale: i18n.language,
         }}
-        onSubmit={(values: SearchTripsForm, { setSubmitting }) =>
-          searchTrips(values).then(
+        onSubmit={(values: SearchTripsForm, { setSubmitting }) => {
+          triggerTransition(t("search_trips_loading"));
+          return searchTrips(values).then(
             () => {
               setSubmitting(false);
-              toastSuccess("search_trips.ERROR");
+              router.push(TRIP_LINK);
+              stopTransition();
             },
-            () => {
+            (e: AxiosError) => {
+              if (e.isAxiosError && e.response?.status === 422) {
+                toastError("search_trips.AIRPORT_NOT_COMPATIBLE");
+              } else {
+                toastError("search_trips.ERROR");
+              }
               setSubmitting(false);
-              toastError("search_trips.ERROR");
+              stopTransition();
             },
-          )
-        }
+          );
+        }}
         schema={TripSchema}
       >
         <AutoField

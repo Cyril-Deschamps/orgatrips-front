@@ -22,5 +22,5 @@ module.exports = {
     }
   },
   reloadOnPrerender: process.env.NODE_ENV === "development",
-  ns: ["validations", "trip", "home", "website", "legal_notice", "privacy_policy"],
+  ns: ["validations", "trip", "home", "website", "legal_notice", "privacy_policy", "trips_results"],
 };

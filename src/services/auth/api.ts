@@ -8,7 +8,7 @@ const baseAPI = axios.create({
   xsrfCookieName: "XSRF-TOKEN",
   url: "/",
   headers: {},
-  timeout: 5000,
+  timeout: 10000,
   withCredentials: true,
 });
 

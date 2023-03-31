@@ -12,6 +12,8 @@ import "../services/validations/yup-init";
 import "../services/i18n";
 import { ProvideToast } from "../services/toast-notifications";
 import { ProvideTrip } from "../services/trip/tripProvider";
+import { AnimatePresence } from "framer-motion";
+import { ProvideTransition } from "../services/transition/TransitionContext";
 
 const varsityTeamFont = localFont({
   src: "../assets/fonts/VarsityTeam.otf",
@@ -41,7 +43,9 @@ const App = ({ Component, router }: AppProps) => {
       >
         <ProvideToast>
           <ProvideTrip>
-            <Component {...router} />
+            <ProvideTransition>
+              <Component {...router} key={router.pathname} />
+            </ProvideTransition>
           </ProvideTrip>
         </ProvideToast>
       </div>

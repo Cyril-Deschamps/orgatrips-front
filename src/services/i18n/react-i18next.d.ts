@@ -8,6 +8,7 @@ import website from "./pages/website/en.json";
 import home from "./pages/home/en.json";
 import legal_notice from "./pages/legal_notice/en.json";
 import privacy_policy from "./pages/privacy_policy/en.json";
+import trips_results from "./pages/trips_results/en.json";
 
 declare module "react-i18next" {
   interface CustomTypeOptions {
@@ -19,6 +20,7 @@ declare module "react-i18next" {
       website: typeof website;
       legal_notice: typeof legal_notice;
       privacy_policy: typeof privacy_policy;
+      trips_results: typeof trips_results;
     };
   }
 }

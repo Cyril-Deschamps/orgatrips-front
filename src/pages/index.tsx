@@ -32,7 +32,10 @@ const Home = (): JSX.Element => {
 
   return (
     <AppLayout>
-      <BaseSeo description={t("home:page_title")} title={t("home:page_title")}>
+      <BaseSeo
+        description={t("home:page_description")}
+        title={t("home:page_title")}
+      >
         <script
           {...jsonLdScriptProps<Organization>({
             "@context": "https://schema.org",

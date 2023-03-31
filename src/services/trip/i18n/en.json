@@ -7,7 +7,9 @@
   "number_of_children": "Children",
   "budget_max": "Maximum budget",
   "find_trips": "Find destinations",
+  "search_trips_loading": "We are looking for the best trips for you ...",
   "search_trips": {
+    "AIRPORT_NOT_COMPATIBLE": "The selected airport is not compatible, please select another one.",
     "ERROR": "An error occurred while searching for destinations. Please try again later."
   },
   "AIRPORT_TYPES": {
