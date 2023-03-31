@@ -11,7 +11,8 @@ import FSelect from "./FSelect";
 import FAutoComplete from "./FAutoComplete";
 import classNames from "classnames";
 import DateRangeField from "./DateRangeField";
-import NumberRangeField from "./NumberRangeField";
+import NumberSliderField from "./NumberSliderField";
+import SuggestionField from "./SuggestionField";
 
 interface Props {
   name: string;
@@ -36,7 +37,8 @@ enum FieldType {
   DateTime,
   AutoComplete,
   DateRange,
-  NumberRange,
+  Slider,
+  Suggestion,
 }
 
 function getFieldType(fieldSchema: AnySchema): FieldType {
@@ -46,8 +48,11 @@ function getFieldType(fieldSchema: AnySchema): FieldType {
   if (fieldSchema.meta()?.dateRange) {
     return FieldType.DateRange;
   }
-  if (fieldSchema.meta()?.numberRange) {
-    return FieldType.NumberRange;
+  if (fieldSchema.meta()?.suggestion) {
+    return FieldType.Suggestion;
+  }
+  if (fieldSchema.meta()?.slider) {
+    return FieldType.Slider;
   }
   if (fieldSchema.meta()?.password) {
     return FieldType.Password;
@@ -195,15 +200,26 @@ const AutoField = ({
           disabled={isDisabled}
           id={id || name}
           name={name}
+          placeholderText={placeholder}
           {...otherProps}
         />
       )}
-      {fieldType === FieldType.NumberRange && (
-        <NumberRangeField
+      {fieldType === FieldType.Slider && (
+        <NumberSliderField
           className={classNames(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
+          {...otherProps}
+        />
+      )}
+      {fieldType === FieldType.Suggestion && (
+        <SuggestionField
+          className={classNames(className, customStyle)}
+          disabled={isDisabled}
+          id={id || name}
+          name={name}
+          placeholder={placeholder}
           {...otherProps}
         />
       )}

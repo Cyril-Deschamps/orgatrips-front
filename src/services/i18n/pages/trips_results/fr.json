@@ -1,0 +1,16 @@
+{
+  "page_title": "Résultats voyages",
+  "page_description": "Notre solution propulsée par l’intelligence artificielle vous propose des destinations en fonction de vos envies et de votre budget. Elle vous suggérera des réservations de transports et de logements, par Booking et Kiwi, qui correspondent au budget indiqué.",
+  "main_title": "Résultats de la recherches",
+  "accomodation_budget": "Coût de l'hébergement",
+  "transportation_budget": "Coût des transorts",
+  "other_budget": "Autres coûts",
+  "total_budget": "Prix du voyage",
+  "night": "nuit",
+  "transport_details": "Détail transport",
+  "search_accomodation": "Chercher un hôtel dans ce budget",
+  "tripInfo_one": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personne</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "tripInfo_other": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personnes</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "sortedByRating_one": "Ordonné par note - {{count}} résultat",
+  "sortedByRating_other": "Ordonné par note - {{count}} résultats"
+}

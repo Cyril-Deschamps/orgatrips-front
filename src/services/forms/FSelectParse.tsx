@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { Field, FieldProps } from "formik";
+import Image from "next/image";
 import React, { FunctionComponent } from "react";
+import chevronIcon from "../../assets/img/icons/icon-chevron-down.svg";
 
 interface Props
   extends React.DetailedHTMLProps<
@@ -31,15 +33,24 @@ const FSelectParse: FunctionComponent<Props> = ({
         field: { value },
         form: { setFieldValue, setFieldTouched },
       }: FieldProps) => (
-        <select
-          className={classNames("select", className)}
-          onBlur={() => setFieldTouched(name)}
-          onChange={(event) => setFieldValue(name, parse(event.target.value))}
-          value={value === null ? "" : value}
-          {...otherProps}
-        >
-          {children}
-        </select>
+        <div className={"relative"}>
+          <select
+            className={classNames("pr-7", className)}
+            onBlur={() => setFieldTouched(name)}
+            onChange={(event) => setFieldValue(name, parse(event.target.value))}
+            value={value === null ? "" : value}
+            {...otherProps}
+          >
+            {children}
+          </select>{" "}
+          <div
+            className={
+              "absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
+            }
+          >
+            <Image alt={"chevron-down"} className={"w-3"} src={chevronIcon} />
+          </div>
+        </div>
       )}
     </Field>
   );

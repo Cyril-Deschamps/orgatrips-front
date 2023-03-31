@@ -35,8 +35,13 @@ declare module "yup" {
       select?: boolean;
       notVisible?: boolean;
       radio?: boolean;
+      suggestion?: {
+        autocompleteRequest: (
+          searchText: string,
+        ) => Promise<AutocompleteItem[]>;
+      };
       dateRange?: { min: Date; max: Date };
-      numberRange?: { min: number; max: number };
+      slider?: { min: number; max: number };
       autocomplete?: boolean;
       multiselect?: boolean;
       stringEnum?: boolean;
@@ -45,11 +50,16 @@ declare module "yup" {
     notEditable(isNotEditable?: boolean): this;
     notVisible(isNotVisible?: boolean): this;
     radio(): this;
+    suggestion({
+      autocompleteRequest,
+    }: {
+      autocompleteRequest: (searchText: string) => Promise<AutocompleteItem[]>;
+    }): this;
     meta(): this["metaInterface"];
     meta(obj: Partial<this["metaInterface"]>): this;
 
     dateRange({ min, max }: { min: Date; max: Date }): this;
-    numberRange({ min, max }: { min: number; max: number }): this;
+    slider({ min, max }: { min: number; max: number }): this;
 
     autocomplete<N extends Namespace>(
       values: Record<string | number | symbol, unknown>,
