@@ -1,5 +1,5 @@
 import { AppProps } from "next/app";
-import React, { useEffect } from "react";
+import React from "react";
 import { appWithTranslation } from "next-i18next";
 import localFont from "next/font/local";
 import classNames from "classnames";
@@ -7,7 +7,7 @@ import Head from "next/head";
 import "../assets/styles/global.css";
 import { Roboto } from "next/font/google";
 import nextI18NextConfig from "../../next-i18next.config";
-import { useRouter, withTranslateRoutes } from "next-translate-routes";
+import { withTranslateRoutes } from "next-translate-routes";
 import "../services/validations/yup-init";
 import "../services/i18n";
 import { ProvideToast } from "../services/toast-notifications";
@@ -29,17 +29,6 @@ const robotoFont = Roboto({
 
 const App = ({ Component, pageProps }: AppProps) => {
   ReactGA.initialize(GA_MEASUREMENT_ID);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (window && document) {
-      ReactGA.send({
-        hitType: "pageview",
-        page: router.pathname,
-        title: document.title,
-      });
-    }
-  }, [router.pathname]);
 
   return (
     <React.StrictMode>

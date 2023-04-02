@@ -38,14 +38,14 @@ const Footer = (): JSX.Element => {
             <NextLink href={FACEBOOK_LINK}>
               <Image
                 alt={"icon-facebook"}
-                className={"w-2xl"}
+                className={"w-xl"}
                 src={facebookIcon}
               />
             </NextLink>
             <NextLink href={INSTAGRAM_LINK}>
               <Image
                 alt={"icon-instagram"}
-                className={"w-2xl"}
+                className={"w-xl"}
                 src={instagramIcon}
               />
             </NextLink>

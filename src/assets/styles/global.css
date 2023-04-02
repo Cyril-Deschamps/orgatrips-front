@@ -33,7 +33,7 @@ input::placeholder {
 }
 
 .react-datepicker-left {
-  @apply absolute left-0 w-full max-w-sm top-11 transform-none !important;
+  @apply h-[23.5rem] absolute left-0 w-full max-w-sm top-11 transform-none !important;
 }
 
 .react-datepicker__month-container {
@@ -89,15 +89,15 @@ input::placeholder {
 }
 
 .react-datepicker__day--in-selecting-range {
-  @apply bg-blue !important;
+  @apply bg-blue text-white !important;
 }
 
 .react-datepicker__day--selecting-range-start {
-  @apply bg-white border-2 border-blue !important;
+  @apply bg-white border-2 border-blue text-black !important;
 }
 
 .react-datepicker__day--selecting-range-end {
-  @apply bg-white border-2 border-blue !important;
+  @apply bg-white border-2 border-blue text-black !important;
 }
 
 .react-datepicker__day--selected {

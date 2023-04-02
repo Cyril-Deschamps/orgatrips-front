@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { addYears } from "date-fns";
 import { useTranslation } from "next-i18next";
-import React, { useCallback, useMemo } from "react";
-import { object, number, mixed, string } from "yup";
+import React, { useCallback, useMemo, useState } from "react";
+import { object, number, string, date } from "yup";
 import { useCountry } from "../../countries/CountryContext";
 import AutoField from "../../forms/AutoField";
 import Form from "../../forms/Form";
@@ -18,6 +18,9 @@ import { TRIP_LINK } from "../../../routes";
 import { useRouter } from "next-translate-routes";
 import { AxiosError } from "axios";
 import ReactGA from "react-ga4";
+import ValueObserver from "../../forms/ValueObserver";
+import Image from "next/image";
+import InfoIcon from "../../../assets/img/icons/icon-info.svg";
 
 const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
   const { t, i18n } = useTranslation("trip");
@@ -26,6 +29,7 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
   const { countriesList } = useCountry();
   const { triggerTransition, stopTransition } = useTransition();
   const router = useRouter();
+  const [adultsNumber, setAdultsNumber] = useState(1);
 
   const findAirportsAutoComplete = useCallback(
     (currentText: string) =>
@@ -41,6 +45,12 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
     [countriesList, findAirports, t],
   );
 
+  const adultsNumberEnum = useMemo(() => [...Array(10).keys()].slice(1), []);
+  const childrenNumberEnum = useMemo(
+    () => [...Array(10 - adultsNumber).keys()],
+    [adultsNumber],
+  );
+
   const TripSchema = useMemo(
     () =>
       object()
@@ -50,28 +60,43 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
             .nullable()
             .required()
             .suggestion({ autocompleteRequest: findAirportsAutoComplete }),
-          dateRange: mixed()
+          dateRange: object()
             .label(t("date_range"))
             .nullable()
             .required()
-            .dateRange({ min: new Date(), max: addYears(new Date(), 1) }),
+            .shape({
+              startDate: date().required().label(t("date_range_start")),
+              endDate: date().required().label(t("date_range_end")),
+            })
+            .dateRange({
+              min: new Date(),
+              max: addYears(new Date(), 1),
+            }),
           adultsNumber: number()
             .label(t("number_of_adults"))
-            .oneOfEnum([...Array(16).keys()].slice(1))
+            .oneOfEnum(adultsNumberEnum)
             .required(),
           childrenNumber: number()
             .label(t("number_of_children"))
-            .oneOfEnum([...Array(16).keys()])
+            .oneOfEnum(childrenNumberEnum)
+            .notEditable(adultsNumber === 9)
             .required(),
           budgetMax: number()
             .label(t("budget_max"))
             .nullable()
             .required()
-            .slider({ min: 0, max: budgetMax }),
+            .max(budgetMax)
+            .slider({ min: 0, max: budgetMax, unit: "$" }),
           locale: string().required().notVisible(),
         })
         .defined(),
-    [findAirportsAutoComplete, t],
+    [
+      adultsNumber,
+      adultsNumberEnum,
+      childrenNumberEnum,
+      findAirportsAutoComplete,
+      t,
+    ],
   );
 
   return (
@@ -98,8 +123,7 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           return searchTrips(values).then(
             () => {
               setSubmitting(false);
-              router.push(TRIP_LINK);
-              stopTransition();
+              router.push(TRIP_LINK).then(stopTransition);
             },
             (e: AxiosError) => {
               if (e.isAxiosError && e.response?.status === 422) {
@@ -114,8 +138,13 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
         }}
         schema={TripSchema}
       >
+        <ValueObserver
+          name={"adultsNumber"}
+          setValueCallback={(value) =>
+            setAdultsNumber((value as number | undefined) || 1)
+          }
+        />
         <AutoField
-          className={"mt-[-0.7rem] p-[0.85rem]"}
           name={"departureCity"}
           otherProps={{ icon: iconPlane }}
           placeholder={t("departure_city_placeholder")}
@@ -124,22 +153,29 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           <div className={"w-full sm:basis-3/5"}>
             <AutoField
               name={"dateRange"}
+              otherProps={{ datesSelectionInfo: t("select_dates_info") }}
               placeholder={t("date_range_placeholder")}
             />
           </div>
           <div className={"w-full sm:basis-1/5"}>
-            <AutoField
-              className={"mt-[-0.7rem] p-[0.85rem]"}
-              name={"adultsNumber"}
-            />
+            <AutoField name={"adultsNumber"} />
           </div>
           <div className={"w-full sm:basis-1/5"}>
-            <AutoField
-              className={"mt-[-0.7rem] p-[0.85rem]"}
-              name={"childrenNumber"}
-            />
+            <AutoField name={"childrenNumber"} />
           </div>
         </div>
+        {adultsNumber !== 1 && (
+          <div
+            className={
+              "flex bg-gray-100 p-2 items-center gap-2 rounded-md mt-1 mb-3"
+            }
+          >
+            <Image alt={"info"} className={"w-5 h-5"} src={InfoIcon} />
+
+            <p className={"text-xs"}>{t("travelers_number_info")}</p>
+          </div>
+        )}
+
         <AutoField name={"budgetMax"} />
 
         <AutoField name={"locale"} />
