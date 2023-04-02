@@ -53,18 +53,19 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             </strong>
           </li>
         </ul>
-        <div className={"flex flex-col gap-4 my-3"}>
+        <div className={"flex flex-col gap-3 my-3"}>
           <div
             className={
-              "flex flex-row flex-wrap justify-between items-center gap-y-3"
+              "flex flex-row flex-wrap justify-between items-center gap-y-2"
             }
           >
-            <p className={"font-bold"}>{`${trip.totalPrice}$ / ${t(
-              "trips_results:person",
-            )}`}</p>
+            <p className={"font-bold"}>{`${(
+              trip.totalPrice / trip.travelersNumber
+            ).toFixed()}$ / ${t("trips_results:person")}`}</p>
+            <p className={"font-bold"}>Total : {`${trip.totalPrice}$`}</p>
             <Link
               className={
-                "p-2 px-3 bg-green rounded-xl text-white uppercase text-xs font-medium"
+                "p-2 px-3 mt-2 bg-green rounded-xl text-white uppercase text-xs font-medium w-full text-center"
               }
               href={`https://www.kiwi.com/deep?affilid=cyrildeschampsorgatripsorgatrips&booking_token=${trip.Transportation.bookingToken}`}
               onClick={() => {

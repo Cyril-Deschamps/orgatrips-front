@@ -17,10 +17,7 @@ addMethod(mixed, "disabled", function () {
 
 addMethod(mixed, "notEditable", function (isNotEditable: boolean = true) {
   return isNotEditable
-    ? this.nullable()
-        .optional()
-        .meta({ disabled: true })
-        .transform(() => undefined)
+    ? this.nullable().optional().meta({ disabled: true })
     : this;
 });
 
