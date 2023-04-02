@@ -10,8 +10,12 @@
   "person": "person",
   "transport_details": "Transport details",
   "search_accomodation": "Find a hotel in this budget",
-  "tripInfo_one": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} person</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
-  "tripInfo_other": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} people</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "trip_info_one": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} person</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "trip_info_other": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} people</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "nights_number_one": "For <strong>{{count}} night</strong>",
+  "nights_number_other": "For <strong>{{count}} nights</strong>",
+  "multiple_nights_number": "For <strong>{{minNightsNumber}} to {{maxNightsNumber}} nights</strong>",
   "sortedByRating_one": "Ordered by rating - {{count}} result",
-  "sortedByRating_other": "Ordered by rating - {{count}} results"
+  "sortedByRating_other": "Ordered by rating - {{count}} results",
+  "total": "Total"
 }

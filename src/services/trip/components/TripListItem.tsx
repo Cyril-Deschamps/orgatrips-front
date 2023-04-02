@@ -61,8 +61,10 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
           >
             <p className={"font-bold"}>{`${(
               trip.totalPrice / trip.travelersNumber
-            ).toFixed()}$ / ${t("trips_results:person")}`}</p>
-            <p className={"font-bold"}>Total : {`${trip.totalPrice}$`}</p>
+            ).toFixed()} $ / ${t("trips_results:person")}`}</p>
+            <p className={"font-bold"}>
+              {t("trips_results:total")} : {`${trip.totalPrice}$`}
+            </p>
             <Link
               className={
                 "p-2 px-3 mt-2 bg-green rounded-xl text-white uppercase text-xs font-medium w-full text-center"

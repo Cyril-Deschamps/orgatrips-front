@@ -10,8 +10,12 @@
   "person": "personne",
   "transport_details": "Détail transport",
   "search_accomodation": "Chercher un hôtel dans ce budget",
-  "tripInfo_one": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personne</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
-  "tripInfo_other": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personnes</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "trip_info_one": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personne</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "trip_info_other": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personnes</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
+  "nights_number_one": "Pour <strong>{{count}} nuit</strong>",
+  "nights_number_other": "Pour <strong>{{count}} nuits</strong>",
+  "multiple_nights_number": "FoPourr <strong>{{minNightsNumber}} à {{maxNightsNumber}} nuits</strong>",
   "sortedByRating_one": "Ordonné par note - {{count}} résultat",
-  "sortedByRating_other": "Ordonné par note - {{count}} résultats"
+  "sortedByRating_other": "Ordonné par note - {{count}} résultats",
+  "total": "Total"
 }
