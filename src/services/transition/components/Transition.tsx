@@ -7,18 +7,20 @@ const Transition = (): JSX.Element => {
   const { shouldTransition, loadingText, stopTransition } = useTransition();
   const [minimumLoading, setMinimumLoading] = useState(false);
 
+  // Start transition
   useEffect(() => {
     if (shouldTransition) {
       setMinimumLoading(true);
     }
   }, [shouldTransition]);
 
+  // Minimum loading time
   useEffect(() => {
     const timer = setTimeout(() => {
       if (minimumLoading) {
         setMinimumLoading(false);
       }
-    }, 1200);
+    }, 1500);
     return () => clearTimeout(timer);
   }, [stopTransition, minimumLoading]);
 

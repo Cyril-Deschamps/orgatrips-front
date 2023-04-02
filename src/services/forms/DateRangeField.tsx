@@ -6,7 +6,6 @@ import { AnySchema } from "yup";
 import { useDate } from "../date/DateContext";
 import { PartialNullable } from "../types/utility";
 import { useYupField } from "./Form";
-
 import ChevronLeft from "../../assets/img/icons/icon-chevron-left.svg";
 import ChevronRight from "../../assets/img/icons/icon-chevron-right.svg";
 import ChevronDown from "../../assets/img/icons/icon-chevron-down.svg";
@@ -20,6 +19,7 @@ import {
   useState,
 } from "react";
 import OutsideAlerter from "../ui/OutsideAlerter";
+import { Trans } from "react-i18next";
 
 interface Props<CustomModifierNames extends string = never>
   extends Omit<
@@ -27,6 +27,7 @@ interface Props<CustomModifierNames extends string = never>
     "onChange" | "selected"
   > {
   name: string;
+  datesSelectionInfo?: string;
 }
 
 export interface DateRange {
@@ -37,6 +38,7 @@ export interface DateRange {
 const DateRangeField = ({
   name,
   dateFormat,
+  datesSelectionInfo,
   className,
   ...otherProps
 }: Props): JSX.Element => {
@@ -87,7 +89,9 @@ const DateRangeField = ({
       return (
         <input
           ref={customInputRef}
-          className={classNames("pr-7 text-ellipsis cursor-pointer")}
+          autoComplete={"off"}
+          className={"pr-7 text-ellipsis cursor-pointer"}
+          spellCheck={"false"}
           {...otherProps}
           onFocus={() => {
             mobileFieldScroll();
@@ -132,44 +136,54 @@ const DateRangeField = ({
             prevMonthButtonDisabled,
             nextMonthButtonDisabled,
           }) => (
-            <div className={"flex items-center justify-between px-2 py-2"}>
-              <span className={"text-lg text-gray-700"}>
-                {format(date, "MMMM yyyy")}
-              </span>
-              <div className={"space-x-2"}>
-                <button
-                  className={classNames(
-                    prevMonthButtonDisabled && "cursor-not-allowed opacity-50",
-                    "inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500",
-                  )}
-                  disabled={prevMonthButtonDisabled}
-                  onClick={decreaseMonth}
-                  type={"button"}
-                >
-                  <Image
-                    alt={"left"}
-                    className={"w-5 h-5 text-gray-600"}
-                    src={ChevronLeft}
-                  />
-                </button>
-                <button
-                  className={
-                    (classNames(
-                      nextMonthButtonDisabled &&
+            <div className={"px-2 py-2"}>
+              {datesSelectionInfo && (
+                <p className={"text-xs leading-4 mb-2 bg-gray-100 p-2 rounded"}>
+                  <Trans components={{ strong: <strong /> }}>
+                    {datesSelectionInfo}
+                  </Trans>
+                </p>
+              )}
+              <div className={"flex items-center justify-between"}>
+                <span className={"text-lg text-gray-700"}>
+                  {format(date, "MMMM yyyy")}
+                </span>
+                <div className={"space-x-2"}>
+                  <button
+                    className={classNames(
+                      prevMonthButtonDisabled &&
                         "cursor-not-allowed opacity-50",
-                    ),
-                    "inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500")
-                  }
-                  disabled={nextMonthButtonDisabled}
-                  onClick={increaseMonth}
-                  type={"button"}
-                >
-                  <Image
-                    alt={"right"}
-                    className={"w-5 h-5 text-gray-600"}
-                    src={ChevronRight}
-                  />
-                </button>
+                      "inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500",
+                    )}
+                    disabled={prevMonthButtonDisabled}
+                    onClick={decreaseMonth}
+                    type={"button"}
+                  >
+                    <Image
+                      alt={"left"}
+                      className={"w-5 h-5 text-gray-600"}
+                      src={ChevronLeft}
+                    />
+                  </button>
+                  <button
+                    className={
+                      (classNames(
+                        nextMonthButtonDisabled &&
+                          "cursor-not-allowed opacity-50",
+                      ),
+                      "inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500")
+                    }
+                    disabled={nextMonthButtonDisabled}
+                    onClick={increaseMonth}
+                    type={"button"}
+                  >
+                    <Image
+                      alt={"right"}
+                      className={"w-5 h-5 text-gray-600"}
+                      src={ChevronRight}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           )}

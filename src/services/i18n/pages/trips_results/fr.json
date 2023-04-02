@@ -7,6 +7,7 @@
   "other_budget": "Autres coûts",
   "total_budget": "Prix du voyage",
   "night": "nuit",
+  "person": "personne",
   "transport_details": "Détail transport",
   "search_accomodation": "Chercher un hôtel dans ce budget",
   "tripInfo_one": "Voyage à moins de <strong>{{maxPrice}}$</strong> - Pour <strong>{{count}} personne</strong><br/>Du <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",

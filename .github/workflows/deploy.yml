@@ -18,6 +18,10 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | tr a-z A-Z)"
         id: extract_branch
 
+      - name: Add .env variable
+        run: |
+          echo "REACT_APP_BOOKING_AFFILIATE_ID=${{ secrets.REACT_APP_BOOKING_AFFILIATE_ID }}" >> .env
+
       # DEVELOPMENT
       - name: Add .env variable based on branch development
         if: ${{ steps.extract_branch.outputs.branch == 'DEVELOPMENT' }}
@@ -56,6 +60,8 @@ jobs:
           PORT: ${{ secrets.DEVELOPMENT_PORT }}
           KEY: ${{ secrets.DEVELOPMENT_SSHKEY }}
           script: |
+            cd /home/cyril/dev-orgatrips-front/
+            git clean -fxd
             docker ps -q --filter "name=dev-orgatrips-front" | grep -q . && docker stop dev-orgatrips-front && docker container rm dev-orgatrips-front
             docker build -t dev-orgatrips-front /home/cyril/dev-orgatrips-front/
             docker run -d --network reverse-proxy --ip 172.18.0.5 --name dev-orgatrips-front -t dev-orgatrips-front
@@ -82,6 +88,8 @@ jobs:
           PORT: ${{ secrets.PRODUCTION_PORT }}
           KEY: ${{ secrets.PRODUCTION_SSHKEY }}
           script: |
+            cd /home/cyril/orgatrips-front/
+            git clean -fxd
             docker ps -q --filter "name=orgatrips-front" | grep -q . && docker stop orgatrips-front && docker container rm orgatrips-front
             docker build -t orgatrips-front /home/cyril/orgatrips-front
             docker run -d --network reverse-proxy --ip 172.18.0.7 --name orgatrips-front -t orgatrips-front

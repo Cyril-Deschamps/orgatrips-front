@@ -22,8 +22,13 @@ const NumberSliderField = ({
 
   const minValue = fieldSchema.meta()!.slider!.min;
   const maxValue = fieldSchema.meta()!.slider!.max;
+  const unit = fieldSchema.meta()!.slider!.unit || "";
 
   const [value, setValue] = useState<number>(0);
+
+  const valueVerification = (value: number) => {
+    return Math.min(Math.max(value, minValue), maxValue);
+  };
 
   useEffect(() => {
     setValue(field.value ?? minValue);
@@ -47,12 +52,10 @@ const NumberSliderField = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const optimizedFn = useCallback(debounce(), []);
 
-  const currency = "$";
-
   return (
     <div className={classNames(className, "px-2xl md:px-3xl py-2xl")}>
       <InputRange
-        formatLabel={(value: number) => `${value} ${currency}`}
+        formatLabel={(value: number) => `${value} ${unit}`}
         {...otherProps}
         classNames={{
           activeTrack:
@@ -69,21 +72,23 @@ const NumberSliderField = ({
         }}
         maxValue={maxValue}
         minValue={minValue}
+        name={name}
         onChange={(number: number) => optimizedFn(number)}
         onChangeComplete={() => helper.setValue(value)}
         value={value}
         allowSameValues
       />
-
       <div className={"flex justify-center pt-2xl gap-s md:gap-3xl"}>
         <div className={"relative"}>
           <input
             className={classNames(className, "pr-7 max-w-[15em]")}
-            id={"maximum"}
-            name={"maximum"}
+            id={`${name}-1`}
+            name={`${name}-1`}
             onChange={(event) =>
-              setValue((value) =>
-                event.target.value === "" ? value : event.target.valueAsNumber,
+              helper.setValue(
+                event.target.value === ""
+                  ? 0
+                  : valueVerification(event.target.valueAsNumber),
               )
             }
             type={"number"}
@@ -94,7 +99,7 @@ const NumberSliderField = ({
               "absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
             }
           >
-            <p>{currency}</p>
+            <p>{unit}</p>
           </div>
         </div>
       </div>

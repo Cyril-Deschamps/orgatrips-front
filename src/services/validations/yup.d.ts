@@ -41,7 +41,7 @@ declare module "yup" {
         ) => Promise<AutocompleteItem[]>;
       };
       dateRange?: { min: Date; max: Date };
-      slider?: { min: number; max: number };
+      slider?: { min: number; max: number; unit?: string };
       autocomplete?: boolean;
       multiselect?: boolean;
       stringEnum?: boolean;
@@ -59,7 +59,15 @@ declare module "yup" {
     meta(obj: Partial<this["metaInterface"]>): this;
 
     dateRange({ min, max }: { min: Date; max: Date }): this;
-    slider({ min, max }: { min: number; max: number }): this;
+    slider({
+      min,
+      max,
+      unit,
+    }: {
+      min: number;
+      max: number;
+      unit?: string;
+    }): this;
 
     autocomplete<N extends Namespace>(
       values: Record<string | number | symbol, unknown>,

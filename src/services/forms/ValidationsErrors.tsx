@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { ComponentType, FunctionComponent } from "react";
 import { useTranslation } from "next-i18next";
 import logger from "../i18n/logger";
 import { useFormikContext } from "formik";
@@ -17,6 +17,55 @@ const ValidationsErrors: FunctionComponent<Props> = ({
 
   if (errors && typeof errors == "object") {
     if (Object.keys(errors).length === 0) return null;
+
+    return (
+      <>
+        {Object.entries(errors).map(([field, e]) => {
+          if (typeof e === "object" && !("key" in e)) {
+            return (
+              <li key={field}>
+                <ValidationsErrors errors={e} />
+              </li>
+            );
+          }
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          /* @ts-ignore */
+          const tr = t(`validations:${e.key}`, e.values);
+          if (!tr || tr === "undefined") {
+            logger.error(
+              `Une validation n'a pas été renseignée pour le champ ${field}`,
+              e.key,
+              `validations:${e.key}`,
+              e.values,
+            );
+            return null;
+          }
+          return <li key={field}>{tr as string}</li>;
+        })}
+      </>
+    );
+  }
+
+  return null;
+};
+
+export function withValidationsErrorWrapper<P extends Record<string, unknown>>(
+  WrappedComponent: ComponentType<P>,
+): ComponentType<P> {
+  const displayName =
+    WrappedComponent.displayName || WrappedComponent.name || "Component";
+
+  function ValidationsErrorWrapper(props: P) {
+    const { errors: formikErrors } = useFormikContext();
+
+    if (
+      formikErrors &&
+      typeof formikErrors === "object" &&
+      Object.keys(formikErrors).length === 0
+    ) {
+      return <WrappedComponent {...props} />;
+    }
 
     return (
       <div className={"bg-red-50 border-l-8 border-red-900 rounded mb-l"}>
@@ -42,29 +91,7 @@ const ValidationsErrors: FunctionComponent<Props> = ({
                 </svg>
               </div>
               <ul className={"text-xs pl-xs"}>
-                {Object.entries(errors).map(([field, e]) => {
-                  if (typeof e === "object" && !("key" in e)) {
-                    return (
-                      <li key={field}>
-                        <ValidationsErrors errors={e} />
-                      </li>
-                    );
-                  }
-
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  /* @ts-ignore */
-                  const tr = t(`validations:${e.key}`, e.values);
-                  if (!tr || tr === "undefined") {
-                    logger.error(
-                      `Une validation n'a pas été renseignée pour le champ ${field}`,
-                      e.key,
-                      `validations:${e.key}`,
-                      e.values,
-                    );
-                    return null;
-                  }
-                  return <li key={field}>{tr as string}</li>;
-                })}
+                <WrappedComponent {...props} />
               </ul>
             </div>
           </div>
@@ -73,7 +100,9 @@ const ValidationsErrors: FunctionComponent<Props> = ({
     );
   }
 
-  return null;
-};
+  ValidationsErrorWrapper.displayName = `withValidationsErrorWrapper(${displayName})`;
 
-export default ValidationsErrors;
+  return ValidationsErrorWrapper;
+}
+
+export default withValidationsErrorWrapper(ValidationsErrors);
