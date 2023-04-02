@@ -8,7 +8,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import BlankImage from "../../../assets/img/blank.svg";
 import BookingLogo from "../../../assets/img/logo-booking-affiliate.svg";
-import ReactGA from "react-ga4";
+import { event } from "nextjs-google-analytics";
 
 const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
   const { t } = useTranslation(["trips_results"]);
@@ -53,29 +53,30 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             </strong>
           </li>
         </ul>
-        <div className={"flex flex-col gap-4 my-3"}>
+        <div className={"flex flex-col gap-3 my-3"}>
           <div
             className={
-              "flex flex-row flex-wrap justify-between items-center gap-y-3"
+              "flex flex-row flex-wrap justify-between items-center gap-y-2"
             }
           >
-            <p className={"font-bold"}>{`${trip.totalPrice}$ / ${t(
-              "trips_results:person",
-            )}`}</p>
+            <p className={"font-bold"}>{`${(
+              trip.totalPrice / trip.travelersNumber
+            ).toFixed()} $ / ${t("trips_results:person")}`}</p>
+            <p className={"font-bold"}>
+              {t("trips_results:total")} : {`${trip.totalPrice}$`}
+            </p>
             <Link
               className={
-                "p-2 px-3 bg-green rounded-xl text-white uppercase text-xs font-medium"
+                "p-2 px-3 mt-2 bg-green rounded-xl text-white uppercase text-xs font-medium w-full text-center"
               }
               href={`https://www.kiwi.com/deep?affilid=cyrildeschampsorgatripsorgatrips&booking_token=${trip.Transportation.bookingToken}`}
               onClick={() => {
-                ReactGA.event({
+                event("Redirect to Kiwi", {
                   category: "Trip Result",
-                  action: "Redirect to Kiwi",
                   label: "Button",
                 });
-                ReactGA.event({
+                event("Redirect to affiliation", {
                   category: "Trip Result",
-                  action: "Redirect to affiliation",
                   label: "Button",
                 });
               }}
@@ -101,14 +102,12 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
               trip.Accomodation.averagePricePerNight
             }-1`}
             onClick={() => {
-              ReactGA.event({
+              event("Redirect to Booking", {
                 category: "Trip Result",
-                action: "Redirect to Booking",
                 label: "Button",
               });
-              ReactGA.event({
+              event("Redirect to affiliation", {
                 category: "Trip Result",
-                action: "Redirect to affiliation",
                 label: "Button",
               });
             }}
