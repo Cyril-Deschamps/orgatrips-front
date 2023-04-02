@@ -82,8 +82,8 @@ const NumberSliderField = ({
         <div className={"relative"}>
           <input
             className={classNames(className, "pr-7 max-w-[15em]")}
-            id={`${name}-1`}
-            name={`${name}-1`}
+            id={name}
+            name={name}
             onChange={(event) =>
               helper.setValue(
                 event.target.value === ""

@@ -13,7 +13,7 @@ import "../services/i18n";
 import { ProvideToast } from "../services/toast-notifications";
 import { ProvideTrip } from "../services/trip/tripProvider";
 import { ProvideTransition } from "../services/transition/TransitionContext";
-import ReactGA from "react-ga4";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID || "";
 
@@ -28,8 +28,6 @@ const robotoFont = Roboto({
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
-  ReactGA.initialize(GA_MEASUREMENT_ID);
-
   return (
     <React.StrictMode>
       <Head>
@@ -48,6 +46,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ProvideToast>
           <ProvideTrip>
             <ProvideTransition>
+              <GoogleAnalytics
+                gaMeasurementId={GA_MEASUREMENT_ID}
+                strategy={"afterInteractive"}
+                trackPageViews
+              />
               <Component {...pageProps} />
             </ProvideTransition>
           </ProvideTrip>
