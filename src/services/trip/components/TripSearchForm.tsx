@@ -17,7 +17,7 @@ import { useTransition } from "../../transition/TransitionContext";
 import { TRIP_LINK } from "../../../routes";
 import { useRouter } from "next-translate-routes";
 import { AxiosError } from "axios";
-import ReactGA from "react-ga4";
+import { event } from "nextjs-google-analytics";
 import ValueObserver from "../../forms/ValueObserver";
 import Image from "next/image";
 import InfoIcon from "../../../assets/img/icons/icon-info.svg";
@@ -114,9 +114,8 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           locale: i18n.language,
         }}
         onSubmit={(values: SearchTripsForm, { setSubmitting }) => {
-          ReactGA.event({
+          event("Trip Search Submit", {
             category: "Trip Search",
-            action: "Trip Search Submit",
             label: "Button",
           });
           triggerTransition(t("search_trips_loading"));

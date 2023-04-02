@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import Transition from "./components/Transition";
 
 export interface TransitionAPI {
@@ -13,7 +13,7 @@ export const TransitionContext = createContext<TransitionAPI | null>(null);
 export const ProvideTransition = ({
   children,
 }: {
-  children: JSX.Element;
+  children: ReactNode;
 }): JSX.Element => {
   const [shouldTransition, setShouldTransition] = useState<boolean>(false);
   const [loadingText, setLoadingText] = useState<string>("");
