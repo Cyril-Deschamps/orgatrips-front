@@ -46,13 +46,17 @@ addMethod(
   },
 );
 
-addMethod(mixed, "dateRange", function (range: { min: number; max: number }) {
+addMethod(object, "dateRange", function (range: { min: number; max: number }) {
   return this.meta({ dateRange: range });
 });
 
-addMethod(number, "slider", function (range: { min: number; max: number }) {
-  return this.meta({ slider: range });
-});
+addMethod(
+  number,
+  "slider",
+  function (range: { min: number; max: number; unit?: string }) {
+    return this.meta({ slider: range });
+  },
+);
 
 addMethod(
   array,

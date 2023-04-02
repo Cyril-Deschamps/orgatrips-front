@@ -6,6 +6,8 @@ import { Namespace, TFuncKey } from "react-i18next";
 import { getNumericEnumEntries } from "../data-structures/enum";
 import RadioSelect from "./RadioSelect";
 import FSelectString from "./FSelectString";
+import { useEffect } from "react";
+import { useField } from "formik";
 
 const FSelect = ({
   name,
@@ -23,6 +25,7 @@ const FSelect = ({
   radio?: boolean;
 }): JSX.Element => {
   const fieldSchema = useYupField(name) as AnySchema;
+  const [field, , helper] = useField(name);
 
   const {
     enum: enumList,
@@ -30,6 +33,24 @@ const FSelect = ({
     stringEnum,
   } = fieldSchema.meta() as NonNullable<BaseSchema["metaInterface"]>;
   const { t } = useTranslation(translate ? ([translate[0]] as Namespace) : []);
+
+  useEffect(() => {
+    if (enumList) {
+      if (Array.isArray(enumList)) {
+        if (enumList?.filter((item) => item === field.value).length === 0) {
+          helper.setValue(enumList[0]);
+        }
+      } else {
+        if (
+          Object(enumList)
+            .keys()
+            .filter((item: unknown) => item === field.value).length !== 0
+        ) {
+          Object(enumList).keys()[0];
+        }
+      }
+    }
+  }, [enumList, field.value, helper]);
 
   return stringEnum ? (
     <FSelectString

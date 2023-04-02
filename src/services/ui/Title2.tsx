@@ -11,7 +11,7 @@ const Title2 = ({ className, ...props }: Props): JSX.Element => {
   return (
     <h2
       {...props}
-      className={classNames(className, "text-3xl font-bold pb-s leading-8")}
+      className={classNames(className, "text-2xl font-semibold pb-s leading-9")}
     />
   );
 };

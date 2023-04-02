@@ -14,6 +14,7 @@ import { default as NextLink } from "next/link";
 
 import dashboardIllustration from "../assets/img/dashboard-illustration.svg";
 import logoKiwiClassic from "../assets/img/logo-kiwi-classic.svg";
+import logoBookingClassic from "../assets/img/logo-booking-classic.svg";
 import sectionCutBackground from "../assets/img/section-cut-background.svg";
 import drawnArrow from "../assets/img/drawn-arrow.svg";
 import bestPriceIcon from "../assets/img/icons/icon-best-price.svg";
@@ -25,7 +26,7 @@ import BaseSeo from "../services/seo/BaseSeo";
 import { jsonLdScriptProps } from "react-schemaorg";
 import { Organization } from "schema-dts";
 import { hostBaseURL } from "../services/auth/config";
-import { KIWI_LINK } from "../routes/external";
+import { BOOKING_LINK, KIWI_LINK } from "../routes/external";
 
 const Home = (): JSX.Element => {
   const { t } = useTranslation(["trip", "home", "website"]);
@@ -58,13 +59,6 @@ const Home = (): JSX.Element => {
               "ml-xs sm:ml-xl md:ml-0 lg:ml-2xl relative flex flex-col items-center gap-s"
             }
           >
-            <span
-              className={
-                "font-Roboto inline-block md:absolute right-[-2rem] top-[-2.5rem] p-xxs sm:py-0 bg-light-blue text-white rounded-md md:rotate-6 text-xs leading-none sm:leading-normal sm:text-base font-bold uppercase"
-              }
-            >
-              {t("home:coming_soon")}
-            </span>
             <h1
               className={
                 "font-VarsityTeam md:w-full text-4xl md:text-5xl leading-8 md:leading-10 sm:tracking-wide text-center lg:text-start"
@@ -125,13 +119,25 @@ const Home = (): JSX.Element => {
           <SizedSection className={"pt-4xl"}>
             <div className={"sm:pl-[2.5vw]"}>
               <TitleLegend>{t("home:our_partners_legend")}</TitleLegend>
-              <Title2>{t("home:our_partners_title")}</Title2>
+              <Title2 className={"text-3xl"}>
+                {t("home:our_partners_title")}
+              </Title2>
               <Divider className={"w-64"} />
               <div
                 className={
-                  "flex flex-row gap-x-3xl gap-y-s pt-xl flex-wrap w-[40%] items-center"
+                  "flex flex-row gap-x-3xl gap-y-s pt-10 md:pt-xl pl-1 flex-wrap w-[40%] items-center"
                 }
               >
+                <NextLink href={BOOKING_LINK}>
+                  <Image
+                    alt={"Logo Booking"}
+                    className={
+                      "max-h-l lg:max-h-2xl object-contain object-left grayscale"
+                    }
+                    src={logoBookingClassic}
+                  />
+                </NextLink>
+
                 <NextLink href={KIWI_LINK}>
                   <Image
                     alt={"Logo kiwi"}
@@ -141,7 +147,7 @@ const Home = (): JSX.Element => {
                 </NextLink>
               </div>
             </div>
-            <div className={"mt-[-5rem] lg:mt-[-6rem]"}>
+            <div className={"mt-[-8rem] lg:mt-[-6rem]"}>
               <Image
                 alt={"section-background relative"}
                 className={"w-full h-[26rem]"}

@@ -7,6 +7,7 @@
   "other_budget": "Others budgets",
   "total_budget": "Trip cost",
   "night": "night",
+  "person": "person",
   "transport_details": "Transport details",
   "search_accomodation": "Find a hotel in this budget",
   "tripInfo_one": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} person</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",

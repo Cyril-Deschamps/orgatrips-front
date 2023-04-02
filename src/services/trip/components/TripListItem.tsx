@@ -8,6 +8,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import BlankImage from "../../../assets/img/blank.svg";
 import BookingLogo from "../../../assets/img/logo-booking-affiliate.svg";
+import ReactGA from "react-ga4";
 
 const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
   const { t } = useTranslation(["trips_results"]);
@@ -58,12 +59,26 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
               "flex flex-row flex-wrap justify-between items-center gap-y-3"
             }
           >
-            <p className={"font-bold"}>{`${trip.totalPrice}$ / person`}</p>
+            <p className={"font-bold"}>{`${trip.totalPrice}$ / ${t(
+              "trips_results:person",
+            )}`}</p>
             <Link
               className={
                 "p-2 px-3 bg-green rounded-xl text-white uppercase text-xs font-medium"
               }
               href={`https://www.kiwi.com/deep?affilid=cyrildeschampsorgatripsorgatrips&booking_token=${trip.Transportation.bookingToken}`}
+              onClick={() => {
+                ReactGA.event({
+                  category: "Trip Result",
+                  action: "Redirect to Kiwi",
+                  label: "Button",
+                });
+                ReactGA.event({
+                  category: "Trip Result",
+                  action: "Redirect to affiliation",
+                  label: "Button",
+                });
+              }}
               rel={"noopener noreferrer"}
               target={"_blank"}
             >
@@ -74,9 +89,9 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             className={
               "p-2 px-3 bg-booking-blue rounded-xl text-white uppercase text-xs font-medium flex flex-col items-center gap-1 text-center"
             }
-            href={`https://www.booking.com/searchresults.en.html?aid=7988926&ss=${encodeURIComponent(
-              trip.destinationName,
-            )}&checkin=${format(
+            href={`https://www.booking.com/searchresults.en.html?aid=${
+              process.env.REACT_APP_BOOKING_AFFILIATE_ID
+            }&ss=${encodeURIComponent(trip.destinationName)}&checkin=${format(
               trip.Transportation.departureDate,
               "yyyy-MM-dd",
             )}&checkout=${format(
@@ -85,6 +100,18 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             )}&group_adults=${trip.travelersNumber}&nflt=price%3DUSD-min-${
               trip.Accomodation.averagePricePerNight
             }-1`}
+            onClick={() => {
+              ReactGA.event({
+                category: "Trip Result",
+                action: "Redirect to Booking",
+                label: "Button",
+              });
+              ReactGA.event({
+                category: "Trip Result",
+                action: "Redirect to affiliation",
+                label: "Button",
+              });
+            }}
             rel={"noopener noreferrer"}
             target={"_blank"}
           >

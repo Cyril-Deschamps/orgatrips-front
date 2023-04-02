@@ -20,17 +20,19 @@ const LegalNotice = (): JSX.Element => {
       />
       <main className={"flex flex-col items-center"}>
         <SizedSection className={"mb-xl"} little>
-          <div className={"bg-white rounded-3xl p-xl"}>
-            <Trans
-              components={{
-                Title1: <Title1 className={"text-center"} />,
-                Title2: <Title2 />,
-                ul: <ul className={"list-disc p-l"} />,
-                li: <li />,
-              }}
-            >
-              {t("legal_notice:description")}
-            </Trans>
+          <div className={"bg-white rounded-3xl p-l"}>
+            <span className={"text-s"}>
+              <Trans
+                components={{
+                  Title1: <Title1 className={"text-center"} />,
+                  Title2: <Title2 />,
+                  ul: <ul className={"list-disc p-l"} />,
+                  li: <li />,
+                }}
+              >
+                {t("legal_notice:description")}
+              </Trans>
+            </span>
           </div>
         </SizedSection>
       </main>
