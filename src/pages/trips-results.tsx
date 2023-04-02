@@ -33,6 +33,16 @@ const Trips = (): JSX.Element => {
     [trips],
   );
 
+  const minNightsNumber = useMemo(
+    () => Math.min(...trips.map((trip) => trip.nightsNumber)),
+    [trips],
+  );
+
+  const maxNightsNumber = useMemo(
+    () => Math.max(...trips.map((trip) => trip.nightsNumber)),
+    [trips],
+  );
+
   return (
     <div className={"bg-appBgColor"}>
       <BaseSeo
@@ -56,7 +66,7 @@ const Trips = (): JSX.Element => {
           <p className={"font-roboto font-medium text-s pt-5 p-2 leading-7"}>
             <Trans
               count={trips[0].travelersNumber}
-              i18nKey={"trips_results:tripInfo" as TFuncKey}
+              i18nKey={"trips_results:trip_info" as TFuncKey}
               values={{
                 maxPrice: maxPrice,
                 count: trips[0].travelersNumber,
@@ -67,6 +77,24 @@ const Trips = (): JSX.Element => {
                 returnDate: formatDate(trips[0].Transportation.returnDate, "P"),
               }}
             />
+            {" - "}
+            {minNightsNumber === maxNightsNumber ? (
+              <Trans
+                count={trips[0].travelersNumber}
+                i18nKey={"trips_results:nights_number" as TFuncKey}
+                values={{
+                  count: trips[0].nightsNumber,
+                }}
+              />
+            ) : (
+              <Trans
+                i18nKey={"trips_results:multiple_nights_number" as TFuncKey}
+                values={{
+                  minNightsNumber,
+                  maxNightsNumber,
+                }}
+              />
+            )}
           </p>
         )}
 
