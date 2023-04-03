@@ -30,6 +30,7 @@ module.exports = {
       },
       colors: {
         appBgColor: "#FCF0E2",
+        infoColor: "#FEF4D8",
         'green': "#3F802B",
         'booking-blue': "#013b96",
         'blue': "#385e80",

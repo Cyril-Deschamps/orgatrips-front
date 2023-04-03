@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import React from "react";
 import { Trip } from "../trip";
@@ -9,6 +9,10 @@ import { format } from "date-fns";
 import BlankImage from "../../../assets/img/blank.svg";
 import BookingLogo from "../../../assets/img/logo-booking-affiliate.svg";
 import { event } from "nextjs-google-analytics";
+import { TFuncKey } from "react-i18next";
+import coffeeIcon from "../../../assets/img/icons/icon-coffee.svg";
+import hotelIcon from "../../../assets/img/icons/icon-hotel.svg";
+import planeIcon from "../../../assets/img/icons/icon-plane.svg";
 
 const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
   const { t } = useTranslation(["trips_results"]);
@@ -31,25 +35,45 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
         width={100}
       />
       <div className={"pt-2"}>
-        <h2 className={"text-2xl font-bold mb-2"}>{trip.destinationName}</h2>
-        <ul className={"list-disc pl-6 pb-1"}>
-          <li className={"text-sm mb-1"}>
+        <h2 className={"text-2xl font-bold mb-2"}>
+          {trip.destinationName}
+          <span className={"text-sm font-medium"}>
+            {" "}
+            -{" "}
+            <Trans
+              count={trip.travelersNumber}
+              i18nKey={"trips_results:nights_number" as TFuncKey}
+              values={{
+                count: trip.nightsNumber,
+              }}
+            />
+          </span>
+        </h2>
+        <ul className={"pl-2 py-2 flex flex-col gap-2"}>
+          <li
+            className={
+              "leading-tight text-sm mb-1 flex flex-row gap-3 items-center"
+            }
+          >
+            <Image alt={"coffee"} className={"w-5"} src={hotelIcon} />
             {`${t("trips_results:accomodation_budget")} : `}
             <span className={"whitespace-nowrap"}>
               <strong>{trip.Accomodation.averagePricePerNight} $</strong> /{" "}
               {t("trips_results:night")}
             </span>
           </li>
-          <li className={"text-sm mb-1"}>
-            {`${t("trips_results:transportation_budget")} : `}{" "}
+          <li className={"text-sm mb-1 flex flex-row gap-3 items-center"}>
+            <Image alt={"coffee"} className={"w-5"} src={planeIcon} />
+            {`${t("trips_results:transportation_budget")} : `}
             <strong className={"whitespace-nowrap"}>
               {trip.Transportation.price} $
             </strong>
           </li>
-          <li className={"text-sm mb-1"}>
+          <li className={"text-sm mb-1 flex flex-row gap-3 items-center"}>
+            <Image alt={"coffee"} className={"pt-[3px] w-5"} src={coffeeIcon} />
             {`${t("trips_results:other_budget")} : `}
             <strong className={"whitespace-nowrap"}>
-              {trip.otherSpentPrice}$
+              {trip.otherSpentPrice} $
             </strong>
           </li>
         </ul>
@@ -63,7 +87,8 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
               trip.totalPrice / trip.travelersNumber
             ).toFixed()} $ / ${t("trips_results:person")}`}</p>
             <p className={"font-bold"}>
-              {t("trips_results:total")} : {`${trip.totalPrice}$`}
+              {t("trips_results:total")} :{" "}
+              <span className={"text-blue"}>{`${trip.totalPrice} $`}</span>
             </p>
             <Link
               className={
