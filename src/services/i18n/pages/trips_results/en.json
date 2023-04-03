@@ -9,7 +9,7 @@
   "night": "night",
   "person": "person",
   "transport_details": "Transport details",
-  "search_accomodation": "Find a hotel in this budget",
+  "search_accomodation": "Find an accommodation in this budget",
   "trip_info_one": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} person</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
   "trip_info_other": "Trip for up to <strong>{{maxPrice}}$</strong> - For <strong>{{count}} people</strong><br/>From <strong>{{departureDate}}</strong> - <strong>{{returnDate}}</strong>",
   "nights_number_one": "For <strong>{{count}} night</strong>",
