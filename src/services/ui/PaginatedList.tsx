@@ -20,26 +20,26 @@ const PaginatedList = <Item,>({
   className?: string;
   id: string;
 }): JSX.Element => {
-  const router = useRouter();
+  const { push, pathname, isReady, query } = useRouter();
   const { t } = useTranslation("website");
   const page = useMemo(
-    () =>
-      router.isReady
-        ? router.query?.page
-          ? parseInt(router.query.page as string)
-          : 1
-        : null,
-    [router],
+    () => (isReady ? (query?.page ? parseInt(query.page as string) : 1) : null),
+    [isReady, query.page],
   );
 
   const setPage = useCallback(
     (page: number) => {
-      router.push({ pathname: router.pathname, query: { page } }, undefined, {
+      push({ pathname: pathname, query: { page } }, undefined, {
         shallow: true,
       });
     },
-    [router],
+    [pathname, push],
   );
+
+  useEffect(() => {
+    setPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
 
   useEffect(() => {
     async function changePageEffect() {
@@ -50,7 +50,7 @@ const PaginatedList = <Item,>({
     if (document) {
       changePageEffect();
     }
-  }, [id, page, router]);
+  }, [id, page]);
 
   // Memos
   const lastPage = useMemo(
