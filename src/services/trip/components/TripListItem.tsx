@@ -83,12 +83,14 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
               "flex flex-row flex-wrap justify-between items-center gap-y-2"
             }
           >
-            <p className={"font-bold"}>{`${(
+            <p className={"font-bold text-xs pt-1"}>{`${(
               trip.totalPrice / trip.travelersNumber
             ).toFixed()} $ / ${t("trips_results:person")}`}</p>
             <p className={"font-bold"}>
               {t("trips_results:total")} :{" "}
-              <span className={"text-blue"}>{`${trip.totalPrice} $`}</span>
+              <span
+                className={"text-blue text-xl"}
+              >{`${trip.totalPrice} $`}</span>
             </p>
             <Link
               className={

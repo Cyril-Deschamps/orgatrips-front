@@ -13,6 +13,7 @@ import router from "next-translate-routes/router";
 import { BASE_LINK } from "../routes";
 import { useDate } from "../services/date/DateContext";
 import { TFuncKey } from "react-i18next";
+import PaginatedList from "../services/ui/PaginatedList";
 
 const Trips = (): JSX.Element => {
   const { t } = useTranslation(["trips_results"]);
@@ -112,13 +113,15 @@ const Trips = (): JSX.Element => {
               values={{ count: trips.length }}
             />
           </p>
-          <div
+          <PaginatedList
             className={"grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}
-          >
-            {trips.map((trip) => (
+            id={"trip-list"}
+            items={trips}
+            paginatedBy={12}
+            render={(trip) => (
               <TripListItem key={trip.destinationName} trip={trip} />
-            ))}
-          </div>
+            )}
+          />
         </div>
       </div>
     </div>
@@ -129,7 +132,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(
       locale ?? "en",
-      ["trips_results"],
+      ["trips_results", "website"],
       nextI18NextConfig,
     )),
   },

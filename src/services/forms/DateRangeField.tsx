@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 import OutsideAlerter from "../ui/OutsideAlerter";
-import { Trans } from "react-i18next";
+import { Trans } from "next-i18next";
 
 interface Props<CustomModifierNames extends string = never>
   extends Omit<
