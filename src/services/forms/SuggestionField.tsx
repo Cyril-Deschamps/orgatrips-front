@@ -72,12 +72,12 @@ const SuggestionField = ({
     debouncedRequest.current(currentText);
   }, [currentText, debouncedRequest, suggestion]);
 
-  const mobileFieldScroll = () => {
-    if (typeof window !== "undefined" && window.innerWidth <= 760) {
+  const fieldScroll = () => {
+    if (typeof window !== "undefined") {
       const y =
         customInputRef.current!.getBoundingClientRect().top +
         window.scrollY -
-        175;
+        100;
 
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -119,7 +119,7 @@ const SuggestionField = ({
             onFocus={() => {
               if (!hasBeenFocused) setHasBeenFocused(true);
               setShowSuggestion(true);
-              mobileFieldScroll();
+              fieldScroll();
             }}
             placeholder={otherProps.placeholder}
             value={currentText}

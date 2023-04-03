@@ -6,7 +6,7 @@ import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import BaseSeo from "../services/seo/BaseSeo";
 import Link from "next/link";
-import LeftChevron from "../assets/img/icons/icon-chevron-left.svg";
+import HomeIcon from "../assets/img/icons/icon-home.svg";
 import { TRIPS_STORAGE_KEY, useTrip } from "../services/trip/tripProvider";
 import TripListItem from "../services/trip/components/TripListItem";
 import router from "next-translate-routes/router";
@@ -49,21 +49,25 @@ const Trips = (): JSX.Element => {
         description={t("trips_results:page_description")}
         title={t("trips_results:page_title")}
       />
-      <div className={"container mx-auto px-4 py-8"}>
-        <div className={"flex items-center gap-s"}>
-          <Link className={"w-10"} href={".."}>
-            <Image alt={"back"} className={"w-full"} src={LeftChevron} />
-          </Link>
+      <div className={"container mx-auto px-4 py-8 "}>
+        <div className={"flex items-center gap-s justify-between"}>
           <h1
             className={
-              "text-green font-VarsityTeam leading-8 md:w-full text-3xl md:text-4xl font-medium"
+              "text-green font-VarsityTeam leading-8 md:w-full text-3xl md:text-4xl lg:text-5xl font-medium"
             }
           >
             {t("trips_results:main_title")}
           </h1>
+          <Link className={"p-1 rounded-md bg-green"} href={".."}>
+            <Image alt={"Back home"} className={"w-8 md:w-9"} src={HomeIcon} />
+          </Link>
         </div>
         {trips.length > 0 && (
-          <p className={"font-roboto font-medium text-s pt-5 p-2 leading-7"}>
+          <p
+            className={
+              "text-center sm:inline-block block font-roboto font-medium text-xs text-white mt-5 p-3 leading-5 bg-blue rounded"
+            }
+          >
             <Trans
               count={trips[0].travelersNumber}
               i18nKey={"trips_results:trip_info" as TFuncKey}
@@ -78,27 +82,29 @@ const Trips = (): JSX.Element => {
               }}
             />
             {" - "}
-            {minNightsNumber === maxNightsNumber ? (
-              <Trans
-                count={trips[0].travelersNumber}
-                i18nKey={"trips_results:nights_number" as TFuncKey}
-                values={{
-                  count: trips[0].nightsNumber,
-                }}
-              />
-            ) : (
-              <Trans
-                i18nKey={"trips_results:multiple_nights_number" as TFuncKey}
-                values={{
-                  minNightsNumber,
-                  maxNightsNumber,
-                }}
-              />
-            )}
+            <span className={"whitespace-nowrap"}>
+              {minNightsNumber === maxNightsNumber ? (
+                <Trans
+                  count={trips[0].travelersNumber}
+                  i18nKey={"trips_results:nights_number" as TFuncKey}
+                  values={{
+                    count: trips[0].nightsNumber,
+                  }}
+                />
+              ) : (
+                <Trans
+                  i18nKey={"trips_results:multiple_nights_number" as TFuncKey}
+                  values={{
+                    minNightsNumber,
+                    maxNightsNumber,
+                  }}
+                />
+              )}
+            </span>
           </p>
         )}
 
-        <div className={"mt-6"}>
+        <div className={"mt-8"}>
           <p className={"mb-3 text-gray-500 text-xs pl-1"}>
             <Trans
               count={trips.length}
