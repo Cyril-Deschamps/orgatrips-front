@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import type { GetStaticProps } from "next";
 import nextI18NextConfig from "../../next-i18next.config";
@@ -14,11 +14,26 @@ import { BASE_LINK } from "../routes";
 import { useDate } from "../services/date/DateContext";
 import { TFuncKey } from "react-i18next";
 import PaginatedList from "../services/ui/PaginatedList";
+import { SortingOption } from "../services/trip/trip";
+import { orderByField } from "../services/data-structures/array";
+import classNames from "classnames";
 
 const Trips = (): JSX.Element => {
   const { t } = useTranslation(["trips_results"]);
   const { trips } = useTrip();
   const { formatDate } = useDate();
+  const [sortingOption, setSortingOption] = useState<SortingOption>(
+    SortingOption.POPULARITY,
+  );
+
+  const sortedTrips = useMemo(() => {
+    switch (sortingOption) {
+      case SortingOption.POPULARITY:
+        return [...trips].sort(orderByField("popularity", true));
+      case SortingOption.CHEAPER:
+        return [...trips].sort(orderByField("totalPrice"));
+    }
+  }, [sortingOption, trips]);
 
   useEffect(() => {
     if (trips.length === 0) {
@@ -50,7 +65,7 @@ const Trips = (): JSX.Element => {
         description={t("trips_results:page_description")}
         title={t("trips_results:page_title")}
       />
-      <div className={"container mx-auto px-4 py-8 "}>
+      <div className={"container mx-auto px-4 py-8"}>
         <div className={"flex items-center gap-s justify-between"}>
           <h1
             className={
@@ -105,24 +120,45 @@ const Trips = (): JSX.Element => {
           </p>
         )}
 
-        <div className={"mt-8"}>
-          <p className={"mb-3 text-gray-500 text-xs pl-1"}>
+        <div
+          className={
+            "border-t border-gray-400 pt-4 mt-5 mb-4 flex justify-between items-center flex-wrap-reverse gap-s"
+          }
+        >
+          <p className={"text-gray-500 font-bold text-xs pl-1"}>
             <Trans
               count={trips.length}
-              i18nKey={"trips_results:sortedByRating" as TFuncKey}
+              i18nKey={"trips_results:results_number" as TFuncKey}
               values={{ count: trips.length }}
             />
           </p>
-          <PaginatedList
-            className={"grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}
-            id={"trip-list"}
-            items={trips}
-            paginatedBy={12}
-            render={(trip) => (
-              <TripListItem key={trip.destinationName} trip={trip} />
-            )}
-          />
+          <div className={"flex gap-3 overflow-x-scroll whitespace-nowrap"}>
+            {Object.values(SortingOption).map((sortName) => (
+              <button
+                key={sortName}
+                className={classNames(
+                  "text-xs border rounded-full p-1 px-2 cursor-pointer",
+                  sortName === sortingOption
+                    ? "text-white border-blue bg-blue"
+                    : "text-gray-600 border-gray-400",
+                )}
+                onClick={() => setSortingOption(sortName)}
+                type={"button"}
+              >
+                {t(`trips_results:sorting_option_${sortName}`)}
+              </button>
+            ))}
+          </div>
         </div>
+        <PaginatedList
+          className={"grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}
+          id={"trip-list"}
+          items={sortedTrips}
+          paginatedBy={12}
+          render={(trip) => (
+            <TripListItem key={trip.destinationName} trip={trip} />
+          )}
+        />
       </div>
     </div>
   );

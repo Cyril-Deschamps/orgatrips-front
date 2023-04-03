@@ -15,7 +15,9 @@
   "nights_number_one": "For <strong>{{count}} night</strong>",
   "nights_number_other": "For <strong>{{count}} nights</strong>",
   "multiple_nights_number": "For <strong>{{minNightsNumber}} to {{maxNightsNumber}} nights</strong>",
-  "sortedByRating_one": "Ordered by rating - {{count}} result",
-  "sortedByRating_other": "Ordered by rating - {{count}} results",
-  "total": "Total"
+  "results_number_one": "{{count}} trip founded",
+  "results_number_other": "{{count}} trips founded",
+  "total": "Total",
+  "sorting_option_POPULARITY": "Top review",
+  "sorting_option_CHEAPER": "Lowest price"
 }
