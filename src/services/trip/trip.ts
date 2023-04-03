@@ -40,12 +40,19 @@ export interface Transportation {
   stopOverOutbound: number;
   departureDate: Date;
   returnDate: Date;
+  arrivalLocalDate: Date;
+  leavingLocalDate: Date;
 }
 
 export interface TransportationRaw
-  extends Omit<Transportation, "departureDate" | "returnDate"> {
+  extends Omit<
+    Transportation,
+    "departureDate" | "returnDate" | "arrivalLocalDate" | "leavingLocalDate"
+  > {
   departureDate: string;
   returnDate: string;
+  arrivalLocalDate: string;
+  leavingLocalDate: string;
 }
 
 export interface Accommodation {
@@ -68,6 +75,11 @@ export enum AirportType {
   LARGE_AIRPORT,
 }
 
+export enum SortingOption {
+  "POPULARITY" = "POPULARITY",
+  "CHEAPER" = "CHEAPER",
+}
+
 export function getAirportTypeKey(airportTypeValue: AirportType): string {
   const keys = Object.keys(AirportType).filter(
     (key) => AirportType[key as keyof typeof AirportType] === airportTypeValue,
@@ -83,6 +95,8 @@ export function mapTripRawToTrip(tripRaw: TripRaw): Trip {
       ...tripRaw.Transportation,
       departureDate: parseISO(tripRaw.Transportation.departureDate),
       returnDate: parseISO(tripRaw.Transportation.returnDate),
+      arrivalLocalDate: parseISO(tripRaw.Transportation.arrivalLocalDate),
+      leavingLocalDate: parseISO(tripRaw.Transportation.leavingLocalDate),
     },
   };
 }
@@ -94,6 +108,8 @@ export function mapTripToTripRaw(tripRaw: Trip): TripRaw {
       ...tripRaw.Transportation,
       departureDate: formatISO(tripRaw.Transportation.departureDate),
       returnDate: formatISO(tripRaw.Transportation.returnDate),
+      arrivalLocalDate: formatISO(tripRaw.Transportation.arrivalLocalDate),
+      leavingLocalDate: formatISO(tripRaw.Transportation.leavingLocalDate),
     },
   };
 }

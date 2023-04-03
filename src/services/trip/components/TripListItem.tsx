@@ -13,9 +13,11 @@ import { TFuncKey } from "react-i18next";
 import coffeeIcon from "../../../assets/img/icons/icon-coffee.svg";
 import hotelIcon from "../../../assets/img/icons/icon-hotel.svg";
 import planeIcon from "../../../assets/img/icons/icon-plane.svg";
+import { useCountry } from "../../countries/CountryContext";
 
 const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
   const { t } = useTranslation(["trips_results"]);
+  const { countriesList } = useCountry();
 
   const objectUrl = useFileAsObjectURL({
     url: trip.destinationPicture,
@@ -35,11 +37,20 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
         width={100}
       />
       <div className={"pt-2"}>
-        <h2 className={"text-2xl font-bold mb-2"}>
-          {trip.destinationName}
-          <span className={"text-sm font-medium"}>
-            {" "}
-            -{" "}
+        <div className={"flex justify-between"}>
+          <div className={"flex flex-col"}>
+            <h2 className={"text-2xl font-bold mb-2"}>
+              {trip.destinationName}
+            </h2>
+            <span
+              className={
+                "relative text-sm text-gray-500 font-medium top-[-0.85rem]"
+              }
+            >
+              {countriesList[trip.destinationCountryCode]}
+            </span>
+          </div>
+          <span className={"text-sm font-medium pt-[0.65rem] pl-1"}>
             <Trans
               count={trip.travelersNumber}
               i18nKey={"trips_results:nights_number" as TFuncKey}
@@ -48,7 +59,8 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
               }}
             />
           </span>
-        </h2>
+        </div>
+
         <ul className={"pl-2 py-2 flex flex-col gap-2"}>
           <li
             className={
@@ -56,7 +68,7 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             }
           >
             <Image alt={"coffee"} className={"w-5"} src={hotelIcon} />
-            {`${t("trips_results:accomodation_budget")} : `}
+            {t("trips_results:accomodation_budget")}&nbsp;:
             <span className={"whitespace-nowrap"}>
               <strong>{trip.Accomodation.averagePricePerNight} $</strong> /{" "}
               {t("trips_results:night")}
@@ -64,16 +76,17 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
           </li>
           <li className={"text-sm mb-1 flex flex-row gap-3 items-center"}>
             <Image alt={"coffee"} className={"w-5"} src={planeIcon} />
-            {`${t("trips_results:transportation_budget")} : `}
+            {t("trips_results:transportation_budget")}&nbsp;:
             <strong className={"whitespace-nowrap"}>
-              {trip.Transportation.price} $
+              {trip.Transportation.price}&nbsp;$
             </strong>
           </li>
           <li className={"text-sm mb-1 flex flex-row gap-3 items-center"}>
             <Image alt={"coffee"} className={"pt-[3px] w-5"} src={coffeeIcon} />
-            {`${t("trips_results:other_budget")} : `}
+            {t("trips_results:other_budget")}&nbsp;:
             <strong className={"whitespace-nowrap"}>
-              {trip.otherSpentPrice} $
+              {trip.otherSpentPrice}
+              &nbsp;$
             </strong>
           </li>
         </ul>
@@ -88,9 +101,9 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             ).toFixed()} $ / ${t("trips_results:person")}`}</p>
             <p className={"font-bold"}>
               {t("trips_results:total")} :{" "}
-              <span
-                className={"text-blue text-xl"}
-              >{`${trip.totalPrice} $`}</span>
+              <span className={"text-blue text-xl"}>
+                {trip.totalPrice}&nbsp;$
+              </span>
             </p>
             <Link
               className={
@@ -120,10 +133,10 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             href={`https://www.booking.com/searchresults.en.html?aid=${
               process.env.REACT_APP_BOOKING_AFFILIATE_ID
             }&ss=${encodeURIComponent(trip.destinationName)}&checkin=${format(
-              trip.Transportation.departureDate,
+              trip.Transportation.arrivalLocalDate,
               "yyyy-MM-dd",
             )}&checkout=${format(
-              trip.Transportation.returnDate,
+              trip.Transportation.leavingLocalDate,
               "yyyy-MM-dd",
             )}&group_adults=${trip.travelersNumber}&nflt=price%3DUSD-min-${
               trip.Accomodation.averagePricePerNight
