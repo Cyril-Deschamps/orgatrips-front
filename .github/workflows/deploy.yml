@@ -1,4 +1,4 @@
-name: Deploy
+name: Linter and Deploy
 
 on:
   push:
@@ -13,15 +13,34 @@ env:
   PROJECT_PATH_PROD: ${{ secrets.PRODUCTION_DOCKER_IMAGES_PATH }}/orgatrips-front
 
 jobs:
-  build:
+  linter:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install dependencies
+        run: yarn run npm-run-all lint-check:*
+
+  build:
+    needs: linter
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | tr a-z A-Z)"
+        run: echo "branch=$(echo ${GITHUB_REF#refs/heads/} | tr a-z A-Z)" >> $GITHUB_OUTPUT
         id: extract_branch
 
       - name: Add .env variable
@@ -68,9 +87,10 @@ jobs:
           script: |
             cd $PROJECT_PATH_DEV
             git clean -df
-            docker ps -q --filter "name=$DOCKER_PROJECT_NAME_DEV" | grep -q . && docker stop $DOCKER_PROJECT_NAME_DEV && docker container rm $DOCKER_PROJECT_NAME_DEV
+            docker stop $DOCKER_PROJECT_NAME_DEV || true
+            docker container rm $DOCKER_PROJECT_NAME_DEV || true
             docker build -t $DOCKER_PROJECT_NAME_DEV $PROJECT_PATH_DEV
-            docker run -d --network reverse-proxy --ip ${{ secrets.DEVELOPMENT_DOCKER_LOCAL_IP }} --name $DOCKER_PROJECT_NAME_DEV -t $DOCKER_PROJECT_NAME_DEV
+            docker run -d --network reverse-proxy --name $DOCKER_PROJECT_NAME_DEV --ip ${{ secrets.DEVELOPMENT_DOCKER_LOCAL_IP }} -t $DOCKER_PROJECT_NAME_DEV
 
       # PRODUCTION
       - name: Copy repository contents via scp PRODUCTION

@@ -10,12 +10,12 @@ const Header = (): JSX.Element => {
   return (
     <header
       className={
-        "flex flex-row items-center content-between py-xs px-s md:px-2xl pb-2xl md:pb-3xl"
+        "flex flex-row items-center content-between py-xs px-s md:px-2xl pb-2xl md:pb-2xl"
       }
     >
       <Link href={BASE_LINK}>
         <div className={"w-52 sm:w-80 ml-[-10px] mr-5 shrink-0"}>
-          <Image alt={"logo"} src={logo} />
+          <Image alt={"logo"} loading={"eager"} src={logo} />
         </div>
       </Link>
       <nav

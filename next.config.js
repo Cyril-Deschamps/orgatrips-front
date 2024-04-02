@@ -13,10 +13,25 @@ module.exports = withBundleAnalyzer(withTranslateRoutes({
   output: 'standalone',
   reactStrictMode: true,
   i18n,
+  sassOptions: {
+    fiber: false,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      }, {
+        protocol: "http",
+        hostname: "localhost",
+      },
+    ],
+  },
   env: {
     REACT_APP_API_HOST: process.env.REACT_APP_API_HOST,
     REACT_APP_HOST: process.env.REACT_APP_HOST,
     REACT_APP_GA_MEASUREMENT_ID: process.env.REACT_APP_GA_MEASUREMENT_ID,
-    REACT_APP_BOOKING_AFFILIATE_ID: process.env.REACT_APP_BOOKING_AFFILIATE_ID
+    REACT_APP_BOOKING_AFFILIATE_ID: process.env.REACT_APP_BOOKING_AFFILIATE_ID,
+    REACT_APP_WEBHOOK_SECRET: process.env.REACT_APP_WEBHOOK_SECRET,
   }
 }));

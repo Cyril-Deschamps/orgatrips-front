@@ -1,5 +1,6 @@
 import {
   createContext,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -27,7 +28,7 @@ export const TripContext = createContext<TripAPI | null>(null);
 export function ProvideTrip({
   children,
 }: {
-  children: JSX.Element;
+  children: ReactNode;
 }): JSX.Element {
   const [trips, setTrips] = useState<Trip[]>([]);
 

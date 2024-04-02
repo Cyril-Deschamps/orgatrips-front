@@ -12,7 +12,6 @@ import { useToastsWithIntl } from "../../toast-notifications";
 import { AirportType, budgetMax, SearchTripsForm } from "../trip";
 import { useTrip } from "../tripProvider";
 import iconPlane from "../../../assets/img/icons/icon-plane.svg";
-import { TFuncKey } from "react-i18next";
 import { useTransition } from "../../transition/TransitionContext";
 import { TRIP_LINK } from "../../../routes";
 import { useRouter } from "next-translate-routes";
@@ -39,7 +38,11 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           label: airport.name,
           legend: `${airport.city !== "" ? `${airport.city}, ` : ""}${
             countriesList[airport.countryCode]
-          } - ${t(`AIRPORT_TYPES.${AirportType[airport.type]}` as TFuncKey)}`,
+          } - ${t(
+            `AIRPORT_TYPES.${
+              AirportType[airport.type] as keyof typeof AirportType
+            }`,
+          )}`,
         })),
       ),
     [countriesList, findAirports, t],

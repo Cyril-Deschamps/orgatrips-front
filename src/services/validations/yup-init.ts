@@ -29,6 +29,10 @@ addMethod(string, "multiline", function () {
   return this.meta({ multiline: true });
 });
 
+addMethod(string, "richText", function () {
+  return this.meta({ richText: true });
+});
+
 addMethod(mixed, "radio", function () {
   return this.meta({ radio: true });
 });

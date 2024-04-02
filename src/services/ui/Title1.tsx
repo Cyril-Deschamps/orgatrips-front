@@ -13,7 +13,7 @@ const Title1 = ({ className, ...props }: Props): JSX.Element => {
       {...props}
       className={classNames(
         className,
-        "text-3xl font-bold uppercase pb-s leading-10",
+        "text-3xl lg:text-4xl xl:text-5xl font-VarsityTeam leading-8 md:leading-10",
       )}
     />
   );

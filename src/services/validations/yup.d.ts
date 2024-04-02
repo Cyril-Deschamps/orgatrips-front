@@ -11,6 +11,7 @@ declare module "yup" {
   > extends BaseSchema<TType, TContext, TOut> {
     password(): this;
     multiline(): this;
+    richText(): this;
   }
 
   interface DateSchema<
@@ -26,6 +27,7 @@ declare module "yup" {
     metaInterface?: {
       password?: boolean;
       multiline?: boolean;
+      richText?: boolean;
       time?: boolean;
       disabled?: boolean;
       translate?: [string, string];

@@ -17,9 +17,10 @@ import PaginatedList from "../services/ui/PaginatedList";
 import { SortingOption } from "../services/trip/trip";
 import { orderByField } from "../services/data-structures/array";
 import classNames from "classnames";
+import Title1 from "../services/ui/Title1";
 
 const Trips = (): JSX.Element => {
-  const { t } = useTranslation(["trips_results"]);
+  const { t } = useTranslation(["pages_content"]);
   const { trips } = useTrip();
   const { formatDate } = useDate();
   const [sortingOption, setSortingOption] = useState<SortingOption>(
@@ -62,18 +63,18 @@ const Trips = (): JSX.Element => {
   return (
     <div className={"bg-appBgColor"}>
       <BaseSeo
-        description={t("trips_results:page_description")}
-        title={t("trips_results:page_title")}
+        description={t("pages_content:trips_results.page_description")}
+        title={t("pages_content:trips_results.page_title")}
       />
       <div className={"container mx-auto px-4 py-8"}>
         <div className={"flex items-center gap-s justify-between"}>
-          <h1
+          <Title1
             className={
-              "text-green font-VarsityTeam leading-8 md:w-full text-3xl md:text-4xl lg:text-5xl font-medium"
+              "font-VarsityTeam md:w-full text-3xl md:text-4xl lg:text-5xl font-medium"
             }
           >
-            {t("trips_results:main_title")}
-          </h1>
+            {t("pages_content:trips_results.main_title")}
+          </Title1>
           <Link className={"p-1 rounded-md bg-green"} href={".."}>
             <Image alt={"Back home"} className={"w-8 md:w-9"} src={HomeIcon} />
           </Link>
@@ -86,7 +87,7 @@ const Trips = (): JSX.Element => {
           >
             <Trans
               count={trips[0].travelersNumber}
-              i18nKey={"trips_results:trip_info" as TFuncKey}
+              i18nKey={"pages_content:trips_results.trip_info" as TFuncKey}
               values={{
                 maxPrice: maxPrice,
                 count: trips[0].travelersNumber,
@@ -102,14 +103,18 @@ const Trips = (): JSX.Element => {
               {minNightsNumber === maxNightsNumber ? (
                 <Trans
                   count={trips[0].travelersNumber}
-                  i18nKey={"trips_results:nights_number" as TFuncKey}
+                  i18nKey={
+                    "pages_content:trips_results.nights_number" as TFuncKey
+                  }
                   values={{
                     count: trips[0].nightsNumber,
                   }}
                 />
               ) : (
                 <Trans
-                  i18nKey={"trips_results:multiple_nights_number" as TFuncKey}
+                  i18nKey={
+                    "pages_content:trips_results.multiple_nights_number" as TFuncKey
+                  }
                   values={{
                     minNightsNumber,
                     maxNightsNumber,
@@ -128,7 +133,7 @@ const Trips = (): JSX.Element => {
           <p className={"text-gray-500 font-bold text-xs pl-1"}>
             <Trans
               count={trips.length}
-              i18nKey={"trips_results:results_number" as TFuncKey}
+              i18nKey={"pages_content:trips_results.results_number" as TFuncKey}
               values={{ count: trips.length }}
             />
           </p>
@@ -145,7 +150,7 @@ const Trips = (): JSX.Element => {
                 onClick={() => setSortingOption(sortName)}
                 type={"button"}
               >
-                {t(`trips_results:sorting_option_${sortName}`)}
+                {t(`pages_content:trips_results.sorting_option_${sortName}`)}
               </button>
             ))}
           </div>
@@ -168,7 +173,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(
       locale ?? "en",
-      ["trips_results", "website"],
+      ["pages_content", "website"],
       nextI18NextConfig,
     )),
   },

@@ -15,9 +15,10 @@ const AutoObject = ({ name, children }: Props): JSX.Element | null => {
     [fieldSchema],
   );
 
-  const isDisabled = useMemo(() => !!fieldSchema.meta()?.disabled, [
-    fieldSchema,
-  ]);
+  const isDisabled = useMemo(
+    () => !!fieldSchema.meta()?.disabled,
+    [fieldSchema],
+  );
 
   if (fieldSchema.meta()?.notVisible) return null;
 

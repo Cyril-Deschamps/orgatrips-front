@@ -20,7 +20,7 @@ const Footer = (): JSX.Element => {
   const { t } = useTranslation(["website"]);
 
   return (
-    <footer className={"bg-white flex justify-center pt-3xl pb-m"}>
+    <footer className={"bg-white pt-3xl pb-m"}>
       <SizedSection>
         <nav className={"flex flex-row justify-between items-center"}>
           <div

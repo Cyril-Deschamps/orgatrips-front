@@ -13,6 +13,7 @@ import classNames from "classnames";
 import DateRangeField from "./DateRangeField";
 import NumberSliderField from "./NumberSliderField";
 import SuggestionField from "./SuggestionField";
+import RichTextField from "./RichTextField";
 
 interface Props {
   name: string;
@@ -29,6 +30,7 @@ interface Props {
 enum FieldType {
   String,
   Textarea,
+  RichText,
   Number,
   Select,
   Email,
@@ -59,6 +61,9 @@ function getFieldType(fieldSchema: AnySchema): FieldType {
   }
   if (fieldSchema.meta()?.multiline) {
     return FieldType.Textarea;
+  }
+  if (fieldSchema.meta()?.richText) {
+    return FieldType.RichText;
   }
   if (fieldSchema.meta()?.select) {
     return FieldType.Select;
@@ -145,6 +150,15 @@ const AutoField = ({
       {fieldType === FieldType.Textarea && (
         <TextareaField
           className={classNames(className, customStyle)}
+          disabled={isDisabled}
+          id={id || name}
+          name={name}
+          placeholder={placeholder}
+          {...otherProps}
+        />
+      )}
+      {fieldType === FieldType.RichText && (
+        <RichTextField
           disabled={isDisabled}
           id={id || name}
           name={name}

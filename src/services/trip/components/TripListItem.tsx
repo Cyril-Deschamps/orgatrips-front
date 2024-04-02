@@ -16,7 +16,7 @@ import planeIcon from "../../../assets/img/icons/icon-plane.svg";
 import { useCountry } from "../../countries/CountryContext";
 
 const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
-  const { t } = useTranslation(["trips_results"]);
+  const { t } = useTranslation(["pages_content"]);
   const { countriesList } = useCountry();
 
   const objectUrl = useFileAsObjectURL({
@@ -53,7 +53,7 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
           <span className={"text-sm font-medium pt-[0.65rem] pl-1"}>
             <Trans
               count={trip.travelersNumber}
-              i18nKey={"trips_results:nights_number" as TFuncKey}
+              i18nKey={"pages_content:trips_results.nights_number" as TFuncKey}
               values={{
                 count: trip.nightsNumber,
               }}
@@ -68,22 +68,22 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             }
           >
             <Image alt={"coffee"} className={"w-5"} src={hotelIcon} />
-            {t("trips_results:accomodation_budget")}&nbsp;:
+            {t("pages_content:trips_results.accomodation_budget")}&nbsp;:
             <span className={"whitespace-nowrap"}>
               <strong>{trip.Accomodation.averagePricePerNight} $</strong> /{" "}
-              {t("trips_results:night")}
+              {t("pages_content:trips_results.night")}
             </span>
           </li>
           <li className={"text-sm mb-1 flex flex-row gap-3 items-center"}>
             <Image alt={"coffee"} className={"w-5"} src={planeIcon} />
-            {t("trips_results:transportation_budget")}&nbsp;:
+            {t("pages_content:trips_results.transportation_budget")}&nbsp;:
             <strong className={"whitespace-nowrap"}>
               {trip.Transportation.price}&nbsp;$
             </strong>
           </li>
           <li className={"text-sm mb-1 flex flex-row gap-3 items-center"}>
             <Image alt={"coffee"} className={"pt-[3px] w-5"} src={coffeeIcon} />
-            {t("trips_results:other_budget")}&nbsp;:
+            {t("pages_content:trips_results.other_budget")}&nbsp;:
             <strong className={"whitespace-nowrap"}>
               {trip.otherSpentPrice}
               &nbsp;$
@@ -98,9 +98,9 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
           >
             <p className={"font-bold text-xs pt-1"}>{`${(
               trip.totalPrice / trip.travelersNumber
-            ).toFixed()} $ / ${t("trips_results:person")}`}</p>
+            ).toFixed()} $ / ${t("pages_content:trips_results.person")}`}</p>
             <p className={"font-bold"}>
-              {t("trips_results:total")} :{" "}
+              {t("pages_content:trips_results.total")} :{" "}
               <span className={"text-blue text-xl"}>
                 {trip.totalPrice}&nbsp;$
               </span>
@@ -123,7 +123,7 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
               rel={"noopener noreferrer"}
               target={"_blank"}
             >
-              {t("trips_results:transport_details")}
+              {t("pages_content:trips_results.transport_details")}
             </Link>
           </div>
           <Link
@@ -154,7 +154,7 @@ const TripListItem = ({ trip }: { trip: Trip }): JSX.Element => {
             rel={"noopener noreferrer"}
             target={"_blank"}
           >
-            {t("trips_results:search_accomodation")}
+            {t("pages_content:trips_results.search_accomodation")}
             <Image
               alt={"logo booking"}
               className={"mix-blend-plus-lighter object-none object-top h-6"}

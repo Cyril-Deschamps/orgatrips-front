@@ -17,6 +17,7 @@ global.__NEXT_TRANSLATE_ROUTES_DATA = data;
 module.exports = {
   siteUrl: process.env.REACT_APP_HOST,
   generateRobotsTxt: true,
+  exclude: ["/blog/admin-*"],
   transform: async (config, path) => {
     const locale =
       i18NextConfig.i18n.locales.find(

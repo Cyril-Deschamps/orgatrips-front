@@ -18,8 +18,8 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
-      backgroundImage: {
-        'section-cut-background': "url('/assets/img/section-cut-background.svg')",
+      aspectRatio: {
+        'article-image': '2 / 1',
       },
       objectPosition: {
         'center-top': 'center top',

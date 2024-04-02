@@ -110,12 +110,15 @@ const FileInput: React.FC<Props> = (props) => {
   }, [fileZone, onChange, accept, multiple]);
 
   return (
-    <div ref={fileZone} className={`${dragging && "active"} file-drop`}>
+    <div
+      ref={fileZone}
+      className={`${dragging && "active"} bg-gray-100 rounded p-s`}
+    >
       {dragLabel
         ? dragLabel
         : `Déposez ${multiple ? "vos fichiers" : "votre fichier"} ici`}
       <div>ou</div>
-      <label className={"upload-btn"}>
+      <label className={"underline"}>
         Recherchez sur votre ordinateur
         <input
           accept={accept}

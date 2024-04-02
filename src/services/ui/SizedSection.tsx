@@ -8,14 +8,16 @@ interface Props
 
 const SizedSection = ({ className, little, ...props }: Props): JSX.Element => {
   return (
-    <div
-      {...props}
-      className={classNames(
-        className,
-        little ? "max-w-screen-lg" : "max-w-screen-2xl",
-        "w-full px-m",
-      )}
-    />
+    <div className={"w-full flex justify-center"}>
+      <div
+        {...props}
+        className={classNames(
+          className,
+          little ? "max-w-screen-xl" : "max-w-[1350px]",
+          "w-full px-m",
+        )}
+      />
+    </div>
   );
 };
 

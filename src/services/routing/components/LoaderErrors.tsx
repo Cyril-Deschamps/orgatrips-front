@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import axios from "axios";
 
 interface Props {
-  reload(): void;
+  reload?(): void;
   error: unknown;
 }
 
@@ -11,13 +11,14 @@ const LoaderErrors: FunctionComponent<Props> = ({ reload, error }) => {
     return (
       <div>
         Une erreur est survenue ({error.message}){" "}
-        <button onClick={reload}>Recharger</button>
+        {reload && <button onClick={reload}>Recharger</button>}
       </div>
     );
   }
   return (
     <div>
-      Une erreur est survenue <button onClick={reload}>Recharger</button>
+      Une erreur est survenue
+      {reload && <button onClick={reload}>Recharger</button>}
     </div>
   );
 };

@@ -4,7 +4,7 @@ export function getNumericEnumEntries<
   E extends
     | Record<string | number | symbol, string | number | symbol>
     | unknown
-    | undefined
+    | undefined,
 >(object: E): [number, keyof E][] {
   const typedObject = object as
     | Record<string | number | symbol, string | number | symbol>
@@ -17,7 +17,7 @@ export function getNumericEnumEntries<
 }
 
 export function getStringEnumEntries<
-  E extends Record<string, string> | unknown | undefined
+  E extends Record<string, string> | unknown | undefined,
 >(object: E): [string, keyof E][] {
   const typedObject = object as Record<string, string> | undefined;
   return typedObject !== undefined
