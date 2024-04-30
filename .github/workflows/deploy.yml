@@ -19,10 +19,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 20
+      - name: Use Node.js 16
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 16
           cache: "yarn"
 
       - name: Install dependencies
@@ -116,6 +116,7 @@ jobs:
           script: |
             cd $PROJECT_PATH_PROD
             git clean -df
-            docker ps -q --filter "name=$DOCKER_PROJECT_NAME_PROD" | grep -q . && docker stop $DOCKER_PROJECT_NAME_PROD && docker container rm $DOCKER_PROJECT_NAME_PROD
+            docker stop $DOCKER_PROJECT_NAME_PROD || true
+            docker container rm $DOCKER_PROJECT_NAME_PROD || true
             docker build -t $DOCKER_PROJECT_NAME_PROD $PROJECT_PATH_PROD
-            docker run -d --network reverse-proxy --ip ${{ secrets.PRODUCTION_DOCKER_LOCAL_IP }} --name $DOCKER_PROJECT_NAME_PROD -t $DOCKER_PROJECT_NAME_PROD
+            docker run -d --network reverse-proxy --name $DOCKER_PROJECT_NAME_PROD --ip ${{ secrets.PRODUCTION_DOCKER_LOCAL_IP }} -t $DOCKER_PROJECT_NAME_PROD
