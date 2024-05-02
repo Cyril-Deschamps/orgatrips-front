@@ -9,7 +9,7 @@ import DateField from "./DateField";
 import TextareaField from "./TextareaField";
 import FSelect from "./FSelect";
 import FAutoComplete from "./FAutoComplete";
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import DateRangeField from "./DateRangeField";
 import NumberSliderField from "./NumberSliderField";
 import SuggestionField from "./SuggestionField";
@@ -119,7 +119,7 @@ const AutoField = ({
       </label>
       {fieldType === FieldType.Email && (
         <EmailField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -129,7 +129,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Password && (
         <PasswordField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -139,7 +139,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.String && (
         <TextField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -149,7 +149,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Textarea && (
         <TextareaField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -168,7 +168,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Number && (
         <NumberField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -178,7 +178,7 @@ const AutoField = ({
       )}
       {(fieldType === FieldType.Date || fieldType === FieldType.DateTime) && (
         <DateField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -189,7 +189,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Select && (
         <FSelect
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -201,7 +201,7 @@ const AutoField = ({
       {fieldType === FieldType.AutoComplete && (
         <FAutoComplete
           afterValueChanged={afterValueChanged}
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled || disabled}
           multiselect={fieldSchema.meta()?.multiselect}
           name={name}
@@ -210,7 +210,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.DateRange && (
         <DateRangeField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -220,7 +220,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Slider && (
         <NumberSliderField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}
@@ -229,7 +229,7 @@ const AutoField = ({
       )}
       {fieldType === FieldType.Suggestion && (
         <SuggestionField
-          className={classNames(className, customStyle)}
+          className={twMerge(className, customStyle)}
           disabled={isDisabled}
           id={id || name}
           name={name}

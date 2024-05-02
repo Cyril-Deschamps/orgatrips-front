@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { useField } from "formik";
 import { Key } from "react";
 
@@ -17,10 +17,7 @@ const RadioSelect = (props: Props): JSX.Element => {
       {props.options.map(([value, label]) => (
         <button
           key={value as Key}
-          className={classNames(
-            "btn --switch",
-            field.value === value && "active",
-          )}
+          className={twMerge("btn --switch", field.value === value && "active")}
           disabled={props.disabled}
           onClick={() =>
             helpers.setValue(

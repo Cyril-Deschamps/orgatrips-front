@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { Field, FieldProps } from "formik";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
@@ -35,7 +35,7 @@ const FSelectParse: FunctionComponent<Props> = ({
       }: FieldProps) => (
         <div className={"relative"}>
           <select
-            className={classNames("pr-7", className)}
+            className={twMerge("pr-7", className)}
             onBlur={() => setFieldTouched(name)}
             onChange={(event) => setFieldValue(name, parse(event.target.value))}
             value={value === null ? "" : value}

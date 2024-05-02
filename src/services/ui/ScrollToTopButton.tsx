@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import iconChevronDown from "../../assets/img/icons/icon-chevron-down-white.svg";
@@ -27,7 +27,7 @@ const ScrollToTopButton = () => {
 
   return (
     <div
-      className={classNames(
+      className={twMerge(
         "fixed bottom-xl lg:bottom-2xl right-xl lg:right-4xl transition-all duration-500 ease-in-out z-50 opacity-0 pointer-events-none overflow-hidden rounded-full shadow",
         isVisible ? "visible opacity-100 pointer-events-auto" : undefined,
       )}

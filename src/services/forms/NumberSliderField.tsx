@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { useField } from "formik";
 import { useCallback, useEffect, useState } from "react";
 import InputRange, { InputRangeProps } from "react-input-range";
@@ -53,7 +53,7 @@ const NumberSliderField = ({
   const optimizedFn = useCallback(debounce(), []);
 
   return (
-    <div className={classNames(className, "px-2xl md:px-3xl py-2xl")}>
+    <div className={twMerge(className, "px-2xl md:px-3xl py-2xl")}>
       <InputRange
         formatLabel={(value: number) => `${value} ${unit}`}
         {...otherProps}
@@ -81,7 +81,7 @@ const NumberSliderField = ({
       <div className={"flex justify-center pt-2xl gap-s md:gap-3xl"}>
         <div className={"relative"}>
           <input
-            className={classNames(className, "pr-7 max-w-[15em]")}
+            className={twMerge(className, "pr-7 max-w-[15em]")}
             id={name}
             name={name}
             onChange={(event) =>

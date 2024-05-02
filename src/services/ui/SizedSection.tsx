@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import React, { DetailedHTMLProps, HTMLAttributes } from "react";
 
 interface Props
@@ -11,10 +11,10 @@ const SizedSection = ({ className, little, ...props }: Props): JSX.Element => {
     <div className={"w-full flex justify-center"}>
       <div
         {...props}
-        className={classNames(
-          className,
+        className={twMerge(
           little ? "max-w-screen-xl" : "max-w-[1350px]",
           "w-full px-m",
+          className,
         )}
       />
     </div>

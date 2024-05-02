@@ -5,7 +5,7 @@ import { AnySchema, BaseSchema } from "yup";
 import { debounce } from "../utils/debounce";
 import Image from "next/image";
 import Downshift, { GetItemPropsOptions } from "downshift";
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 
 interface Props
   extends React.DetailedHTMLProps<
@@ -102,7 +102,7 @@ const SuggestionField = ({
         <div className={"relative"}>
           <input
             ref={customInputRef}
-            className={classNames(
+            className={twMerge(
               className,
               `${
                 hasBeenFocused

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { useRouter } from "next-translate-routes";
 import Image from "next/image";
 import React, { DetailedHTMLProps, HTMLAttributes } from "react";
@@ -18,10 +18,7 @@ const CardHeader = ({
 }: Props): JSX.Element => {
   const router = useRouter();
   return (
-    <div
-      {...props}
-      className={classNames(className, "flex flex-row gap-s pb-s ")}
-    >
+    <div {...props} className={twMerge("flex flex-row gap-s pb-s", className)}>
       {goBack && (
         <button onClick={() => router.back()}>
           <Image alt={"go back"} src={goBackIcon} />

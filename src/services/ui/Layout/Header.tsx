@@ -1,12 +1,14 @@
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import Link from "next-translate-routes/link";
-import { BASE_LINK } from "src/routes";
-
+import { BASE_LINK, BLOG_LINK } from "src/routes";
+import { default as NextLink } from "next/link";
 import logo from "../../../assets/img/logo.png";
-import logoKiwiAffiliate from "../../../assets/img/logo-kiwi-affiliate.png";
-import logoBookingAffiliate from "../../../assets/img/logo-booking-affiliate.svg";
+import Button from "../Button";
 
 const Header = (): JSX.Element => {
+  const pathname = usePathname();
+
   return (
     <header
       className={
@@ -23,12 +25,15 @@ const Header = (): JSX.Element => {
           "flex sm:flex-row items-center gap-xs sm:gap-m ml-auto shrink flex-col justify-end"
         }
       >
-        <div className={"w-14 sm:w-24"}>
-          <Image alt={"logo-booking-affiliate"} src={logoBookingAffiliate} />
-        </div>
-        <div className={"w-14 sm:w-24"}>
-          <Image alt={"logo-kiwi-affiliate"} src={logoKiwiAffiliate} />
-        </div>
+        {pathname.includes(BLOG_LINK) ? (
+          <NextLink href={BASE_LINK}>
+            <Button>Accéder a l'application</Button>
+          </NextLink>
+        ) : (
+          <NextLink href={BLOG_LINK}>
+            <Button className={"bg-green"}>Accéder au blog</Button>
+          </NextLink>
+        )}
       </nav>
     </header>
   );

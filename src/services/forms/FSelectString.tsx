@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { Field, FieldProps } from "formik";
 import React, { FunctionComponent } from "react";
 
@@ -24,7 +24,7 @@ const FSelectString: FunctionComponent<Props> = ({
         form: { setFieldValue, setFieldTouched },
       }: FieldProps) => (
         <select
-          className={classNames("select", className)}
+          className={twMerge("select", className)}
           onBlur={() => setFieldTouched(name)}
           onChange={(event) => setFieldValue(name, event.target.value)}
           value={value === null ? "" : value}

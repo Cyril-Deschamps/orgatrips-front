@@ -13,7 +13,7 @@ import Link from "next/link";
 import Image from "next/image";
 import iconPencil from "../../../assets/img/icons/icon-pencil.svg";
 import iconTrash from "../../../assets/img/icons/icon-trash.svg";
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import BaseSeo from "../../../services/seo/BaseSeo";
 import {
   LoadedArticleAPI,
@@ -68,7 +68,7 @@ const AdminBlogDashboard = (): JSX.Element => {
                   {articles.map((article, index) => (
                     <tr
                       key={article.slug}
-                      className={classNames(
+                      className={twMerge(
                         "border-b",
                         index % 2 !== 0 ? "bg-white" : "bg-neutral-100",
                       )}

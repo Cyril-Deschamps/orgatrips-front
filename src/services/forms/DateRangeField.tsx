@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { format } from "date-fns";
 import { useField } from "formik";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
@@ -108,7 +108,7 @@ const DateRangeField = ({
     <OutsideAlerter onClickOutside={() => setShowDatePicker(false)}>
       <div className={"relative"}>
         <DatePicker
-          className={classNames("text-ellipsis cursor-pointer", className)}
+          className={twMerge("text-ellipsis cursor-pointer", className)}
           customInput={<CustomDateInput />}
           endDate={field.value?.endDate}
           locale={locale}
@@ -150,7 +150,7 @@ const DateRangeField = ({
                 </span>
                 <div className={"space-x-2"}>
                   <button
-                    className={classNames(
+                    className={twMerge(
                       prevMonthButtonDisabled &&
                         "cursor-not-allowed opacity-50",
                       "inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500",
@@ -167,7 +167,7 @@ const DateRangeField = ({
                   </button>
                   <button
                     className={
-                      (classNames(
+                      (twMerge(
                         nextMonthButtonDisabled &&
                           "cursor-not-allowed opacity-50",
                       ),

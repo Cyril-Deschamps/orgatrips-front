@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import React, { ReactNode } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -15,7 +15,7 @@ const AppLayout = ({
   return (
     <>
       <Header />
-      <main className={classNames(className, "grow")}>{children}</main>
+      <main className={twMerge("grow", className)}>{children}</main>
       <Footer />
     </>
   );

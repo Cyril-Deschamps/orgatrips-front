@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import React, { DetailedHTMLProps, HTMLAttributes } from "react";
 
 interface Props
@@ -11,7 +11,7 @@ const TitleLegend = ({ className, ...props }: Props): JSX.Element => {
   return (
     <p
       {...props}
-      className={classNames(className, "font-VarsityTeam text-s text-blue")}
+      className={twMerge("font-VarsityTeam text-s text-blue", className)}
     />
   );
 };

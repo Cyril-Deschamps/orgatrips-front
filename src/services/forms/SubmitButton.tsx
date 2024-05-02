@@ -1,6 +1,6 @@
 import { useContext, useMemo, useState } from "react";
 import { FormikContextType, FormikContext } from "formik";
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
 
 interface ButtonProps
@@ -27,7 +27,7 @@ const SubmitButton = ({
 
   return (
     <Button
-      className={classNames(className, "w-3/4")}
+      className={twMerge(className, "w-3/4")}
       disabled={isSubmitting}
       onClick={(ev) => {
         if (onClick) {

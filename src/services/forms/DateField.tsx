@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { useField } from "formik";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
 import { useDate } from "../date/DateContext";
@@ -24,7 +24,7 @@ const DateField = ({
 
   return (
     <DatePicker
-      className={classNames("input", className)}
+      className={twMerge("input", className)}
       locale={locale}
       onChange={(date) => helper.setValue(date)}
       selected={field.value}

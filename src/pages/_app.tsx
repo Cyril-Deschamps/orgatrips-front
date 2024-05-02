@@ -5,7 +5,7 @@ import { AppProps } from "next/app";
 import React, { useState } from "react";
 import { appWithTranslation } from "next-i18next";
 import localFont from "next/font/local";
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import Head from "next/head";
 import { Roboto } from "next/font/google";
 import nextI18NextConfig from "../../next-i18next.config";
@@ -51,7 +51,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title key={"title"}>{`${AppConfig.siteName}`}</title>
       </Head>
       <div
-        className={classNames(
+        className={twMerge(
           varsityTeamFont.variable,
           robotoFont.variable,
           "flex flex-col w-full min-h-screen p-0 m-0 bg-appBgColor font-Roboto",

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import React, { DetailedHTMLProps, HTMLAttributes } from "react";
 
 interface Props
@@ -6,7 +6,7 @@ interface Props
 
 const Divider = ({ className, ...props }: Props): JSX.Element => {
   return (
-    <div {...props} className={classNames(className, "h-[1px] bg-gray-300")} />
+    <div {...props} className={twMerge("h-[1px] bg-gray-300", className)} />
   );
 };
 

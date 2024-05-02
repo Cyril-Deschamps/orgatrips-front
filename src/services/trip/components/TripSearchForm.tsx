@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { addYears } from "date-fns";
 import { useTranslation } from "next-i18next";
 import React, { useCallback, useMemo, useState } from "react";
@@ -104,9 +104,9 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
 
   return (
     <div
-      className={classNames(
-        className,
+      className={twMerge(
         "w-full max-w-2xl bg-white rounded-xl shadow-lg p-6 pt-3 md:p-10",
+        className,
       )}
     >
       <Form

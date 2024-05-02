@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import { useField } from "formik";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
@@ -24,7 +24,7 @@ export const PicturePreview: FunctionComponent<{
       {objectURL && (
         <Image
           alt={"Preview image"}
-          className={classNames(
+          className={twMerge(
             "h-40 w-auto rounded object-cover",
             aspectRatio ? `aspect-[${aspectRatio}]` : undefined,
           )}

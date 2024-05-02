@@ -16,7 +16,7 @@ import { TFuncKey } from "react-i18next";
 import PaginatedList from "../services/ui/PaginatedList";
 import { SortingOption } from "../services/trip/trip";
 import { orderByField } from "../services/data-structures/array";
-import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 import Title1 from "../services/ui/Title1";
 
 const Trips = (): JSX.Element => {
@@ -141,7 +141,7 @@ const Trips = (): JSX.Element => {
             {Object.values(SortingOption).map((sortName) => (
               <button
                 key={sortName}
-                className={classNames(
+                className={twMerge(
                   "text-xs border rounded-full p-1 px-2 cursor-pointer",
                   sortName === sortingOption
                     ? "text-white border-blue bg-blue"
