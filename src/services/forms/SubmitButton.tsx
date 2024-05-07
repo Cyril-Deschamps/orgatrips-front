@@ -2,6 +2,7 @@ import { useContext, useMemo, useState } from "react";
 import { FormikContextType, FormikContext } from "formik";
 import { twMerge } from "tailwind-merge";
 import Button from "../ui/Button";
+import { useTranslation } from "react-i18next";
 
 interface ButtonProps
   extends React.DetailedHTMLProps<
@@ -16,6 +17,8 @@ const SubmitButton = ({
 }: ButtonProps): JSX.Element => {
   const formik: FormikContextType<unknown> | undefined =
     useContext(FormikContext);
+
+  const { t } = useTranslation(["validations"]);
 
   const [isHookedSubmitting, setIsHookedSubmitting] = useState(false);
 
@@ -42,7 +45,7 @@ const SubmitButton = ({
       }}
       type={"submit"}
     >
-      {isSubmitting ? "Chargement..." : children}
+      {isSubmitting ? t("validations:loading") : children}
     </Button>
   );
 };

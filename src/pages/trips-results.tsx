@@ -5,7 +5,7 @@ import nextI18NextConfig from "../../next-i18next.config";
 import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import BaseSeo from "../services/seo/BaseSeo";
-import Link from "next/link";
+import Link from "next-translate-routes/link";
 import HomeIcon from "../assets/img/icons/icon-home.svg";
 import { TRIPS_STORAGE_KEY, useTrip } from "../services/trip/tripProvider";
 import TripListItem from "../services/trip/components/TripListItem";
@@ -75,8 +75,14 @@ const Trips = (): JSX.Element => {
           >
             {t("pages_content:trips_results.main_title")}
           </Title1>
-          <Link className={"p-1 rounded-md bg-green"} href={".."}>
-            <Image alt={"Back home"} className={"w-8 md:w-9"} src={HomeIcon} />
+          <Link href={".."}>
+            <div className={"p-1 rounded-md bg-green"}>
+              <Image
+                alt={"Back home"}
+                className={"w-8 md:w-9"}
+                src={HomeIcon}
+              />
+            </div>
           </Link>
         </div>
         {trips.length > 0 && (

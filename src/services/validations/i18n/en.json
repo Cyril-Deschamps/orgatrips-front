@@ -33,5 +33,6 @@
   },
   "array": {
     "min": "The field {{label}} requires at least {{min}}"
-  }
+  },
+  "loading": "Loading..."
 }

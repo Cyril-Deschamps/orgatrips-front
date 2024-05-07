@@ -12,8 +12,8 @@ const SizedSection = ({ className, little, ...props }: Props): JSX.Element => {
       <div
         {...props}
         className={twMerge(
-          little ? "max-w-screen-xl" : "max-w-[1350px]",
-          "w-full px-m",
+          little ? "max-w-screen-xl" : "max-w-[1450px]",
+          "w-full px-m md:px-2xl",
           className,
         )}
       />

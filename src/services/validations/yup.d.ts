@@ -9,7 +9,8 @@ declare module "yup" {
     TContext extends AnyObject = AnyObject,
     TOut extends TType = TType,
   > extends BaseSchema<TType, TContext, TOut> {
-    password(): this;
+    password(regex?: RegExp): this;
+    passwordConfirmation(ref: Reference): this;
     multiline(): this;
     richText(): this;
   }

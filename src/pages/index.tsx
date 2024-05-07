@@ -10,7 +10,7 @@ import type { GetStaticProps } from "next";
 import nextI18NextConfig from "../../next-i18next.config";
 import { Trans, useTranslation } from "next-i18next";
 import AppLayout from "../services/ui/Layout/AppLayout";
-import { default as NextLink } from "next/link";
+import Link from "next/link";
 import dashboardIllustration from "../assets/img/dashboard-illustration.svg";
 import logoKiwiClassic from "../assets/img/logo-kiwi-classic.svg";
 import logoBookingClassic from "../assets/img/logo-booking-classic.svg";
@@ -127,7 +127,7 @@ const Home = (): JSX.Element => {
                 "flex flex-row gap-x-3xl gap-y-s pt-10 md:pt-xl pl-1 flex-wrap w-[40%] items-center"
               }
             >
-              <NextLink href={BOOKING_LINK}>
+              <Link href={BOOKING_LINK}>
                 <Image
                   alt={"Logo Booking"}
                   className={
@@ -135,15 +135,15 @@ const Home = (): JSX.Element => {
                   }
                   src={logoBookingClassic}
                 />
-              </NextLink>
+              </Link>
 
-              <NextLink href={KIWI_LINK}>
+              <Link href={KIWI_LINK}>
                 <Image
                   alt={"Logo kiwi"}
                   className={"max-h-3xl object-contain object-left grayscale"}
                   src={logoKiwiClassic}
                 />
-              </NextLink>
+              </Link>
             </div>
           </div>
           <div className={"mt-[-8rem] lg:mt-[-6rem]"}>

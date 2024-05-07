@@ -9,7 +9,7 @@ const Card = ({ className, children, ...props }: Props): JSX.Element => {
     <div
       {...props}
       className={twMerge(
-        "w-11/12 max-w-6xl p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mb-m",
+        "bg-white w-11/12 max-w-6xl p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 mb-m",
         className,
       )}
     >

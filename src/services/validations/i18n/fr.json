@@ -33,5 +33,6 @@
   },
   "array": {
     "min": "Le champ {{label}} en exige au minimum {{min}}"
-  }
+  },
+  "loading": "Chargement..."
 }

@@ -9,7 +9,7 @@ const SmoothText = dynamic(() => import("../../ui/SmoothText"), {
   ssr: false,
 });
 
-const ArticleItem = ({
+const TripItem = ({
   article,
   imageClassname,
 }: {
@@ -63,4 +63,4 @@ const ArticleItem = ({
   );
 };
 
-export default ArticleItem;
+export default TripItem;

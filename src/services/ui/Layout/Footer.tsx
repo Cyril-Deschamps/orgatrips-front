@@ -10,7 +10,6 @@ import {
   HELP_PRIVACY_POLICY_LINK,
 } from "../../../routes/help";
 import { BASE_LINK } from "../../../routes";
-
 import logoIco from "../../../assets/img/logo-ico.png";
 import facebookIcon from "../../../assets/img/icons/icon-facebook.svg";
 import instagramIcon from "../../../assets/img/icons/icon-instagram.svg";

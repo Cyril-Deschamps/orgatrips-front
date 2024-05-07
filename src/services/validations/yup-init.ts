@@ -2,9 +2,27 @@ import { addMethod, date, mixed, string, array, object, number } from "yup";
 import { getNumericEnumEntries } from "../data-structures/enum";
 import { Namespace, TFuncKey } from "react-i18next";
 import { AutocompleteItem } from "../forms/SuggestionField";
+import Reference from "yup/lib/Reference";
 
-addMethod(string, "password", function () {
-  return this.required().meta({ password: true });
+addMethod(
+  string,
+  "password",
+  function (regex: RegExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/) {
+    return this.required()
+      .meta({ password: true })
+      .matches(regex, {
+        message: { key: "user.password.matches" },
+      });
+  },
+);
+
+addMethod(string, "passwordConfirmation", function (ref: Reference) {
+  return (
+    this.required()
+      .meta({ password: true })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .equals([ref], { key: "user.password.equals" }) as any
+  );
 });
 
 addMethod(date, "time", function () {

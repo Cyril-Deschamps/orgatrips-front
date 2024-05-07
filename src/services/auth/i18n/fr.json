@@ -1,0 +1,38 @@
+{
+  "email": "Adresse e-mail",
+  "lastname": "Nom",
+  "firstname": "Prénom",
+  "password": "Mot de passe",
+  "password-confirm": "Confirmation mot de passe",
+  "create-user": {
+    "TOAST_SUCCESS": "L'utilisateur a été créé avec succès",
+    "TOAST_ERROR": "Une erreur est survenue lors de la création du compte",
+    "TOAST_ERROR_ALREADY_EXIST": "Un compte existe déjà avec cette adresse e-mail."
+  },
+  "login": {
+    "TOAST_ERROR": "Une erreur est survenue lors de l'authentification"
+  },
+  "user": {
+    "lastname": "Nom",
+    "firstname": "Prénom",
+    "admin": "Administrateur"
+  },
+  "update-user": {
+    "TOAST_SUCCESS": "Votre utilisateur a été mis à jour avec succès",
+    "TOAST_ERROR": "Une erreur s'est produite lors de l'enregistrement des mises à jour."
+  },
+  "update-user-password": {
+    "ERROR_INVALID_OLD_PASSWORD": "Ancien mot de passe invalide",
+    "SUCCESS": "Mot de passe mise à jour avec succès",
+    "ERROR": "Une erreur s'est produite lors de la mise à jour du mot de passe"
+  },
+  "delete-user": {
+    "TOAST_SUCCESS": "L'utilisateur a été supprimé avec succès",
+    "TOAST_ERROR": "Une erreur s'est produite lors de la suppression de l'utilisateur."
+  },
+  "loginAction": "Se connecter",
+  "registerAction": "S'inscrire",
+  "or-register": "Ou s'inscrire",
+  "or-login": "Ou se connecter",
+  "logout": "Se déconnecter"
+}

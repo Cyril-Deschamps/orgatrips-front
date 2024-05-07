@@ -1,0 +1,38 @@
+{
+  "email": "E-mail",
+  "lastname": "Lastname",
+  "firstname": "Firstname",
+  "password": "Password",
+  "password-confirm": "Password confirmation",
+  "user": {
+    "lastname": "Name",
+    "firstname": "Firstname",
+    "admin": "Admin"
+  },
+  "create-user": {
+    "TOAST_SUCCESS": "The user has been successfully created",
+    "TOAST_ERROR": "An error occurred during account creation",
+    "TOAST_ERROR_ALREADY_EXIST": "An account already exists with this e-mail address."
+  },
+  "login": {
+    "TOAST_ERROR": "An error occurred during authentication"
+  },
+  "update-user": {
+    "TOAST_SUCCESS": "Your user has been successfully updated",
+    "TOAST_ERROR": "An error has occurred while saving updates."
+  },
+  "update-user-password": {
+    "ERROR_INVALID_OLD_PASSWORD": "Old password invalid",
+    "SUCCESS": "Password successfully updated",
+    "ERROR": "An error occurred while updating the password"
+  },
+  "delete-user": {
+    "TOAST_SUCCESS": "The user has been successfully deleted",
+    "TOAST_ERROR": "An error occurred while deleting the user."
+  },
+  "loginAction": "Log in",
+  "registerAction": "Sign in",
+  "or-register": "Or sign in",
+  "or-login": "Or log in",
+  "logout": "Log out"
+}

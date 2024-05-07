@@ -20,6 +20,13 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { AppConfig } from "../services/utils/AppConfig";
+import dynamic from "next/dynamic";
+const ProvideAuth = dynamic(
+  () => import("../services/auth/apiProvider").then((file) => file.ProvideAuth),
+  {
+    ssr: false,
+  },
+);
 
 const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID || "";
 
@@ -61,14 +68,16 @@ const App = ({ Component, pageProps }: AppProps) => {
           <Hydrate state={pageProps.dehydratedState}>
             <ProvideToast>
               <ProvideTransition>
-                <ProvideTrip>
-                  <GoogleAnalytics
-                    gaMeasurementId={GA_MEASUREMENT_ID}
-                    strategy={"afterInteractive"}
-                    trackPageViews
-                  />
-                  <Component {...pageProps} />
-                </ProvideTrip>
+                <ProvideAuth>
+                  <ProvideTrip>
+                    <GoogleAnalytics
+                      gaMeasurementId={GA_MEASUREMENT_ID}
+                      strategy={"afterInteractive"}
+                      trackPageViews
+                    />
+                    <Component {...pageProps} />
+                  </ProvideTrip>
+                </ProvideAuth>
               </ProvideTransition>
             </ProvideToast>
           </Hydrate>

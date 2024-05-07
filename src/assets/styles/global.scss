@@ -122,3 +122,14 @@ input::placeholder {
   transition: transform 220ms cubic-bezier(0.2, 0, 0, 1),
     opacity 220ms ease 100ms;
 }
+
+.goo {
+  display: inline;
+  box-decoration-break: clone;
+  padding: 0.5rem 0.7rem;
+  filter: url(#goo);
+}
+
+.goo:focus {
+  outline: 0;
+}

@@ -9,7 +9,7 @@ import {
   ADMIN_NEW_ARTICLE_LINK,
 } from "../../../routes/blog/admin-its-a-fucking-route-to-manage-article";
 import { useRouter } from "next-translate-routes";
-import Link from "next/link";
+import Link from "next-translate-routes/link";
 import Image from "next/image";
 import iconPencil from "../../../assets/img/icons/icon-pencil.svg";
 import iconTrash from "../../../assets/img/icons/icon-trash.svg";
@@ -78,8 +78,6 @@ const AdminBlogDashboard = (): JSX.Element => {
                           href={`${generatePath(ARTICLE_DETAIL_LINK, {
                             articleSlug: article.slug,
                           })}`}
-                          rel={"noopener noreferrer"}
-                          target={"_blank"}
                         >
                           {article.title}
                         </Link>

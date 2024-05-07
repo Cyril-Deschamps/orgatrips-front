@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next-translate-routes/link";
-import { BASE_LINK, BLOG_LINK } from "src/routes";
-import { default as NextLink } from "next/link";
+import { ACCOUNT_LINK, BASE_LINK, BLOG_LINK, LOGIN_LINK } from "src/routes";
 import logo from "../../../assets/img/logo.png";
 import Button from "../Button";
+import { useAuth } from "../../auth/apiProvider";
 
 const Header = (): JSX.Element => {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   return (
     <header
@@ -22,17 +23,34 @@ const Header = (): JSX.Element => {
       </Link>
       <nav
         className={
-          "flex sm:flex-row items-center gap-xs sm:gap-m ml-auto shrink flex-col justify-end"
+          "flex flex-col items-center gap-s ml-auto shrink justify-end"
         }
       >
         {pathname.includes(BLOG_LINK) ? (
-          <NextLink href={BASE_LINK}>
-            <Button>Accéder a l'application</Button>
-          </NextLink>
+          <Link href={BASE_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              Accéder à l'application
+            </Button>
+          </Link>
         ) : (
-          <NextLink href={BLOG_LINK}>
-            <Button className={"bg-green"}>Accéder au blog</Button>
-          </NextLink>
+          <Link href={BLOG_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              Accéder au blog
+            </Button>
+          </Link>
+        )}
+        {user ? (
+          <Link href={ACCOUNT_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              Espace client
+            </Button>
+          </Link>
+        ) : (
+          <Link href={LOGIN_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              Connexion
+            </Button>
+          </Link>
         )}
       </nav>
     </header>

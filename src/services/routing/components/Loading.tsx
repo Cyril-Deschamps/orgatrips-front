@@ -1,10 +1,12 @@
 import { FunctionComponent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   debounce?: boolean;
 }
 
 const Loading: FunctionComponent<Props> = ({ debounce = true }) => {
+  const { t } = useTranslation(["validations"]);
   const [showLoading, setShowLoading] = useState(!debounce);
   useEffect(() => {
     if (debounce) {
@@ -17,7 +19,7 @@ const Loading: FunctionComponent<Props> = ({ debounce = true }) => {
   });
 
   if (!showLoading) return null;
-  return <div>Chargement...</div>;
+  return <div>{t("validations:loading")}</div>;
 };
 
 export default Loading;

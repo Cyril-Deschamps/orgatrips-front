@@ -4,7 +4,6 @@ import type { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
 import nextI18nextConfig from "../../../next-i18next.config";
 import AppLayout from "../../services/ui/Layout/AppLayout";
-import SizedSection from "../../services/ui/SizedSection";
 import BaseSeo from "../../services/seo/BaseSeo";
 import ArticleItem from "../../services/articles/components/ArticleItem";
 import {
@@ -14,9 +13,8 @@ import {
 import { prefetchAllArticles } from "../../services/articles/prerenderingHelper";
 import { dehydrate } from "@tanstack/react-query";
 import { withUseQuery } from "../../services/routing/useLoader";
-import Card from "../../services/ui/Card";
-import InfoIcon from "../../assets/img/icons/icon-info-white.svg";
-import InfoCard from "../../services/ui/InfoCard";
+import Title1 from "../../services/ui/Title1";
+import TripItem from "../../services/articles/components/TripItem";
 
 const BlogDashboard = (): JSX.Element => {
   const { useLoadArticles } = useArticle() as LoadedArticleAPI;
@@ -29,47 +27,38 @@ const BlogDashboard = (): JSX.Element => {
         description={t("pages_content:blog.page_description")}
         title={t("pages_content:blog.page_title")}
       />
-      <div
+      <section
         className={
-          "flex flex-col items-center w-full p-xl bg-gradient-to-b from-appBgColor from-50% to-white to-50%"
+          "my-xl grid grid-cols-3 gap-x-3xl px-m md:px-2xl w-full max-w-[1700px]"
         }
       >
-        <Card className={"border-0 w-full bg-white"}>
-          <div className={"grid grid-cols-2 gap-8"}>
-            <InfoCard icon={InfoIcon} title={"Test"}>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed to using 'Content here,
-              content here', making it look like readable English.
-            </InfoCard>
-            <InfoCard
-              className={"bg-green opacity-100"}
-              icon={InfoIcon}
-              title={"Test"}
-            >
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters.
-            </InfoCard>
-          </div>
-        </Card>
-      </div>
-
-      <div className={"bg-white w-full"}>
-        <SizedSection>
-          <h2>Sélection de la rédaction</h2>
-          <div>
+        <div className={"col-start-1 xl:col-end-3 col-end-4"}>
+          <Title1 className={"italic"} big>
+            Sélection de la rédaction
+          </Title1>
+          <div className={"mt-2xl"}>
             <ArticleItem article={articles[0]} />
-            <div>
-              {articles.slice(1, 3).map((article) => (
-                <ArticleItem key={article.slug} article={article} />
-              ))}
-            </div>
           </div>
-        </SizedSection>
-      </div>
+        </div>
+        <div>
+          <span className={"bg-white p-xs rounded-xl font-bold"}>
+            Dernières génération partagée ...
+          </span>
+          <div
+            className={
+              "xl:col-start-3 xl:col-end-4 gap-2xl xl:gap-s col-start-1 col-end-4 pt-xl grid content-start"
+            }
+          >
+            {articles.slice(1, 3).map((article) => (
+              <TripItem
+                key={article.slug}
+                article={article}
+                imageClassname={"aspect-auto h-[208px]"}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     </AppLayout>
   );
 };

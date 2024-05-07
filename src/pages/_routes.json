@@ -1,5 +1,11 @@
 {
   "trips-results": {
     "fr": "resultats-voyages"
+  },
+  "login": {
+    "fr": "connexion"
+  },
+  "register": {
+    "fr": "inscription"
   }
 }

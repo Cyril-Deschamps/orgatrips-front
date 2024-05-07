@@ -1,7 +1,20 @@
-import axios from "axios";
+"use client";
+
+import axios, { AxiosPromise } from "axios";
 import { baseURL } from "./config";
 import logger from "./logger";
 import { parse as parseContentDisposition } from "content-disposition";
+import {
+  LoggedUser,
+  LoggedUserRaw,
+  User,
+  UserForm,
+  UserPasswordForm,
+  UserRaw,
+  UserToLogin,
+} from "./user";
+
+const LOCAL_STORAGE_USER_KEY = "user";
 
 const baseAPI = axios.create({
   baseURL,
@@ -22,6 +35,61 @@ baseAPI.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+export function login(user: UserToLogin): AxiosPromise<{
+  user: LoggedUserRaw;
+  message: string;
+}> {
+  return baseAPI.post("/login", user);
+}
+
+export function logout(): AxiosPromise<void> {
+  return baseAPI.get("/logout");
+}
+
+export function getLocalUser(): LoggedUser {
+  return JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_USER_KEY) as string,
+  ) as LoggedUser;
+}
+
+export function setLocalUser(user: LoggedUser): void {
+  return localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
+}
+
+export function isSetLocalUser(): boolean {
+  return localStorage.getItem("user") !== null;
+}
+
+export function deleteLocalUser(): void {
+  return localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+}
+
+export function getUserById(id: User["id"]): AxiosPromise<UserRaw> {
+  return baseAPI.get("/users/" + id);
+}
+
+export function updateUserById(
+  userId: User["id"],
+  user: UserForm,
+): AxiosPromise<UserRaw> {
+  return baseAPI.put(`/users/${userId}`, user);
+}
+
+export function deleteUserById(userId: User["id"]): AxiosPromise<void> {
+  return baseAPI.delete(`/users/${userId}`);
+}
+
+export function updateUserPasswordById(
+  id: User["id"],
+  form: UserPasswordForm,
+): AxiosPromise<void> {
+  return baseAPI.put("/users/" + id + "/update-pwd", form);
+}
+
+export function createAccount(user: UserForm): AxiosPromise<void> {
+  return baseAPI.post("/users", user);
+}
 
 export interface ObjectURL {
   url: string;

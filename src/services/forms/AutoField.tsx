@@ -111,7 +111,7 @@ const AutoField = ({
   return (
     <div className={"my-xxs"}>
       <label
-        className={"bg-white z-10 relative px-xxs ml-xs text-xs"}
+        className={"bg-white rounded z-10 relative px-xxs ml-xs text-xs"}
         htmlFor={id || name}
       >
         {fieldSchema.spec.label} {unit && ` (${unit})`}
