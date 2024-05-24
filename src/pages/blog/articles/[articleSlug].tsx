@@ -4,17 +4,9 @@ import type { GetStaticProps } from "next";
 import AppLayout from "../../../services/ui/Layout/AppLayout";
 import SizedSection from "../../../services/ui/SizedSection";
 import nextI18nextConfig from "../../../../next-i18next.config";
-import {
-  getAllArticlesPaths,
-  prefetchArticleBySlug,
-} from "../../../services/articles/prerenderingHelper";
-import {
-  LoadedArticleAPI,
-  useArticle,
-} from "../../../services/articles/useArticle";
-import { withUseQuery } from "../../../services/routing/useLoader";
+import { prefetchArticleBySlug } from "../../../services/articles/prerenderingHelper";
 import BaseSeo from "../../../services/seo/BaseSeo";
-import { dehydrate } from "@tanstack/react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useDate } from "../../../services/date/DateContext";
 import iconCalendarGray from "../../../assets/img/icons/icon-calendar-gray.svg";
@@ -22,14 +14,18 @@ import iconTimeGray from "../../../assets/img/icons/icon-time-gray.svg";
 import { formatDuration } from "date-fns";
 import { Article } from "../../../services/articles/article";
 import ScrollToTopButton from "../../../services/ui/ScrollToTopButton";
+import { getAllArticles } from "../../../services/articles/api";
+import { useLoadArticleBySlug } from "../../../services/articles/articleHooks";
+import { Prefetched } from "../../../services/api";
 
 interface Props {
   referenceId: Article["slug"];
 }
 
 const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
-  const { useLoadArticleBySlug } = useArticle() as LoadedArticleAPI;
-  const { data: article } = useLoadArticleBySlug(referenceId);
+  const { data: article, isLoading } = useLoadArticleBySlug<Prefetched>({
+    articleSlug: referenceId,
+  });
   const { formatDate } = useDate();
 
   const [headings, setHeadings] = useState<{ id: string; text: string }[]>([]);
@@ -53,7 +49,7 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
 
   return (
     <AppLayout>
-      <BaseSeo title={article.title} translated={false} noBaseTitle />
+      <BaseSeo title={article.title} noBaseTitle />
       <ScrollToTopButton />
       <SizedSection
         className={
@@ -72,6 +68,7 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
               id={"title"}
             >
               {article.title}
+              {isLoading ? "..." : ""}
             </h1>
             <div className={"h-xxs w-4xl rounded-xl bg-blue md:hidden"} />
           </div>
@@ -150,59 +147,6 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
             </span>
           </div>
         </article>
-        <aside className={"article-aside"}>
-          <div className={"window"}>
-            <div className={"flex flex-row items-center gap-l"}>
-              <div className={"tools"}>
-                <div className={"circle"}>
-                  <span className={"red box"} />
-                </div>
-                <div className={"circle"}>
-                  <span className={"yellow box"} />
-                </div>
-                <div className={"circle"}>
-                  <span className={"green box"} />
-                </div>
-              </div>
-              <span className={"uppercase font-bold text-xs text-gray-700"}>
-                Orgatrips
-              </span>
-            </div>
-            <div className={"pt-s"}>
-              <span>
-                Our solution powered by artificial intelligence suggests
-                destinations according to your desires and your budget. It will
-                suggest you transportation and accommodation reservations,
-                through Booking and Kiwi, that match your budget.
-              </span>
-            </div>
-          </div>
-          <div className={"window"}>
-            <div className={"flex flex-row items-center gap-l"}>
-              <div className={"tools"}>
-                <div className={"circle"}>
-                  <span className={"red box"} />
-                </div>
-                <div className={"circle"}>
-                  <span className={"yellow box"} />
-                </div>
-                <div className={"circle"}>
-                  <span className={"green box"} />
-                </div>
-              </div>
-              <span className={"uppercase font-bold text-xs text-gray-700"}>
-                Les articles les plus lus
-              </span>
-            </div>
-            <div className={"pt-s"}>
-              <span>
-                Le site qui explique tout de A à Z sur le Bitcoin, la blockchain
-                et les crypto-monnaies. Des actualités et des articles
-                explicatifs pour découvrir et progresser dans ces secteurs !
-              </span>
-            </div>
-          </div>
-        </aside>
       </SizedSection>
     </AppLayout>
   );
@@ -210,14 +154,19 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
 
 export async function getStaticPaths() {
   return {
-    paths: await getAllArticlesPaths(),
+    paths: await getAllArticles().then(({ data }) =>
+      data.map((article) => ({
+        params: { articleSlug: article.slug },
+      })),
+    ),
     fallback: false,
   };
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
+  const queryClient = new QueryClient();
   const articleSlug = params!.articleSlug as string;
-  const queryClient = await prefetchArticleBySlug(articleSlug);
+  await prefetchArticleBySlug(queryClient, articleSlug);
   return {
     props: {
       referenceId: articleSlug,
@@ -231,9 +180,4 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   };
 };
 
-const useQueryLoaders = ({ referenceId }: Props) => {
-  const { useLoadArticleBySlug } = useArticle();
-  return [useLoadArticleBySlug(referenceId)];
-};
-
-export default withUseQuery<Props>(ArticleDetails, useQueryLoaders);
+export default ArticleDetails;

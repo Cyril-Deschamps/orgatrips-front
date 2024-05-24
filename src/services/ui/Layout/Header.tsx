@@ -1,14 +1,15 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import Link from "next-translate-routes/link";
 import { ACCOUNT_LINK, BASE_LINK, BLOG_LINK, LOGIN_LINK } from "src/routes";
 import logo from "../../../assets/img/logo.png";
 import Button from "../Button";
-import { useAuth } from "../../auth/apiProvider";
+import { useAuthContext } from "../../auth/apiProvider";
+import Link from "next/link";
+import { ADMIN_ARTICLES_LINK } from "../../../routes/blog";
 
 const Header = (): JSX.Element => {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   return (
     <header
@@ -49,6 +50,13 @@ const Header = (): JSX.Element => {
           <Link href={LOGIN_LINK}>
             <Button className={"bg-green px-s py-xxs text-s text-white"}>
               Connexion
+            </Button>
+          </Link>
+        )}
+        {user && user.admin && (
+          <Link href={ADMIN_ARTICLES_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              Admin
             </Button>
           </Link>
         )}

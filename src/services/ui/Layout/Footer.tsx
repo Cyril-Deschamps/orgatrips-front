@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Link from "next-translate-routes/link";
-import { default as NextLink } from "next/link";
+import Link, { default as NextLink } from "next/link";
 import Divider from "../Divider";
 import SizedSection from "../SizedSection";
 import { useTranslation } from "next-i18next";

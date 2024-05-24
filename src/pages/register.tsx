@@ -1,22 +1,22 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
 import nextI18nextConfig from "../../next-i18next.config";
-import { useRouter } from "next-translate-routes";
 import { FunctionComponent } from "react";
 import { ACCOUNT_LINK, BASE_LINK, LOGIN_LINK } from "../routes";
-import { useAuth } from "../services/auth/apiProvider";
+import { useAuthContext } from "../services/auth/apiProvider";
 import { useToastsWithIntl } from "../services/toast-notifications";
 import Card from "../services/ui/Card";
 import CardHeader from "../services/ui/CardHeader";
 import AppLayout from "../services/ui/Layout/AppLayout";
 import Title1 from "../services/ui/Title1";
-import Link from "next-translate-routes/link";
 import RegisterForm from "../services/auth/components/RegisterForm";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Register: FunctionComponent = () => {
   const { t } = useTranslation(["auth"]);
-  const { createAccount, user } = useAuth();
+  const { register, user } = useAuthContext();
   const { toastError } = useToastsWithIntl(["auth"]);
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const Register: FunctionComponent = () => {
         </CardHeader>
         <RegisterForm
           onSubmit={(registerInfos) => {
-            return createAccount(registerInfos).then(
+            return register(registerInfos).then(
               () => {
                 router.push(ACCOUNT_LINK);
               },

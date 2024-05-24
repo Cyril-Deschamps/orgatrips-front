@@ -24,7 +24,7 @@ import tripImage from "../assets/img/trip-image.jpeg";
 import BaseSeo from "../services/seo/BaseSeo";
 import { jsonLdScriptProps } from "react-schemaorg";
 import { Organization } from "schema-dts";
-import { hostBaseURL } from "../services/auth/config";
+import { hostBaseURL } from "../services/api/config";
 import { BOOKING_LINK, KIWI_LINK } from "../routes/external";
 import Title1 from "../services/ui/Title1";
 

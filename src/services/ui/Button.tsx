@@ -8,7 +8,8 @@ const Button = ({ className, children, ...props }: Props): JSX.Element => {
     <button
       {...props}
       className={twMerge(
-        "text-white hover:opacity-80 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-light-blue",
+        "text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-light-blue",
+        props.disabled ? "cursor-default opacity-50" : "hover:opacity-80",
         className,
       )}
     >

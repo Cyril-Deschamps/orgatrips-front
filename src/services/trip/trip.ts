@@ -1,10 +1,13 @@
 import { formatISO, parseISO } from "date-fns";
 import { DateRange } from "../forms/DateRangeField";
+import { searchTrips } from "./api";
 
 export const budgetMax = 25000 as const;
 
+export const TRIPS_STORAGE_KEY = "trips" as const;
+
 export interface SearchTripsForm {
-  departureCity: string;
+  departureIataCode: string;
   dateRange: DateRange;
   budgetMax: number;
   adultsNumber: number;
@@ -13,50 +16,69 @@ export interface SearchTripsForm {
 }
 
 export interface Trip {
-  destinationName: string;
-  destinationCityCode: string;
-  destinationCountryCode: string;
+  id?: number;
+  DepartureAirport: Airport;
+  DestinationCity: City;
   nightsNumber: number;
   travelersNumber: number;
-  popularity: number;
-  otherSpentPrice: number;
-  totalPrice: number;
-  destinationPicture: string;
-  Accomodation: Accommodation;
-  Transportation: Transportation;
-  budgetMax: number;
+  otherSpentBudget: number;
+  totalBudget: number;
+  accomodationAveragePricePerNight: number;
+  transportationPrice: number;
+  transportationBookingToken: string;
+  transportationInboundDuration: number;
+  transportationOutboundDuration: number;
+  transportationStopOverInbound: number;
+  transportationStopOverOutbound: number;
+  transportationDepartureDate: Date;
+  transportationReturnDate: Date;
+  transportationArrivalLocalDate: Date;
+  transportationLeavingLocalDate: Date;
+  createdAt: Date;
 }
 
-export interface TripRaw extends Omit<Trip, "Transportation"> {
-  Transportation: TransportationRaw;
+export interface FeedTrip extends Omit<Trip, "id"> {
+  id: number;
+  likesCount: number;
+  hasAlreadyLike: boolean;
 }
 
-export interface Transportation {
-  price: number;
-  bookingToken: string;
-  inboundDuration: number;
-  outboundDuration: number;
-  stopOverInbound: number;
-  stopOverOutbound: number;
-  departureDate: Date;
-  returnDate: Date;
-  arrivalLocalDate: Date;
-  leavingLocalDate: Date;
+export interface FeedTripRaw extends Omit<TripRaw, "id"> {
+  id: number;
+  likesCount: number;
+  hasAlreadyLike: boolean;
 }
 
-export interface TransportationRaw
+export interface TripRaw
   extends Omit<
-    Transportation,
-    "departureDate" | "returnDate" | "arrivalLocalDate" | "leavingLocalDate"
+    Trip,
+    | "transportationDepartureDate"
+    | "transportationReturnDate"
+    | "transportationArrivalLocalDate"
+    | "transportationLeavingLocalDate"
+    | "createdAt"
   > {
-  departureDate: string;
-  returnDate: string;
-  arrivalLocalDate: string;
-  leavingLocalDate: string;
+  transportationDepartureDate: string;
+  transportationReturnDate: string;
+  transportationArrivalLocalDate: string;
+  transportationLeavingLocalDate: string;
+  createdAt: string;
 }
 
-export interface Accommodation {
-  averagePricePerNight: number;
+export interface City {
+  id: number;
+  name: string;
+  countryCode: string;
+  slug: string;
+  code: string;
+  kiwiDstPopularityScore: number;
+  lat: number;
+  lon: number;
+  soloPricePerPersonMin: number;
+  soloPricePerPersonMax: number;
+  multiplePricePerPersonMin: number;
+  multiplePricePerPersonMax: number;
+  cityPic: string | null;
 }
 
 export interface Airport {
@@ -80,6 +102,35 @@ export enum SortingOption {
   "CHEAPER" = "CHEAPER",
 }
 
+export enum LiveFeedWebSocketRequestType {
+  LIKE,
+  UNLIKE,
+}
+
+export interface LiveFeedWebSocketRequest {
+  type: LiveFeedWebSocketRequestType;
+  params: Record<string, unknown>;
+}
+
+export enum LiveFeedWebSocketResponseType {
+  ERROR = -1,
+  REFRESH_DATA,
+}
+
+export interface LiveFeedWebSocketResponse {
+  type: LiveFeedWebSocketResponseType;
+  params: Record<string, unknown>;
+}
+
+export async function searchAndSaveTrips(form: SearchTripsForm): Promise<void> {
+  try {
+    const { data: trips } = await searchTrips(form);
+    localStorage.setItem(TRIPS_STORAGE_KEY, JSON.stringify(trips));
+  } catch (e) {
+    throw e;
+  }
+}
+
 export function getAirportTypeKey(airportTypeValue: AirportType): string {
   const keys = Object.keys(AirportType).filter(
     (key) => AirportType[key as keyof typeof AirportType] === airportTypeValue,
@@ -88,28 +139,47 @@ export function getAirportTypeKey(airportTypeValue: AirportType): string {
   return keys[0] || "";
 }
 
+export function mapFeedTripRawToFeedTrip(tripRaw: FeedTripRaw): FeedTrip {
+  return {
+    ...tripRaw,
+    transportationDepartureDate: parseISO(tripRaw.transportationDepartureDate),
+    transportationReturnDate: parseISO(tripRaw.transportationReturnDate),
+    transportationArrivalLocalDate: parseISO(
+      tripRaw.transportationArrivalLocalDate,
+    ),
+    transportationLeavingLocalDate: parseISO(
+      tripRaw.transportationLeavingLocalDate,
+    ),
+    createdAt: parseISO(tripRaw.createdAt),
+  };
+}
+
 export function mapTripRawToTrip(tripRaw: TripRaw): Trip {
   return {
     ...tripRaw,
-    Transportation: {
-      ...tripRaw.Transportation,
-      departureDate: parseISO(tripRaw.Transportation.departureDate),
-      returnDate: parseISO(tripRaw.Transportation.returnDate),
-      arrivalLocalDate: parseISO(tripRaw.Transportation.arrivalLocalDate),
-      leavingLocalDate: parseISO(tripRaw.Transportation.leavingLocalDate),
-    },
+    transportationDepartureDate: parseISO(tripRaw.transportationDepartureDate),
+    transportationReturnDate: parseISO(tripRaw.transportationReturnDate),
+    transportationArrivalLocalDate: parseISO(
+      tripRaw.transportationArrivalLocalDate,
+    ),
+    transportationLeavingLocalDate: parseISO(
+      tripRaw.transportationLeavingLocalDate,
+    ),
+    createdAt: parseISO(tripRaw.createdAt),
   };
 }
 
 export function mapTripToTripRaw(tripRaw: Trip): TripRaw {
   return {
     ...tripRaw,
-    Transportation: {
-      ...tripRaw.Transportation,
-      departureDate: formatISO(tripRaw.Transportation.departureDate),
-      returnDate: formatISO(tripRaw.Transportation.returnDate),
-      arrivalLocalDate: formatISO(tripRaw.Transportation.arrivalLocalDate),
-      leavingLocalDate: formatISO(tripRaw.Transportation.leavingLocalDate),
-    },
+    transportationDepartureDate: formatISO(tripRaw.transportationDepartureDate),
+    transportationReturnDate: formatISO(tripRaw.transportationReturnDate),
+    transportationArrivalLocalDate: formatISO(
+      tripRaw.transportationArrivalLocalDate,
+    ),
+    transportationLeavingLocalDate: formatISO(
+      tripRaw.transportationLeavingLocalDate,
+    ),
+    createdAt: formatISO(tripRaw.createdAt),
   };
 }

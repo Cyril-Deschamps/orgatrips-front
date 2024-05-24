@@ -4,20 +4,22 @@ import iconArrowMiniLeft from "../../assets/img/icons/icon-chevron-left.svg";
 import iconArrowMiniRight from "../../assets/img/icons/icon-chevron-right.svg";
 import iconEndArrowLeft from "../../assets/img/icons/icon-end-arrow-left.svg";
 import iconEndArrowRight from "../../assets/img/icons/icon-end-arrow-right.svg";
-import { useRouter } from "next-translate-routes";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 const PaginatedList = <Item,>({
   items,
   render,
   paginatedBy,
   className,
+  emptyPlaceholder,
   id,
 }: {
   items: Item[];
   render: (item: Item) => JSX.Element | null;
   paginatedBy: number;
   className?: string;
+  emptyPlaceholder?: JSX.Element | string;
   id: string;
 }): JSX.Element => {
   const { push, pathname, isReady, query } = useRouter();
@@ -100,7 +102,9 @@ const PaginatedList = <Item,>({
               {currentPage.map((item) => render(item))}
             </div>
           ) : (
-            <p className={"py-l text-center w-full"}>{t("no_result")}...</p>
+            <p className={"py-l text-center w-full"}>
+              {emptyPlaceholder ? emptyPlaceholder : t("no_result")}...
+            </p>
           )}
           {lastPage > 1 && (
             <div

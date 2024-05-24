@@ -1,14 +1,14 @@
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next-translate-routes";
+import { useRouter } from "next/router";
 import nextI18nextConfig from "../../../../../next-i18next.config";
 import { ADMIN_ARTICLES_LINK } from "../../../../routes/blog";
+import { Prefetched } from "../../../../services/api";
 import ArticleForm from "../../../../services/articles/components/ArticleForm";
 import {
-  useArticle,
-  LoadedArticleAPI,
-} from "../../../../services/articles/useArticle";
-import { withUseQuery } from "../../../../services/routing/useLoader";
+  useLoadArticleBySlug,
+  useUpdateArticle,
+} from "../../../../services/articles/articleHooks";
 import BaseSeo from "../../../../services/seo/BaseSeo";
 import Card from "../../../../services/ui/Card";
 import CardHeader from "../../../../services/ui/CardHeader";
@@ -19,33 +19,39 @@ interface Props {
 }
 
 const EditArticle = ({ referenceId }: Props): JSX.Element => {
-  const { useLoadArticleBySlug, updateArticle } =
-    useArticle() as LoadedArticleAPI;
-  const { data: article } = useLoadArticleBySlug(referenceId);
+  const { data: article } = useLoadArticleBySlug<Prefetched>({
+    articleSlug: referenceId,
+  });
+  const { mutateAsync: updateArticle } = useUpdateArticle();
   const router = useRouter();
 
   return (
     <AppLayout>
-      <BaseSeo title={"Modifier un article"} translated={false} noIndex />
+      <BaseSeo title={"Modifier un article"} noIndex />
       <Card>
         <CardHeader goBack>
           <h1 className={"text-2xl font-medium text-gray-900"}>
             Modifier un article
           </h1>
         </CardHeader>
-        <ArticleForm
-          initialArticle={article}
-          onSubmit={(values) =>
-            updateArticle(article.slug, values).then(
-              () => {
-                router.push(ADMIN_ARTICLES_LINK);
-              },
-              () => {
-                /* Handle error */
-              },
-            )
-          }
-        />
+        {article && (
+          <ArticleForm
+            initialArticle={article}
+            onSubmit={(values) =>
+              updateArticle({
+                articleSlug: article.slug,
+                articleForm: values,
+              }).then(
+                () => {
+                  router.push(ADMIN_ARTICLES_LINK);
+                },
+                () => {
+                  /* Handle error */
+                },
+              )
+            }
+          />
+        )}
       </Card>
     </AppLayout>
   );
@@ -67,9 +73,4 @@ export const getServerSideProps: GetServerSideProps = async ({
   };
 };
 
-const useQueryLoaders = ({ referenceId }: Props) => {
-  const { useLoadArticleBySlug } = useArticle();
-  return [useLoadArticleBySlug(referenceId)];
-};
-
-export default withUseQuery<Props>(EditArticle, useQueryLoaders);
+export default EditArticle;

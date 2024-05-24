@@ -21,13 +21,13 @@ import baseAPI, {
   isSetLocalUser,
   login as apiLogin,
   logout as apiLogout,
-  createAccount as apiCreateAccount,
+  register as apiRegister,
   deleteUserById,
   updateUserPasswordById,
   setLocalUser,
 } from "./api";
 import { LOGIN_LINK } from "../../routes";
-import { useRouter } from "next-translate-routes";
+import { useRouter } from "next/router";
 
 const defaultUser =
   typeof localStorage !== "undefined"
@@ -46,7 +46,7 @@ export interface AuthAPI {
 
   logout(): Promise<void>;
 
-  createAccount(user: UserToRegister): Promise<void>;
+  register(user: UserToRegister): Promise<void>;
 
   checkUserValidity(): Promise<void>;
 
@@ -154,8 +154,13 @@ export function useProvideAuth(): AuthAPI {
     return Promise.resolve();
   }, [loggedUser?.id]);
 
-  const createAccount: AuthAPI["createAccount"] = useCallback(async (user) => {
-    await apiCreateAccount(user);
+  const register: AuthAPI["register"] = useCallback(async (user) => {
+    await apiRegister(user).then((res) => {
+      const newUser = mapUserRawToUser(res.data.user) as User & LoggedUser;
+      setLoggedUser(newUser);
+      setUser(newUser);
+      return newUser;
+    });
   }, []);
 
   const updateUserPassword: AuthAPI["updateUserPassword"] = useCallback(
@@ -172,7 +177,7 @@ export function useProvideAuth(): AuthAPI {
   return {
     loggedUser,
     user,
-    createAccount,
+    register,
     reloadUser,
     login,
     logout,
@@ -182,7 +187,7 @@ export function useProvideAuth(): AuthAPI {
   };
 }
 
-export function useAuth(): AuthAPI {
+export function useAuthContext(): AuthAPI {
   return useContext(AuthContext) as AuthAPI;
 }
 

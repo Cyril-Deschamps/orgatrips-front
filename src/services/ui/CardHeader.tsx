@@ -1,8 +1,8 @@
 import { twMerge } from "tailwind-merge";
-import { useRouter } from "next-translate-routes";
 import Image from "next/image";
 import React, { DetailedHTMLProps, HTMLAttributes } from "react";
 import goBackIcon from "../../assets/img/icons/icon-chevron-left.svg";
+import { useRouter } from "next/router";
 
 interface Props
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

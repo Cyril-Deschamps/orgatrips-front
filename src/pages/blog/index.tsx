@@ -6,20 +6,22 @@ import nextI18nextConfig from "../../../next-i18next.config";
 import AppLayout from "../../services/ui/Layout/AppLayout";
 import BaseSeo from "../../services/seo/BaseSeo";
 import ArticleItem from "../../services/articles/components/ArticleItem";
-import {
-  LoadedArticleAPI,
-  useArticle,
-} from "../../services/articles/useArticle";
+import { useLoadArticles } from "../../services/articles/articleHooks";
 import { prefetchAllArticles } from "../../services/articles/prerenderingHelper";
 import { dehydrate } from "@tanstack/react-query";
-import { withUseQuery } from "../../services/routing/useLoader";
 import Title1 from "../../services/ui/Title1";
-import TripItem from "../../services/articles/components/TripItem";
+import FeedTripItem from "../../services/trip/components/FeedTripItem";
+import { Prefetched } from "../../services/api";
+import { getQueryClient } from "../../services/api/config";
+import { useLoadFeedTrips } from "../../services/trip/tripHooks";
+import useWebSocketTripFeed from "../../services/trip/useWebSocketTripFeed";
 
 const BlogDashboard = (): JSX.Element => {
-  const { useLoadArticles } = useArticle() as LoadedArticleAPI;
-  const { data: articles } = useLoadArticles();
+  const { data: articles, isLoading: articlesIsLoading } =
+    useLoadArticles<Prefetched>();
+  const { data: trips, isLoading: tripsIsLoading } = useLoadFeedTrips();
   const { t } = useTranslation(["website", "pages_content"]);
+  const feedTripWs = useWebSocketTripFeed();
 
   return (
     <AppLayout>
@@ -29,7 +31,7 @@ const BlogDashboard = (): JSX.Element => {
       />
       <section
         className={
-          "my-xl grid grid-cols-3 gap-x-3xl px-m md:px-2xl w-full max-w-[1700px]"
+          "my-xl grid grid-cols-3 gap-x-3xl gap-y-3xl px-m md:px-2xl w-full max-w-[1700px]"
         }
       >
         <div className={"col-start-1 xl:col-end-3 col-end-4"}>
@@ -37,25 +39,30 @@ const BlogDashboard = (): JSX.Element => {
             Sélection de la rédaction
           </Title1>
           <div className={"mt-2xl"}>
-            <ArticleItem article={articles[0]} />
+            {articlesIsLoading ? <></> : <ArticleItem article={articles[0]} />}
           </div>
         </div>
-        <div>
+        <div className={"xl:col-start-3 xl:col-end-4 col-start-1 col-end-4"}>
           <span className={"bg-white p-xs rounded-xl font-bold"}>
-            Dernières génération partagée ...
+            Dernières recherches partagées ...
           </span>
-          <div
-            className={
-              "xl:col-start-3 xl:col-end-4 gap-2xl xl:gap-s col-start-1 col-end-4 pt-xl grid content-start"
-            }
-          >
-            {articles.slice(1, 3).map((article) => (
-              <TripItem
-                key={article.slug}
-                article={article}
-                imageClassname={"aspect-auto h-[208px]"}
-              />
-            ))}
+          <div className={"gap-s pt-xl grid content-start"}>
+            {tripsIsLoading || !trips ? (
+              <p>Loading...</p>
+            ) : (
+              trips
+                .slice(0, 3)
+                .map((trip) => (
+                  <FeedTripItem
+                    key={
+                      trip.id ?? trip.totalBudget + trip.DepartureAirport.city
+                    }
+                    feedTripWs={feedTripWs}
+                    imageClassname={"aspect-auto h-[208px]"}
+                    trip={trip}
+                  />
+                ))
+            )}
           </div>
         </div>
       </section>
@@ -64,7 +71,9 @@ const BlogDashboard = (): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const queryClient = await prefetchAllArticles();
+  const queryClient = getQueryClient();
+  await prefetchAllArticles(queryClient);
+
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
@@ -77,9 +86,4 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   };
 };
 
-const useQueryLoaders = () => {
-  const { useLoadArticles } = useArticle();
-  return [useLoadArticles()];
-};
-
-export default withUseQuery(BlogDashboard, useQueryLoaders);
+export default BlogDashboard;

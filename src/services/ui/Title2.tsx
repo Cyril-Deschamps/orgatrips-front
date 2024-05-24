@@ -11,7 +11,7 @@ const Title2 = ({ className, ...props }: Props): JSX.Element => {
   return (
     <h2
       {...props}
-      className={twMerge("text-2xl font-semibold pb-s leading-9", className)}
+      className={twMerge("text-2xl font-semibold leading-9 pb-s", className)}
     />
   );
 };

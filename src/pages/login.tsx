@@ -1,28 +1,22 @@
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next-translate-routes";
 import React from "react";
 import nextI18nextConfig from "../../next-i18next.config";
 import { REGISTER_LINK } from "../routes";
-import { useAuth } from "../services/auth/apiProvider";
+import { useAuthContext } from "../services/auth/apiProvider";
 import LoginForm from "../services/auth/components/LoginForm";
 import { useToastsWithIntl } from "../services/toast-notifications";
 import Card from "../services/ui/Card";
 import CardHeader from "../services/ui/CardHeader";
 import AppLayout from "../services/ui/Layout/AppLayout";
 import Title1 from "../services/ui/Title1";
-import Link from "next-translate-routes/link";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 const Login: React.FC = () => {
   const { t } = useTranslation(["auth"]);
-  const { login, user } = useAuth();
+  const { login } = useAuthContext();
   const { toastError } = useToastsWithIntl(["auth"]);
-  const router = useRouter();
-
-  if (user) {
-    router.back();
-  }
 
   return (
     <AppLayout>
@@ -31,10 +25,12 @@ const Login: React.FC = () => {
           <Title1>{t("auth:loginAction")}</Title1>
         </CardHeader>
         <LoginForm
-          onSubmit={(loginInfos) => {
-            return login(loginInfos).catch(() => {
+          onSubmit={async (loginInfos) => {
+            try {
+              return await login(loginInfos);
+            } catch {
               toastError("auth:login.TOAST_ERROR");
-            });
+            }
           }}
         />
         <div className={"flex justify-center mt-s font-bold text-sm"}>

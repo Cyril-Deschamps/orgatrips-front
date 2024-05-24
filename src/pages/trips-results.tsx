@@ -1,16 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import type { GetStaticProps } from "next";
 import nextI18NextConfig from "../../next-i18next.config";
 import { Trans, useTranslation } from "next-i18next";
 import Image from "next/image";
 import BaseSeo from "../services/seo/BaseSeo";
-import Link from "next-translate-routes/link";
 import HomeIcon from "../assets/img/icons/icon-home.svg";
-import { TRIPS_STORAGE_KEY, useTrip } from "../services/trip/tripProvider";
 import TripListItem from "../services/trip/components/TripListItem";
-import router from "next-translate-routes/router";
-import { BASE_LINK } from "../routes";
 import { useDate } from "../services/date/DateContext";
 import { TFuncKey } from "react-i18next";
 import PaginatedList from "../services/ui/PaginatedList";
@@ -18,10 +14,12 @@ import { SortingOption } from "../services/trip/trip";
 import { orderByField } from "../services/data-structures/array";
 import { twMerge } from "tailwind-merge";
 import Title1 from "../services/ui/Title1";
+import Link from "next/link";
+import { useLoadLocalTrips } from "../services/trip/tripHooks";
 
 const Trips = (): JSX.Element => {
   const { t } = useTranslation(["pages_content"]);
-  const { trips } = useTrip();
+  const trips = useLoadLocalTrips();
   const { formatDate } = useDate();
   const [sortingOption, setSortingOption] = useState<SortingOption>(
     SortingOption.POPULARITY,
@@ -30,23 +28,18 @@ const Trips = (): JSX.Element => {
   const sortedTrips = useMemo(() => {
     switch (sortingOption) {
       case SortingOption.POPULARITY:
-        return [...trips].sort(orderByField("popularity", true));
+        return [...trips].sort(
+          (a, b) =>
+            b.DestinationCity.kiwiDstPopularityScore -
+            a.DestinationCity.kiwiDstPopularityScore,
+        );
       case SortingOption.CHEAPER:
-        return [...trips].sort(orderByField("totalPrice"));
+        return [...trips].sort(orderByField("totalBudget"));
     }
   }, [sortingOption, trips]);
 
-  useEffect(() => {
-    if (trips.length === 0) {
-      const trips = localStorage.getItem(TRIPS_STORAGE_KEY);
-      if (!trips || (trips && JSON.parse(trips).length === 0)) {
-        router.replace(BASE_LINK);
-      }
-    }
-  });
-
   const maxPrice = useMemo(
-    () => Math.max(...trips.map((trip) => trip.totalPrice)),
+    () => Math.max(...trips.map((trip) => trip.totalBudget)),
     [trips],
   );
 
@@ -98,10 +91,10 @@ const Trips = (): JSX.Element => {
                 maxPrice: maxPrice,
                 count: trips[0].travelersNumber,
                 departureDate: formatDate(
-                  trips[0].Transportation.departureDate,
+                  trips[0].transportationDepartureDate,
                   "P",
                 ),
-                returnDate: formatDate(trips[0].Transportation.returnDate, "P"),
+                returnDate: formatDate(trips[0].transportationReturnDate, "P"),
               }}
             />
             {" - "}
@@ -167,7 +160,11 @@ const Trips = (): JSX.Element => {
           items={sortedTrips}
           paginatedBy={12}
           render={(trip) => (
-            <TripListItem key={trip.destinationName} trip={trip} />
+            <TripListItem
+              key={trip.DestinationCity.name}
+              canBeSaved={true}
+              trip={trip}
+            />
           )}
         />
       </div>
