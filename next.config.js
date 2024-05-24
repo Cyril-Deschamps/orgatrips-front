@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /** @type {import('next').NextConfig} */
 
-
 const { i18n } = require('./next-i18next.config.js');
-const withTranslateRoutes = require('next-translate-routes/plugin')
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-module.exports = withBundleAnalyzer(withTranslateRoutes({
+module.exports = withBundleAnalyzer({
   output: 'standalone',
   reactStrictMode: true,
   i18n,
@@ -34,4 +32,4 @@ module.exports = withBundleAnalyzer(withTranslateRoutes({
     REACT_APP_BOOKING_AFFILIATE_ID: process.env.REACT_APP_BOOKING_AFFILIATE_ID,
     REACT_APP_WEBHOOK_SECRET: process.env.REACT_APP_WEBHOOK_SECRET,
   }
-}));
+});

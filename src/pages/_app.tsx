@@ -1,4 +1,5 @@
 import "../assets/styles/global.scss";
+import "react-responsive-modal/styles.css";
 import "../services/validations/yup-init";
 import "../services/i18n/yupConfig";
 import { AppProps } from "next/app";
@@ -9,13 +10,11 @@ import { twMerge } from "tailwind-merge";
 import Head from "next/head";
 import { Roboto } from "next/font/google";
 import nextI18NextConfig from "../../next-i18next.config";
-import { withTranslateRoutes } from "next-translate-routes";
 import { ProvideToast } from "../services/toast-notifications";
-import { ProvideTrip } from "../services/trip/tripProvider";
 import { ProvideTransition } from "../services/transition/TransitionContext";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import {
-  Hydrate,
+  HydrationBoundary,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
@@ -65,26 +64,24 @@ const App = ({ Component, pageProps }: AppProps) => {
         )}
       >
         <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
+          <HydrationBoundary state={pageProps.dehydratedState}>
             <ProvideToast>
               <ProvideTransition>
                 <ProvideAuth>
-                  <ProvideTrip>
-                    <GoogleAnalytics
-                      gaMeasurementId={GA_MEASUREMENT_ID}
-                      strategy={"afterInteractive"}
-                      trackPageViews
-                    />
-                    <Component {...pageProps} />
-                  </ProvideTrip>
+                  <GoogleAnalytics
+                    gaMeasurementId={GA_MEASUREMENT_ID}
+                    strategy={"afterInteractive"}
+                    trackPageViews
+                  />
+                  <Component {...pageProps} />
                 </ProvideAuth>
               </ProvideTransition>
             </ProvideToast>
-          </Hydrate>
+          </HydrationBoundary>
         </QueryClientProvider>
       </div>
     </React.StrictMode>
   );
 };
 
-export default appWithTranslation(withTranslateRoutes(App), nextI18NextConfig);
+export default appWithTranslation(App, nextI18NextConfig);

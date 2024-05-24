@@ -1,6 +1,6 @@
 {
-  "departure_city": "Aéroport de départ",
-  "departure_city_placeholder": "Où allez vous ?",
+  "departure_iata_code": "Aéroport de départ",
+  "departure_iata_code_placeholder": "Charles de Gaulle...",
   "date_range": "Dates de voyage",
   "date_range_start": "Date de départ",
   "date_range_end": "Date de retour",

@@ -32,3 +32,8 @@ export function mapArticleRawToArticle(articleRaw: ArticleRaw): Article {
     updatedAt: parseISO(articleRaw.updatedAt),
   };
 }
+
+export function fillMinLenght(text: string, minLenght: number) {
+  const lenDifference = minLenght - text.length;
+  return text + (lenDifference > 0 ? Array(lenDifference).join("\u00A0") : "");
+}

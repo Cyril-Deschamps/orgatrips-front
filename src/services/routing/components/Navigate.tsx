@@ -1,5 +1,5 @@
 import { Url } from "next/dist/shared/lib/router/router";
-import { useRouter } from "next-translate-routes/router";
+import { useRouter } from "next/router";
 import { FunctionComponent, useEffect } from "react";
 
 interface Props {

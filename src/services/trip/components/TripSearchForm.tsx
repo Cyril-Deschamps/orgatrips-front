@@ -9,22 +9,27 @@ import Form from "../../forms/Form";
 import SubmitButton from "../../forms/SubmitButton";
 import ValidationsErrors from "../../forms/ValidationsErrors";
 import { useToastsWithIntl } from "../../toast-notifications";
-import { AirportType, budgetMax, SearchTripsForm } from "../trip";
-import { useTrip } from "../tripProvider";
+import {
+  AirportType,
+  budgetMax,
+  searchAndSaveTrips,
+  SearchTripsForm,
+} from "../trip";
 import iconPlane from "../../../assets/img/icons/icon-plane.svg";
 import { useTransition } from "../../transition/TransitionContext";
 import { TRIP_LINK } from "../../../routes";
-import { useRouter } from "next-translate-routes";
 import { AxiosError } from "axios";
 import { event } from "nextjs-google-analytics";
 import ValueObserver from "../../forms/ValueObserver";
 import Image from "next/image";
 import InfoIcon from "../../../assets/img/icons/icon-info.svg";
+import { useRouter } from "next/router";
+import { findAirports } from "../api";
+import GoToLastSearchButton from "./GoToLastSearchButton";
 
 const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
   const { t, i18n } = useTranslation("trip");
   const { toastError } = useToastsWithIntl("trip");
-  const { searchTrips, findAirports } = useTrip();
   const { countriesList } = useCountry();
   const { triggerTransition, stopTransition } = useTransition();
   const router = useRouter();
@@ -32,7 +37,7 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
 
   const findAirportsAutoComplete = useCallback(
     (currentText: string) =>
-      findAirports(currentText).then((airports) =>
+      findAirports(currentText).then(({ data: airports }) =>
         airports.map((airport) => ({
           id: airport.iataCode,
           label: airport.name,
@@ -45,7 +50,7 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           )}`,
         })),
       ),
-    [countriesList, findAirports, t],
+    [countriesList, t],
   );
 
   const adultsNumberEnum = useMemo(() => [...Array(10).keys()].slice(1), []);
@@ -58,8 +63,8 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
     () =>
       object()
         .shape({
-          departureCity: string()
-            .label(t("departure_city"))
+          departureIataCode: string()
+            .label(t("departure_iata_code"))
             .nullable()
             .required()
             .suggestion({ autocompleteRequest: findAirportsAutoComplete }),
@@ -122,7 +127,7 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
             label: "Button",
           });
           triggerTransition(t("search_trips_loading"));
-          return searchTrips(values).then(
+          return searchAndSaveTrips(values).then(
             () => {
               setSubmitting(false);
               router.push(TRIP_LINK).then(stopTransition);
@@ -147,9 +152,9 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
           }
         />
         <AutoField
-          name={"departureCity"}
+          name={"departureIataCode"}
           otherProps={{ icon: iconPlane }}
-          placeholder={t("departure_city_placeholder")}
+          placeholder={t("departure_iata_code_placeholder")}
         />
         <div className={"flex gap-x-s flex-wrap sm:flex-nowrap"}>
           <div className={"w-full sm:basis-3/5"}>
@@ -185,6 +190,9 @@ const TripSearchForm = ({ className }: { className?: string }): JSX.Element => {
         <div className={"pt-l flex items-center flex-col"}>
           <ValidationsErrors />
           <SubmitButton className={"uppercase"}>{t("find_trips")}</SubmitButton>
+          <GoToLastSearchButton
+            className={"mt-s bg-transparent text-black font-bold"}
+          />
         </div>
       </Form>
     </div>

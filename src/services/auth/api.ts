@@ -1,18 +1,16 @@
-"use client";
-
 import axios, { AxiosPromise } from "axios";
-import { baseURL } from "./config";
-import logger from "./logger";
+import { baseURL } from "../api/config";
 import { parse as parseContentDisposition } from "content-disposition";
 import {
   LoggedUser,
   LoggedUserRaw,
   User,
-  UserForm,
   UserPasswordForm,
   UserRaw,
   UserToLogin,
+  UserToRegister,
 } from "./user";
+import logger from "../api/logger";
 
 const LOCAL_STORAGE_USER_KEY = "user";
 
@@ -71,7 +69,7 @@ export function getUserById(id: User["id"]): AxiosPromise<UserRaw> {
 
 export function updateUserById(
   userId: User["id"],
-  user: UserForm,
+  user: UserToRegister,
 ): AxiosPromise<UserRaw> {
   return baseAPI.put(`/users/${userId}`, user);
 }
@@ -87,7 +85,10 @@ export function updateUserPasswordById(
   return baseAPI.put("/users/" + id + "/update-pwd", form);
 }
 
-export function createAccount(user: UserForm): AxiosPromise<void> {
+export function register(user: UserToRegister): AxiosPromise<{
+  user: LoggedUserRaw;
+  message: string;
+}> {
   return baseAPI.post("/users", user);
 }
 

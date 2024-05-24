@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import { hostBaseURL } from "../services/auth/config";
+import { hostBaseURL } from "../services/api/config";
 
 class MyDocument extends Document {
   render() {
