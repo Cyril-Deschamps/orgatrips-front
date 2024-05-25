@@ -56,7 +56,7 @@ const Dashboard = (): JSX.Element => {
             paginatedBy={12}
             render={(trip) => (
               <TripListItem
-                key={trip.DestinationCity.name}
+                key={trip.id ?? trip.DestinationCity.name + trip.totalBudget}
                 canBeSaved={true}
                 isSavedInitially={true}
                 trip={trip}

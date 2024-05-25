@@ -39,11 +39,6 @@ const PaginatedList = <Item,>({
   );
 
   useEffect(() => {
-    setPage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
-
-  useEffect(() => {
     async function changePageEffect() {
       const element = document.getElementById(id);
       const y = element!.getBoundingClientRect().top + window.scrollY - 300;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import type { GetStaticProps } from "next";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import AppLayout from "../../../services/ui/Layout/AppLayout";
 import SizedSection from "../../../services/ui/SizedSection";
 import nextI18nextConfig from "../../../../next-i18next.config";
@@ -17,6 +17,7 @@ import ScrollToTopButton from "../../../services/ui/ScrollToTopButton";
 import { getAllArticles } from "../../../services/articles/api";
 import { useLoadArticleBySlug } from "../../../services/articles/articleHooks";
 import { Prefetched } from "../../../services/api";
+import { Trans, useTranslation } from "react-i18next";
 
 interface Props {
   referenceId: Article["slug"];
@@ -27,6 +28,7 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
     articleSlug: referenceId,
   });
   const { formatDate } = useDate();
+  const { t } = useTranslation(["pages_content"]);
 
   const [headings, setHeadings] = useState<{ id: string; text: string }[]>([]);
 
@@ -139,12 +141,7 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
           />
           <div className={"my-xl rounded w-4xl self-center bg-blue h-1"} />
           <div>
-            <p>D'autres articles sur le voyage</p>
-            <span>
-              Le site qui explique tout de A à Z sur le Bitcoin, la blockchain
-              et les crypto-monnaies. Des actualités et des articles explicatifs
-              pour découvrir et progresser dans ces secteurs !
-            </span>
+            <Trans>{t("pages_content:home.main_description")}</Trans>
           </div>
         </article>
       </SizedSection>
@@ -152,16 +149,24 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
   );
 };
 
-export async function getStaticPaths() {
-  return {
-    paths: await getAllArticles().then(({ data }) =>
-      data.map((article) => ({
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const articlesParams = await getAllArticles().then(({ data }) =>
+    data.flatMap((article) => {
+      if (!locales) {
+        return { params: { articleSlug: article.slug } };
+      }
+      return locales.map((locale) => ({
         params: { articleSlug: article.slug },
-      })),
-    ),
+        locale,
+      }));
+    }),
+  );
+
+  return {
+    paths: articlesParams,
     fallback: false,
   };
-}
+};
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   const queryClient = new QueryClient();
@@ -173,7 +178,7 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
       dehydratedState: dehydrate(queryClient),
       ...(await serverSideTranslations(
         locale ?? "en",
-        ["website"],
+        ["website", "pages_content"],
         nextI18nextConfig,
       )),
     },

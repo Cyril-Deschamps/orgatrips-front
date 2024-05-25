@@ -56,7 +56,7 @@ const Header = (): JSX.Element => {
         {user && user.admin && (
           <Link href={ADMIN_ARTICLES_LINK}>
             <Button className={"bg-green px-s py-xxs text-s text-white"}>
-              Admin
+              Espace admin
             </Button>
           </Link>
         )}
