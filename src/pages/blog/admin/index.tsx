@@ -25,15 +25,16 @@ import {
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAuthContext } from "../../../services/auth/apiProvider";
+import { BASE_LINK } from "../../../routes";
 
 const AdminBlogDashboard = (): JSX.Element => {
-  const { user } = useAuthContext();
   const { data: articles, isLoading } = useLoadArticles<Prefetched>();
   const { mutate: deleteArticle } = useDeleteArticle();
   const router = useRouter();
 
+  const { user } = useAuthContext();
   if (!user || !user.admin) {
-    router.back();
+    router.push(BASE_LINK);
     return <></>;
   }
 

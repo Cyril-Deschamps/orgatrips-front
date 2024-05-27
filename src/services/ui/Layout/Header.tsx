@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ADMIN_ARTICLES_LINK } from "../../../routes/blog";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
+import generatePath from "../../routing/generatePath";
 
 const Header = (): JSX.Element => {
   const { user } = useAuthContext();
@@ -53,7 +54,11 @@ const Header = (): JSX.Element => {
             </Button>
           </Link>
         ) : (
-          <Link href={LOGIN_LINK}>
+          <Link
+            href={generatePath(LOGIN_LINK, undefined, {
+              redirect: pathname,
+            })}
+          >
             <Button className={"bg-green px-s py-xxs text-s text-white"}>
               {t("header.login")}
             </Button>

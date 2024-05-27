@@ -2,7 +2,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
 import nextI18nextConfig from "../../next-i18next.config";
 import { FunctionComponent } from "react";
-import { ACCOUNT_LINK, BASE_LINK, LOGIN_LINK } from "../routes";
+import { ACCOUNT_LINK, LOGIN_LINK } from "../routes";
 import { useAuthContext } from "../services/auth/apiProvider";
 import { useToastsWithIntl } from "../services/toast-notifications";
 import Card from "../services/ui/Card";
@@ -13,6 +13,7 @@ import RegisterForm from "../services/auth/components/RegisterForm";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import generatePath from "../services/routing/generatePath";
 
 const Register: FunctionComponent = () => {
   const { t } = useTranslation(["auth"]);
@@ -21,7 +22,9 @@ const Register: FunctionComponent = () => {
   const router = useRouter();
 
   if (user) {
-    router.push(BASE_LINK);
+    router.push(
+      router.query?.redirect ? (router.query.redirect as string) : ACCOUNT_LINK,
+    );
   }
 
   return (
@@ -43,7 +46,13 @@ const Register: FunctionComponent = () => {
           }}
         />
         <div className={"flex justify-center mt-s font-bold text-sm"}>
-          <Link href={LOGIN_LINK}>{t("auth:or-login")}</Link>
+          <Link
+            href={generatePath(LOGIN_LINK, undefined, {
+              redirect: router.query?.redirect,
+            })}
+          >
+            {t("auth:or-login")}
+          </Link>
         </div>
       </Card>
     </AppLayout>

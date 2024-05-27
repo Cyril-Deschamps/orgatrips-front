@@ -13,7 +13,7 @@
   "number_of_adults": "Adultes",
   "number_of_children": "Enfants",
   "travelers_number_info": "Note : Jusqu'à 9 voyageurs (adultes & enfants) autorisés.",
-  "budget_maw": "Budget maximum",
+  "budget_max": "Budget maximum",
   "find_trips": "Trouver les destinations",
   "search_trips_loading": "Nous cherchons les meilleurs voyages pour vous ...",
   "search_trips": {
@@ -24,5 +24,6 @@
     "SMALL_AIRPORT": "Petit aéroport",
     "MEDIUM_AIRPORT": "Aéroport secondaire",
     "LARGE_AIRPORT": "Aéroport principal"
-  }
+  },
+  "see_last_search": "Voir la dernière recherche"
 }

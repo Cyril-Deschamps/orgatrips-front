@@ -20,6 +20,7 @@ import { REGISTER_LINK } from "../../../routes";
 import { useRouter } from "next/router";
 import { useSaveTrip, useUnsaveTrip } from "../tripHooks";
 import { twJoin, twMerge } from "tailwind-merge";
+import generatePath from "../../routing/generatePath";
 
 type Props = {
   trip: Trip;
@@ -212,7 +213,11 @@ const TripListItem = ({
                       saveTrip({ trip }, { onSuccess: () => setIsSaved(true) });
                     }
                   } else {
-                    router.push(REGISTER_LINK);
+                    router.push(
+                      generatePath(REGISTER_LINK, undefined, {
+                        redirect: router.pathname,
+                      }),
+                    );
                   }
                 }}
               >

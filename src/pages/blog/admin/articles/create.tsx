@@ -10,9 +10,17 @@ import Card from "../../../../services/ui/Card";
 import CardHeader from "../../../../services/ui/CardHeader";
 import AppLayout from "../../../../services/ui/Layout/AppLayout";
 import { useCreateArticle } from "../../../../services/articles/articleHooks";
+import { useAuthContext } from "../../../../services/auth/apiProvider";
+import { BASE_LINK } from "../../../../routes";
 
 const NewArticle = (): JSX.Element => {
   const { mutateAsync: createArticle } = useCreateArticle();
+
+  const { user } = useAuthContext();
+  if (!user || !user.admin) {
+    router.push(BASE_LINK);
+    return <></>;
+  }
 
   return (
     <AppLayout>

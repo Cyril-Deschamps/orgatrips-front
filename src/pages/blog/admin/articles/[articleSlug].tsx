@@ -13,6 +13,8 @@ import BaseSeo from "../../../../services/seo/BaseSeo";
 import Card from "../../../../services/ui/Card";
 import CardHeader from "../../../../services/ui/CardHeader";
 import AppLayout from "../../../../services/ui/Layout/AppLayout";
+import { useAuthContext } from "../../../../services/auth/apiProvider";
+import { BASE_LINK } from "../../../../routes";
 
 interface Props {
   referenceId: string;
@@ -24,6 +26,12 @@ const EditArticle = ({ referenceId }: Props): JSX.Element => {
   });
   const { mutateAsync: updateArticle } = useUpdateArticle();
   const router = useRouter();
+
+  const { user } = useAuthContext();
+  if (!user || !user.admin) {
+    router.push(BASE_LINK);
+    return <></>;
+  }
 
   return (
     <AppLayout>

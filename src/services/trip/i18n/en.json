@@ -24,5 +24,6 @@
     "SMALL_AIRPORT": "Little airport",
     "MEDIUM_AIRPORT": "Secondary airport",
     "LARGE_AIRPORT": "Main airport"
-  }
+  },
+  "see_last_search": "See last search"
 }
