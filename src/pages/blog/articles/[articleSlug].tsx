@@ -49,6 +49,8 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
       });
   };
 
+  const { locale } = useDate();
+
   return (
     <AppLayout>
       <BaseSeo title={article.title} noBaseTitle />
@@ -102,8 +104,10 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
                 src={iconTimeGray}
               />
               <span className={"text-gray-500 font-light pl-2"}>
-                {`${formatDuration({ minutes: article.readingTime })}`} de
-                lecture
+                {`${formatDuration(
+                  { minutes: article.readingTime },
+                  { locale },
+                )} ${t("pages_content:blog.reading_time")}`}
               </span>
             </div>
           </div>
@@ -119,7 +123,9 @@ const ArticleDetails = ({ referenceId }: Props): JSX.Element => {
           />
 
           <div className={"w-full max-w-full bg-blue p-s rounded-lg mt-l"}>
-            <h2 className={"font-medium text-gray-300 pb-xs"}>Sommaire</h2>
+            <h2 className={"font-medium text-gray-300 pb-xs"}>
+              {t("pages_content:blog.summary")}
+            </h2>
             <ul>
               {headings.map((heading, index) => (
                 <li key={index}>

@@ -59,6 +59,7 @@ const Dashboard = (): JSX.Element => {
                 key={trip.id ?? trip.DestinationCity.name + trip.totalBudget}
                 canBeSaved={true}
                 isSavedInitially={true}
+                showDeparture={true}
                 trip={trip}
               />
             )}

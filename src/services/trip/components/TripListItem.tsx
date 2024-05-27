@@ -26,6 +26,7 @@ type Props = {
   canBeSaved?: boolean;
   isSavedInitially?: boolean;
   isCard?: boolean;
+  showDeparture?: boolean;
 };
 
 const TripListItem = ({
@@ -33,6 +34,7 @@ const TripListItem = ({
   canBeSaved,
   isSavedInitially,
   isCard = true,
+  showDeparture = false,
 }: Props): JSX.Element => {
   const { user } = useAuthContext();
   const { t } = useTranslation(["pages_content"]);
@@ -68,7 +70,10 @@ const TripListItem = ({
         <div className={"flex justify-between"}>
           <div className={"flex flex-col"}>
             <h2 className={"text-2xl font-bold mb-2"}>
-              {trip.DestinationCity.name}
+              {(showDeparture
+                ? `${trip.DepartureAirport.city}
+               -> `
+                : "") + trip.DestinationCity.name}
             </h2>
             <span
               className={

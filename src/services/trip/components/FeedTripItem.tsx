@@ -15,6 +15,7 @@ import BlankImage from "../../../assets/img/blank.svg";
 import tripImageBasic from "../../../assets/img/trip-image-basic.jpg";
 import { fillMinLenght } from "../../articles/article";
 import { WebSocketTripFeed } from "../useWebSocketTripFeed";
+import { TFuncKey, Trans, useTranslation } from "react-i18next";
 const SmoothText = dynamic(() => import("../../ui/SmoothText"), {
   ssr: false,
 });
@@ -30,6 +31,7 @@ const FeedTripItem = ({
 }): JSX.Element => {
   const { formatDate } = useDate();
   const [toggleModal, setToggleModal] = useState(false);
+  const { t } = useTranslation(["trip"]);
 
   const handleLike = () => {
     if (trip.hasAlreadyLike) {
@@ -65,7 +67,12 @@ const FeedTripItem = ({
             <span
               className={"bg-white text-xs font-bold px-xs py-xxs rounded-full"}
             >
-              {trip.totalBudget} $ - {trip.nightsNumber + 1} jours
+              {trip.totalBudget} $ -{" "}
+              <Trans
+                count={trip.nightsNumber + 1}
+                i18nKey={"trip:result_days" as TFuncKey}
+                values={{ count: trip.nightsNumber + 1 }}
+              />
             </span>
           </div>
           <div>
@@ -82,32 +89,30 @@ const FeedTripItem = ({
         </div>
         <div className={"pr-s sm:mt-3 sm:text-2xl sm:leading-xl relative"}>
           <SmoothText className={"text-xxs leading-6 mt-[-4px] font-bold"}>
-            &#x2022;&nbsp; VOYAGE
+            &#x2022;&nbsp; {t("trip:trip")}
             <br />
             ************
           </SmoothText>
           <SmoothText className={"text-3xl absolute top-[19px] font-bold"}>
-            {fillMinLenght(trip.DestinationCity.name, 5)}
+            {fillMinLenght(
+              `${trip.DepartureAirport.city}
+               -> ${trip.DestinationCity.name}`,
+              5,
+            )}
           </SmoothText>
         </div>
         <div className={"absolute bottom-xs right-s gap-s flex"}>
-          {feedTripWs.ws ? (
-            feedTripWs.isWsConnected ? (
-              <button
-                className={"p-xs bg-white rounded-full flex gap-xxs"}
-                onClick={() => handleLike()}
-              >
-                <span>{trip.likesCount} </span>
-                <Image
-                  alt={"toogle-like"}
-                  src={trip.hasAlreadyLike ? HeartIcon : HeartOutlineIcon}
-                />
-              </button>
-            ) : (
-              <></>
-            )
-          ) : (
-            <></>
+          {feedTripWs.ws && feedTripWs.isWsConnected && (
+            <button
+              className={"p-xs bg-white rounded-full flex gap-xxs"}
+              onClick={() => handleLike()}
+            >
+              <span>{trip.likesCount} </span>
+              <Image
+                alt={"toogle-like"}
+                src={trip.hasAlreadyLike ? HeartIcon : HeartOutlineIcon}
+              />
+            </button>
           )}
           <button
             className={"p-xs bg-white rounded-full"}
@@ -124,7 +129,7 @@ const FeedTripItem = ({
         center
       >
         <>
-          <Title2>Détails du voyage</Title2>
+          <Title2>{t("trip:trip_detail")}</Title2>
           <TripListItem isCard={false} trip={trip} />
         </>
       </Modal>

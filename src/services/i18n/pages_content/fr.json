@@ -36,7 +36,11 @@
   },
   "blog": {
     "page_title": "Apprenez à voyager moins chers !",
-    "page_description": "Vous pouvez avoir confiance en OrgaTrips !"
+    "page_description": "Vous pouvez avoir confiance en OrgaTrips !",
+    "last_share_title": "Derniers voyages partagés ...",
+    "blog_title": "Sélection de la rédaction",
+    "summary": "Sommaire",
+    "reading_time": "de lecture"
   },
   "privacy_policy": {
     "page_title": "Politique de confidentialité",

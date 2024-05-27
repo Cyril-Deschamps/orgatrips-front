@@ -1,4 +1,8 @@
 {
+  "trip": "Voyage",
+  "trip_detail": "Détails du voyage",
+  "result_days_one": "{{count}} jour",
+  "result_days_other": "{{count}} jours",
   "departure_iata_code": "Aéroport de départ",
   "departure_iata_code_placeholder": "Charles de Gaulle...",
   "date_range": "Dates de voyage",

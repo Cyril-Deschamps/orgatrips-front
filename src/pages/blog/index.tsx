@@ -36,20 +36,19 @@ const BlogDashboard = (): JSX.Element => {
       >
         <div className={"col-start-1 xl:col-end-3 col-end-4"}>
           <Title1 className={"italic"} big>
-            Sélection de la rédaction
+            {t("pages_content:blog.blog_title")}
           </Title1>
           <div className={"mt-2xl"}>
-            {articlesIsLoading ? <></> : <ArticleItem article={articles[0]} />}
+            {!articlesIsLoading && <ArticleItem article={articles[0]} />}
           </div>
         </div>
         <div className={"xl:col-start-3 xl:col-end-4 col-start-1 col-end-4"}>
           <span className={"bg-white p-xs rounded-xl font-bold"}>
-            Dernières recherches partagées ...
+            {t("pages_content:blog.last_share_title")}
           </span>
           <div className={"gap-s pt-xl grid content-start"}>
-            {tripsIsLoading || !trips ? (
-              <p>Loading...</p>
-            ) : (
+            {!tripsIsLoading &&
+              trips &&
               trips
                 .slice(0, 3)
                 .map((trip) => (
@@ -61,8 +60,7 @@ const BlogDashboard = (): JSX.Element => {
                     imageClassname={"aspect-auto h-[208px]"}
                     trip={trip}
                   />
-                ))
-            )}
+                ))}
           </div>
         </div>
       </section>
@@ -79,7 +77,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       dehydratedState: dehydrate(queryClient),
       ...(await serverSideTranslations(
         locale ?? "en",
-        ["website", "pages_content"],
+        ["website", "pages_content", "trip"],
         nextI18nextConfig,
       )),
     },

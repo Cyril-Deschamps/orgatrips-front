@@ -36,7 +36,11 @@
   },
   "blog": {
     "page_title": "Learn how to travel cheaper!",
-    "page_description": "Trust in OrgaTrips!"
+    "page_description": "Trust in OrgaTrips!",
+    "last_share_title": "Last shared trips ...",
+    "blog_title": "Editor's selection",
+    "summary": "Summary",
+    "reading_time": "of reading"
   },
   "privacy_policy": {
     "page_title": "Privacy policy",

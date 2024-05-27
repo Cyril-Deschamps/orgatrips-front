@@ -7,6 +7,13 @@
     "legal_notice": "Mentions légales",
     "privacy_policy": "Politique de confidentialité"
   },
+  "header": {
+    "home": "Accueil",
+    "blog": "Blog",
+    "account": "Mon compte",
+    "login": "Se connecter",
+    "admin": "Admin"
+  },
   "footer": {
     "all_rights_reserved": "Tous droits réservés"
   },

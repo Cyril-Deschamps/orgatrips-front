@@ -6,10 +6,12 @@ import Button from "../Button";
 import { useAuthContext } from "../../auth/apiProvider";
 import Link from "next/link";
 import { ADMIN_ARTICLES_LINK } from "../../../routes/blog";
+import { useTranslation } from "react-i18next";
 
 const Header = (): JSX.Element => {
   const pathname = usePathname();
   const { user } = useAuthContext();
+  const { t } = useTranslation("website");
 
   return (
     <header
@@ -24,39 +26,39 @@ const Header = (): JSX.Element => {
       </Link>
       <nav
         className={
-          "flex flex-col items-center gap-s ml-auto shrink justify-end"
+          "menu-item flex flex-col items-center gap-s ml-auto shrink justify-end"
         }
       >
-        {pathname.includes(BLOG_LINK) ? (
-          <Link href={BASE_LINK}>
-            <Button className={"bg-green px-s py-xxs text-s text-white"}>
-              Accéder à l'application
-            </Button>
-          </Link>
-        ) : (
-          <Link href={BLOG_LINK}>
-            <Button className={"bg-green px-s py-xxs text-s text-white"}>
-              Accéder au blog
-            </Button>
-          </Link>
-        )}
         {user ? (
           <Link href={ACCOUNT_LINK}>
             <Button className={"bg-green px-s py-xxs text-s text-white"}>
-              Espace client
+              {t("header.account")}
             </Button>
           </Link>
         ) : (
           <Link href={LOGIN_LINK}>
             <Button className={"bg-green px-s py-xxs text-s text-white"}>
-              Connexion
+              {t("header.login")}
+            </Button>
+          </Link>
+        )}
+        {pathname.includes(BLOG_LINK) ? (
+          <Link href={BASE_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              {t("header.home")}
+            </Button>
+          </Link>
+        ) : (
+          <Link href={BLOG_LINK}>
+            <Button className={"bg-green px-s py-xxs text-s text-white"}>
+              {t("header.blog")}
             </Button>
           </Link>
         )}
         {user && user.admin && (
           <Link href={ADMIN_ARTICLES_LINK}>
             <Button className={"bg-green px-s py-xxs text-s text-white"}>
-              Espace admin
+              {t("header.admin")}
             </Button>
           </Link>
         )}
