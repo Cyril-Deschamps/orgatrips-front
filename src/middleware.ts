@@ -18,6 +18,7 @@ export async function middleware(req: NextRequest) {
         .get("accept-language")
         ?.split(",")?.[0]
         .split("-")?.[0]
+        .split(";")?.[0]
         .toLowerCase() || nextI18nextConfig.i18n.defaultLocale;
 
     return NextResponse.redirect(

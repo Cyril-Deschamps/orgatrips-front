@@ -4,6 +4,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "next build",
+    "prod": "next start",
     "postbuild": "next-sitemap",
     "start": "next dev",
     "build-stats": "cross-env ANALYZE=true npm run build",
