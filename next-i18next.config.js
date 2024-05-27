@@ -1,11 +1,11 @@
+/** @type {import('next-i18next').UserConfig} */
 module.exports = {
   i18n: {
-    defaultLocale: "en",
-    locales: ["fr", "en"],
+    defaultLocale: "default",
+    locales: ["default", "fr", "en"],
+    localeDetection: false,
   },
-  fallbackLng: {
-    default: ["en"],
-  },
+  trailingSlash: true,
   interpolation: {
     escapeValue: false,
   },

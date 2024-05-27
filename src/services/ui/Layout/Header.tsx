@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { ACCOUNT_LINK, BASE_LINK, BLOG_LINK, LOGIN_LINK } from "src/routes";
 import logo from "../../../assets/img/logo.png";
 import Button from "../Button";
@@ -7,11 +6,12 @@ import { useAuthContext } from "../../auth/apiProvider";
 import Link from "next/link";
 import { ADMIN_ARTICLES_LINK } from "../../../routes/blog";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 
 const Header = (): JSX.Element => {
-  const pathname = usePathname();
   const { user } = useAuthContext();
   const { t } = useTranslation("website");
+  const { pathname, query, push } = useRouter();
 
   return (
     <header
@@ -24,6 +24,23 @@ const Header = (): JSX.Element => {
           <Image alt={"logo"} loading={"eager"} src={logo} />
         </div>
       </Link>
+      <div className={"ml-xxs mt-1 flex items-center"}>
+        <button
+          onClick={() =>
+            push({ pathname, query }, { pathname, query }, { locale: "fr" })
+          }
+        >
+          <strong>FR</strong>
+        </button>
+        <div className={"w-[1.5px] h-3 bg-black mx-xs"} />
+        <button
+          onClick={() =>
+            push({ pathname, query }, { pathname, query }, { locale: "en" })
+          }
+        >
+          <strong>EN</strong>
+        </button>
+      </div>
       <nav
         className={
           "menu-item flex flex-col items-center gap-s ml-auto shrink justify-end"
