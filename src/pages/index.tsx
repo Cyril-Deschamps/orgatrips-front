@@ -59,7 +59,9 @@ const Home = (): JSX.Element => {
           }
         >
           <Title1
-            className={"text-4xl sm:tracking-wide text-center lg:text-start"}
+            className={
+              "text-4xl sm:tracking-wide text-center lg:text-start leading-10"
+            }
           >
             <Trans
               components={{
@@ -95,7 +97,7 @@ const Home = (): JSX.Element => {
       </SizedSection>
       <div
         className={
-          "bg-white w-full mt-[-54px] flex flex-col items-center pb-6 md:pb-12"
+          "bg-white w-full mt-[-25px] sm:mt-[-54px] flex flex-col items-center pb-6 md:pb-12"
         }
       >
         <SizedSection

@@ -17,7 +17,7 @@ const Header = (): JSX.Element => {
   return (
     <header
       className={
-        "flex flex-row items-center content-between py-xs px-s md:px-2xl pb-2xl md:pb-2xl"
+        "flex flex-row flex-wrap gap-xs items-center content-between py-xs px-s md:px-2xl pb-2xl md:pb-2xl"
       }
     >
       <Link href={BASE_LINK}>
@@ -25,7 +25,7 @@ const Header = (): JSX.Element => {
           <Image alt={"logo"} loading={"eager"} src={logo} />
         </div>
       </Link>
-      <div className={"ml-xxs mt-1 flex items-center"}>
+      <div className={"mt-1 flex items-center ml-auto sm:ml-0"}>
         <button
           onClick={() =>
             push({ pathname, query }, { pathname, query }, { locale: "fr" })
@@ -44,7 +44,7 @@ const Header = (): JSX.Element => {
       </div>
       <nav
         className={
-          "menu-item flex flex-col items-center gap-s ml-auto shrink justify-end"
+          "flex flex-row sm:flex-col justify-end items-center gap-s sm:mr-0 mr-auto ml-auto shrink"
         }
       >
         {user ? (
